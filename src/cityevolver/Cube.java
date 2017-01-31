@@ -18,7 +18,12 @@ public class Cube
         this.x = x;
         this.y = y;
         this.z = z;
-        this.road = road;        
+        this.road = road;
+    }
+
+    public boolean isRoad()
+    {
+        return road;
     }
     
     public void draw()
@@ -71,5 +76,10 @@ public class Cube
             glVertex3f(x, 1 + y, 1 + z);
         }
         glEnd();
+    }
+
+    public void print()
+    {
+        System.out.println("x" + x + " y" + y + " z" + z);
     }
 }

@@ -1,5 +1,7 @@
 package cityevolver;
 
+import algorithm.Individual;
+import algorithm.Population;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,35 +17,22 @@ public class CityEvolver
 
     public static void main(String[] args)
     {
+        Population p = new Population(20, 1, 20);
+        p.run();
+        Individual world = p.best();
         initDisplay();
 
-        actionLoop();
+        actionLoop(world);
         cleanUp();
     }
 
-    public static void actionLoop()
+    public static void actionLoop(Individual world)
     {
         Camera camera = new Camera(0, 0, 0);
         
         int displayListHandle = -1;
         
-        Mouse.setGrabbed(false);
-        
-        ArrayList<Cube> cubes = new ArrayList<>();
-        for (int i = 0; i < 16; i++)
-        {
-            for (int j = 0; j < 16 ; j++)
-            {
-                if (Math.random() > 0.5)
-                {
-                    cubes.add(new Cube(i, 0, j, false));
-                }
-                else
-                {
-                    cubes.add(new Cube(i, 0, j, true));
-                }
-            }
-        }
+        Mouse.setGrabbed(true);
         
         double time = 0.0f;
         int frames = 0;
@@ -68,10 +57,7 @@ public class CityEvolver
                                 
                 glNewList(displayListHandle, GL_COMPILE);
                                 
-                for (Cube cube : cubes)
-                {
-                    cube.draw();
-                }
+                world.draw();
                 
                 glEndList();
 
