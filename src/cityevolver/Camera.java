@@ -28,16 +28,6 @@ public class Camera
         glEnable(GL_DEPTH_TEST);
     }
 
-    public void yaw(float amount)
-    {
-        yaw += amount;
-    }
-
-    public void pitch(float amount)
-    {
-        pitch += amount;
-    }
-
     public void input(float delta)
     {
         float multiplier = 1.0f;
@@ -105,7 +95,7 @@ public class Camera
         }
     }
     
-    public void move(float dx, float dy, float dz)
+    private void move(float dx, float dy, float dz)
     {
         position.x -= dx * (float) sin(toRadians(yaw - 90)) + dz * sin(toRadians(yaw));
         position.z += dx * (float) cos(toRadians(yaw - 90)) + dz * cos(toRadians(yaw));
