@@ -35,16 +35,16 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jTabbedPane1" min="-2" pref="301" max="-2" attributes="0"/>
+                      <Component id="sideTabbedPane" min="-2" pref="301" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel1" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="jTabbedPane2" min="-2" pref="370" max="-2" attributes="0"/>
+                      <Component id="fileManagerPane" min="-2" pref="370" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Component id="jScrollPane7" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="gaMenuPanel" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -56,15 +56,15 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jPanel2" min="-2" pref="127" max="-2" attributes="0"/>
-                  <Component id="jTabbedPane2" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
+                  <Component id="gaMenuPanel" min="-2" pref="127" max="-2" attributes="0"/>
+                  <Component id="fileManagerPane" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
                   <Component id="jScrollPane7" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jTabbedPane1" max="32767" attributes="0"/>
+                  <Component id="sideTabbedPane" max="32767" attributes="0"/>
                   <Component id="jPanel1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -94,7 +94,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton12" min="-2" max="-2" attributes="0"/>
+                          <Component id="statsButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
@@ -109,7 +109,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton12" min="-2" max="-2" attributes="0"/>
+                  <Component id="statsButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="statsPanel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
@@ -118,12 +118,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton12">
+        <Component class="javax.swing.JButton" name="statsButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Stats"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton12ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="statsButtonActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="statsPanel">
@@ -141,44 +141,44 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <Component id="costLabel" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel47" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel41" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel39" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel40" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel45" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel46" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel44" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel48" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel49" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel50" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel51" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="roadsCostLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="industryCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="DenseResidentialCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="grassParksCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lightResidentialCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="denseCommericalCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="farmlandCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lightCommercialCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="hosptialCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="policeCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fireCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="educationCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="jLabel52" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="totalCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="utilityLabel" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel75" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel74" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel68" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel70" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel71" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel66" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel77" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel72" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel67" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel73" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel69" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel76" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="roadsUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="industryUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="denseResidentialUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="GrassParksUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lightResidentialUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="denseCommericalUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="farmlandUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lightCommercialUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="hospitalUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="policeUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fireUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="educationUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="jLabel78" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="totalUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="26" max="32767" attributes="0"/>
                   </Group>
@@ -190,62 +190,62 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                              <Component id="utilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel75" min="-2" max="-2" attributes="0"/>
+                              <Component id="roadsUtilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel70" min="-2" max="-2" attributes="0"/>
+                              <Component id="GrassParksUtilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel71" min="-2" max="-2" attributes="0"/>
+                              <Component id="lightResidentialUtilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel68" min="-2" max="-2" attributes="0"/>
+                              <Component id="denseResidentialUtilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel72" min="-2" max="-2" attributes="0"/>
+                              <Component id="lightCommercialUtilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel66" min="-2" max="-2" attributes="0"/>
+                              <Component id="denseCommericalUtilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel77" min="-2" max="-2" attributes="0"/>
+                              <Component id="farmlandUtilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel74" min="-2" max="-2" attributes="0"/>
+                              <Component id="industryUtilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel67" min="-2" max="-2" attributes="0"/>
+                              <Component id="hospitalUtilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel73" min="-2" max="-2" attributes="0"/>
+                              <Component id="policeUtilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel69" min="-2" max="-2" attributes="0"/>
+                              <Component id="fireUtilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel76" min="-2" max="-2" attributes="0"/>
+                              <Component id="educationUtilityLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jLabel78" min="-2" max="-2" attributes="0"/>
+                              <Component id="totalUtilityLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <Component id="costLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
+                              <Component id="roadsCostLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
+                              <Component id="grassParksCostLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel40" min="-2" max="-2" attributes="0"/>
+                              <Component id="lightResidentialCostLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
+                              <Component id="DenseResidentialCostLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel44" min="-2" max="-2" attributes="0"/>
+                              <Component id="lightCommercialCostLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel45" min="-2" max="-2" attributes="0"/>
+                              <Component id="denseCommericalCostLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel46" min="-2" max="-2" attributes="0"/>
+                              <Component id="farmlandCostLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel47" min="-2" max="-2" attributes="0"/>
+                              <Component id="industryCostLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel48" min="-2" max="-2" attributes="0"/>
+                              <Component id="hosptialCostLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel49" min="-2" max="-2" attributes="0"/>
+                              <Component id="policeCostLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel50" min="-2" max="-2" attributes="0"/>
+                              <Component id="fireCostLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel51" min="-2" max="-2" attributes="0"/>
+                              <Component id="educationCostLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jLabel52" min="-2" max="-2" attributes="0"/>
+                              <Component id="totalCostLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="30" max="32767" attributes="0"/>
@@ -254,13 +254,13 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel37">
+            <Component class="javax.swing.JLabel" name="roadsCostLabel">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="text" type="java.lang.String" value="Roads: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel2">
+            <Component class="javax.swing.JLabel" name="costLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Lucida Grande" size="13" style="1"/>
@@ -268,118 +268,118 @@
                 <Property name="text" type="java.lang.String" value="Cost"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel39">
+            <Component class="javax.swing.JLabel" name="grassParksCostLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Grass/Parks: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel40">
+            <Component class="javax.swing.JLabel" name="lightResidentialCostLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="LightResidential: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel41">
+            <Component class="javax.swing.JLabel" name="DenseResidentialCostLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="DenseResidential: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel44">
+            <Component class="javax.swing.JLabel" name="lightCommercialCostLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="LightCommercial: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel45">
+            <Component class="javax.swing.JLabel" name="denseCommericalCostLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="DenseCommercial: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel46">
+            <Component class="javax.swing.JLabel" name="farmlandCostLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Farmland: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel47">
+            <Component class="javax.swing.JLabel" name="industryCostLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Industry: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel48">
+            <Component class="javax.swing.JLabel" name="hosptialCostLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hospital: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel49">
+            <Component class="javax.swing.JLabel" name="policeCostLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Police: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel50">
+            <Component class="javax.swing.JLabel" name="fireCostLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fire: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel51">
+            <Component class="javax.swing.JLabel" name="educationCostLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Education: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel52">
+            <Component class="javax.swing.JLabel" name="totalCostLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Total: 2000"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel66">
+            <Component class="javax.swing.JLabel" name="denseCommericalUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="DenseCommercial: 50 jobs"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel67">
+            <Component class="javax.swing.JLabel" name="hospitalUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hospital: 50 servings"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel68">
+            <Component class="javax.swing.JLabel" name="denseResidentialUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="DenseResidential: 50 population"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel69">
+            <Component class="javax.swing.JLabel" name="fireUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fire: 50 servings"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel70">
+            <Component class="javax.swing.JLabel" name="GrassParksUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Grass/Parks: 50 m^3 of green space"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel71">
+            <Component class="javax.swing.JLabel" name="lightResidentialUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="LightResidential: 50 population"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel72">
+            <Component class="javax.swing.JLabel" name="lightCommercialUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="LightCommercial: 50 jobs"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel73">
+            <Component class="javax.swing.JLabel" name="policeUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Police: 50 servings"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel74">
+            <Component class="javax.swing.JLabel" name="industryUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Industry: 50 jobs"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel75">
+            <Component class="javax.swing.JLabel" name="roadsUtilityLabel">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="text" type="java.lang.String" value="Roads: 50 meters of road"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel5">
+            <Component class="javax.swing.JLabel" name="utilityLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Lucida Grande" size="13" style="1"/>
@@ -387,17 +387,17 @@
                 <Property name="text" type="java.lang.String" value="Utility"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel76">
+            <Component class="javax.swing.JLabel" name="educationUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Education: 50 servings"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel77">
+            <Component class="javax.swing.JLabel" name="farmlandUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Farmland: 50 servings"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel78">
+            <Component class="javax.swing.JLabel" name="totalUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Total: 2000"/>
               </Properties>
@@ -406,7 +406,7 @@
         </Container>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanel2">
+    <Container class="javax.swing.JPanel" name="gaMenuPanel">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -424,43 +424,43 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="generationsLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jSlider1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="generationsSlider" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="generationsValueLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                              <Component id="mutationValueLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="mutationLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel3" min="-2" pref="75" max="-2" attributes="0"/>
+                                  <Component id="populationLabel" min="-2" pref="75" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jSlider5" min="-2" max="-2" attributes="0"/>
+                                  <Component id="populationSlider" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="populationValueLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButton4" min="-2" pref="80" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                              <Component id="startGaButton" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="saveGaButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jSlider7" min="-2" max="-2" attributes="0"/>
+                      <Component id="mutationSlider" min="-2" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jTextField3" alignment="0" max="32767" attributes="0"/>
+                          <Component id="gaNameField" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                              <Component id="stopGaButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButton6" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="resetGaButton" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -473,36 +473,36 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jSlider1" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jSlider7" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                      <Component id="generationsSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="generationsLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="mutationSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="mutationLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="generationsValueLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="mutationValueLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jSlider5" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="populationLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="populationSlider" min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                          <Component id="populationValueLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="startGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="stopGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="resetGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="saveGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="gaNameField" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -512,73 +512,73 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton4">
+        <Component class="javax.swing.JButton" name="startGaButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Start"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton5">
+        <Component class="javax.swing.JButton" name="stopGaButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Stop"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopGaButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton6">
+        <Component class="javax.swing.JButton" name="resetGaButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Reset"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetGaButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JSlider" name="jSlider1">
+        <Component class="javax.swing.JSlider" name="generationsSlider">
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="generationsLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Generations"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel3">
+        <Component class="javax.swing.JLabel" name="populationLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Population"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSlider" name="jSlider5">
+        <Component class="javax.swing.JSlider" name="populationSlider">
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel9">
+        <Component class="javax.swing.JLabel" name="mutationLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Mutation"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSlider" name="jSlider7">
+        <Component class="javax.swing.JSlider" name="mutationSlider">
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel10">
+        <Component class="javax.swing.JLabel" name="generationsValueLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="150"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel11">
+        <Component class="javax.swing.JLabel" name="populationValueLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="150"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel13">
+        <Component class="javax.swing.JLabel" name="mutationValueLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="150"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="saveGaButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Save"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField3">
+        <Component class="javax.swing.JTextField" name="gaNameField">
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+    <Container class="javax.swing.JTabbedPane" name="sideTabbedPane">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -589,7 +589,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel4">
+        <Container class="javax.swing.JPanel" name="fitnessFunctionPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Fitness Function">
@@ -605,59 +605,59 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jSlider15" min="-2" pref="124" max="-2" attributes="0"/>
+                              <Component id="industrySlider" min="-2" pref="124" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
+                              <Component id="industryLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jSlider13" pref="124" max="32767" attributes="0"/>
-                                  <Component id="jSlider12" pref="0" max="32767" attributes="0"/>
-                                  <Component id="jSlider11" alignment="1" pref="0" max="32767" attributes="0"/>
-                                  <Component id="jSlider10" alignment="1" pref="0" max="32767" attributes="0"/>
-                                  <Component id="jSlider9" alignment="1" pref="0" max="32767" attributes="0"/>
-                                  <Component id="jSlider8" alignment="1" pref="0" max="32767" attributes="0"/>
+                                  <Component id="denseResidentialSlider" pref="124" max="32767" attributes="0"/>
+                                  <Component id="farmlandSlider" pref="0" max="32767" attributes="0"/>
+                                  <Component id="denseCommercialSlider" alignment="1" pref="0" max="32767" attributes="0"/>
+                                  <Component id="lightResidentialSlider" alignment="1" pref="0" max="32767" attributes="0"/>
+                                  <Component id="grassParksSlider" alignment="1" pref="0" max="32767" attributes="0"/>
+                                  <Component id="roadsSlider" alignment="1" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel16" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
+                                  <Component id="denseResidentialLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="grassParksLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="roadsLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lightResidentialLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="denseCommercialLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="farmlandLabel" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jSlider14" min="-2" pref="124" max="-2" attributes="0"/>
+                              <Component id="lightCommercialSider" min="-2" pref="124" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
+                              <Component id="lightCommercialLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jSlider16" min="-2" pref="124" max="-2" attributes="0"/>
+                              <Component id="hospitalSlider" min="-2" pref="124" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
+                              <Component id="hospitalLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jSlider17" min="-2" pref="124" max="-2" attributes="0"/>
+                              <Component id="policeSlider" min="-2" pref="124" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
+                              <Component id="policeLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jSlider18" min="-2" pref="124" max="-2" attributes="0"/>
+                              <Component id="fireSlider" min="-2" pref="124" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                              <Component id="fireLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jSlider19" min="-2" pref="124" max="-2" attributes="0"/>
+                              <Component id="educationSlider" min="-2" pref="124" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
+                              <Component id="educationLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jButton10" min="-2" max="-2" attributes="0"/>
+                      <Component id="resetFitnessFunctionButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -667,164 +667,167 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jSlider8" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                          <Component id="roadsSlider" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="roadsLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jSlider9" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel15" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="grassParksSlider" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="grassParksLabel" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jSlider10" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel16" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lightResidentialSlider" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="lightResidentialLabel" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jSlider13" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel19" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="denseResidentialSlider" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="denseResidentialLabel" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jSlider14" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
+                          <Component id="lightCommercialSider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="lightCommercialLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jSlider11" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
+                          <Component id="denseCommercialSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="denseCommercialLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jSlider12" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
+                          <Component id="farmlandSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="farmlandLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jSlider15" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
+                          <Component id="industrySlider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="industryLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jSlider16" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
+                          <Component id="hospitalSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="hospitalLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jSlider17" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
+                          <Component id="policeSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="policeLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jSlider18" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                          <Component id="fireSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="fireLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jSlider19" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
+                          <Component id="educationSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="educationLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton10" min="-2" max="-2" attributes="0"/>
+                      <Component id="resetFitnessFunctionButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="227" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JSlider" name="jSlider8">
+            <Component class="javax.swing.JSlider" name="roadsSlider">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel14">
+            <Component class="javax.swing.JLabel" name="roadsLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Roads: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSlider" name="jSlider9">
+            <Component class="javax.swing.JSlider" name="grassParksSlider">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel15">
+            <Component class="javax.swing.JLabel" name="grassParksLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Grass/Parks: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSlider" name="jSlider10">
+            <Component class="javax.swing.JSlider" name="lightResidentialSlider">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel16">
+            <Component class="javax.swing.JLabel" name="lightResidentialLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="LightResidential: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSlider" name="jSlider11">
+            <Component class="javax.swing.JSlider" name="denseCommercialSlider">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel17">
+            <Component class="javax.swing.JLabel" name="denseCommercialLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="DenseCommercial: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSlider" name="jSlider12">
+            <Component class="javax.swing.JSlider" name="farmlandSlider">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel18">
+            <Component class="javax.swing.JLabel" name="farmlandLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Farmland: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSlider" name="jSlider13">
+            <Component class="javax.swing.JSlider" name="denseResidentialSlider">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel19">
+            <Component class="javax.swing.JLabel" name="denseResidentialLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="DenseResidential: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSlider" name="jSlider14">
+            <Component class="javax.swing.JSlider" name="lightCommercialSider">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel20">
+            <Component class="javax.swing.JLabel" name="lightCommercialLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="LightCommercial: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSlider" name="jSlider15">
+            <Component class="javax.swing.JSlider" name="industrySlider">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel21">
+            <Component class="javax.swing.JLabel" name="industryLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Industry: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSlider" name="jSlider16">
+            <Component class="javax.swing.JSlider" name="hospitalSlider">
             </Component>
-            <Component class="javax.swing.JSlider" name="jSlider17">
+            <Component class="javax.swing.JSlider" name="policeSlider">
             </Component>
-            <Component class="javax.swing.JSlider" name="jSlider18">
+            <Component class="javax.swing.JSlider" name="fireSlider">
             </Component>
-            <Component class="javax.swing.JSlider" name="jSlider19">
+            <Component class="javax.swing.JSlider" name="educationSlider">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel22">
+            <Component class="javax.swing.JLabel" name="hospitalLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hospital: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel23">
+            <Component class="javax.swing.JLabel" name="policeLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Police: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel24">
+            <Component class="javax.swing.JLabel" name="fireLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fire: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel25">
+            <Component class="javax.swing.JLabel" name="educationLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Education: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton10">
+            <Component class="javax.swing.JButton" name="resetFitnessFunctionButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Reset"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetFitnessFunctionButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanel5">
+        <Container class="javax.swing.JPanel" name="blockKeyPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Block Key">
@@ -839,37 +842,37 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPanel6" max="32767" attributes="0"/>
-                          <Component id="jPanel8" max="32767" attributes="0"/>
-                          <Component id="jPanel9" max="32767" attributes="0"/>
-                          <Component id="jPanel11" max="32767" attributes="0"/>
-                          <Component id="jPanel10" max="32767" attributes="0"/>
-                          <Component id="jPanel12" max="32767" attributes="0"/>
-                          <Component id="jPanel14" max="32767" attributes="0"/>
-                          <Component id="jPanel15" max="32767" attributes="0"/>
-                          <Component id="jPanel16" max="32767" attributes="0"/>
-                          <Component id="jPanel17" max="32767" attributes="0"/>
-                          <Component id="jPanel19" max="32767" attributes="0"/>
-                          <Component id="jPanel18" max="32767" attributes="0"/>
-                          <Component id="jPanel21" max="32767" attributes="0"/>
-                          <Component id="jPanel13" max="32767" attributes="0"/>
+                          <Component id="roadsKeyPanel" max="32767" attributes="0"/>
+                          <Component id="grassParksKeyPanel" max="32767" attributes="0"/>
+                          <Component id="lightResidentialKeyPanel" max="32767" attributes="0"/>
+                          <Component id="desneResidentialKeyPanel" max="32767" attributes="0"/>
+                          <Component id="lightCommercialKeyPanel" max="32767" attributes="0"/>
+                          <Component id="denseCommercialKeyPanel" max="32767" attributes="0"/>
+                          <Component id="industryKeyPanel" max="32767" attributes="0"/>
+                          <Component id="hospitalKeyPanel" max="32767" attributes="0"/>
+                          <Component id="policeKeyPanel" max="32767" attributes="0"/>
+                          <Component id="fireKeyPanel" max="32767" attributes="0"/>
+                          <Component id="educationKeyPanel" max="32767" attributes="0"/>
+                          <Component id="waterKeyPanel" max="32767" attributes="0"/>
+                          <Component id="immovableObjectKeyPanel" max="32767" attributes="0"/>
+                          <Component id="farmlandKeyPanel" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="11" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel43" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel42" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel27" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel28" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel29" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel31" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel32" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
+                          <Component id="immovableObjectKeyLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="waterKeyLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="educationKeyLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="grassParksKeyLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="roadsKeyLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lightResidentialKeyLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="denseCommercialKeyLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="denseResidentialKeyLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="industryKeyLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="hospitalKeyLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="policeKeyLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="lightCommercialKeyLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="fireKeyLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="farmlandKeyLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="35" max="32767" attributes="0"/>
                   </Group>
@@ -880,73 +883,73 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPanel6" max="32767" attributes="0"/>
-                          <Component id="jLabel26" max="32767" attributes="0"/>
+                          <Component id="roadsKeyPanel" max="32767" attributes="0"/>
+                          <Component id="roadsKeyLabel" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPanel8" max="32767" attributes="0"/>
-                          <Component id="jLabel27" max="32767" attributes="0"/>
+                          <Component id="grassParksKeyPanel" max="32767" attributes="0"/>
+                          <Component id="grassParksKeyLabel" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPanel9" max="32767" attributes="0"/>
-                          <Component id="jLabel28" max="32767" attributes="0"/>
+                          <Component id="lightResidentialKeyPanel" max="32767" attributes="0"/>
+                          <Component id="lightResidentialKeyLabel" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPanel11" max="32767" attributes="0"/>
-                          <Component id="jLabel31" max="32767" attributes="0"/>
+                          <Component id="desneResidentialKeyPanel" max="32767" attributes="0"/>
+                          <Component id="denseResidentialKeyLabel" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
-                          <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
+                          <Component id="lightCommercialKeyLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="lightCommercialKeyPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
+                          <Component id="denseCommercialKeyPanel" min="-2" max="-2" attributes="0"/>
+                          <Component id="denseCommercialKeyLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel30" max="32767" attributes="0"/>
-                          <Component id="jPanel13" max="32767" attributes="0"/>
+                          <Component id="farmlandKeyLabel" max="32767" attributes="0"/>
+                          <Component id="farmlandKeyPanel" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
-                          <Component id="jPanel14" min="-2" max="-2" attributes="0"/>
+                          <Component id="industryKeyLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="industryKeyPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
-                          <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
+                          <Component id="hospitalKeyLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="hospitalKeyPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
+                          <Component id="policeKeyPanel" min="-2" max="-2" attributes="0"/>
+                          <Component id="policeKeyLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel17" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
+                          <Component id="fireKeyPanel" min="-2" max="-2" attributes="0"/>
+                          <Component id="fireKeyLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel19" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
+                          <Component id="educationKeyPanel" min="-2" max="-2" attributes="0"/>
+                          <Component id="educationKeyLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel18" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel42" min="-2" max="-2" attributes="0"/>
+                          <Component id="waterKeyPanel" min="-2" max="-2" attributes="0"/>
+                          <Component id="waterKeyLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel21" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel43" min="-2" max="-2" attributes="0"/>
+                          <Component id="immovableObjectKeyPanel" min="-2" max="-2" attributes="0"/>
+                          <Component id="immovableObjectKeyLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="248" max="32767" attributes="0"/>
                   </Group>
@@ -954,57 +957,57 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel26">
+            <Component class="javax.swing.JLabel" name="roadsKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Roads"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel27">
+            <Component class="javax.swing.JLabel" name="grassParksKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Grass/Parks"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel28">
+            <Component class="javax.swing.JLabel" name="lightResidentialKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="LightResidential"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel29">
+            <Component class="javax.swing.JLabel" name="denseCommercialKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="DenseCommercial"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel31">
+            <Component class="javax.swing.JLabel" name="denseResidentialKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="DenseResidential"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel32">
+            <Component class="javax.swing.JLabel" name="lightCommercialKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="LightCommercial"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel33">
+            <Component class="javax.swing.JLabel" name="industryKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Industry"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel34">
+            <Component class="javax.swing.JLabel" name="hospitalKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hospital"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel35">
+            <Component class="javax.swing.JLabel" name="policeKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Police"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel36">
+            <Component class="javax.swing.JLabel" name="fireKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fire"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JPanel" name="jPanel6">
+            <Container class="javax.swing.JPanel" name="roadsKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="80" green="80" red="80" type="rgb"/>
@@ -1024,7 +1027,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel8">
+            <Container class="javax.swing.JPanel" name="grassParksKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="d1" red="10" type="rgb"/>
@@ -1044,7 +1047,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel9">
+            <Container class="javax.swing.JPanel" name="lightResidentialKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="c8" green="ff" red="0" type="rgb"/>
@@ -1064,7 +1067,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel11">
+            <Container class="javax.swing.JPanel" name="desneResidentialKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="64" red="0" type="rgb"/>
@@ -1084,7 +1087,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel10">
+            <Container class="javax.swing.JPanel" name="lightCommercialKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="0" type="rgb"/>
@@ -1104,7 +1107,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel12">
+            <Container class="javax.swing.JPanel" name="denseCommercialKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="0" red="0" type="rgb"/>
@@ -1124,7 +1127,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel14">
+            <Container class="javax.swing.JPanel" name="industryKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="c9" red="ff" type="rgb"/>
@@ -1144,7 +1147,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel15">
+            <Container class="javax.swing.JPanel" name="hospitalKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="fa" green="fa" red="fa" type="rgb"/>
@@ -1164,7 +1167,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel16">
+            <Container class="javax.swing.JPanel" name="policeKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="5f" red="bf" type="rgb"/>
@@ -1184,7 +1187,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel17">
+            <Container class="javax.swing.JPanel" name="fireKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="0" red="ff" type="rgb"/>
@@ -1204,12 +1207,12 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Component class="javax.swing.JLabel" name="jLabel38">
+            <Component class="javax.swing.JLabel" name="educationKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Education"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JPanel" name="jPanel19">
+            <Container class="javax.swing.JPanel" name="educationKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="21" green="43" red="65" type="rgb"/>
@@ -1229,17 +1232,17 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Component class="javax.swing.JLabel" name="jLabel42">
+            <Component class="javax.swing.JLabel" name="waterKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Water"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel43">
+            <Component class="javax.swing.JLabel" name="immovableObjectKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="ImmovableObject"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JPanel" name="jPanel18">
+            <Container class="javax.swing.JPanel" name="waterKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ee" green="c1" red="0" type="rgb"/>
@@ -1259,7 +1262,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel21">
+            <Container class="javax.swing.JPanel" name="immovableObjectKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="10" green="10" red="10" type="rgb"/>
@@ -1279,12 +1282,12 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Component class="javax.swing.JLabel" name="jLabel30">
+            <Component class="javax.swing.JLabel" name="farmlandKeyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Farmland"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JPanel" name="jPanel13">
+            <Container class="javax.swing.JPanel" name="farmlandKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="8b" green="ec" red="ff" type="rgb"/>
@@ -1308,7 +1311,7 @@
         </Container>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
+    <Container class="javax.swing.JTabbedPane" name="fileManagerPane">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -1319,7 +1322,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel20">
+        <Container class="javax.swing.JPanel" name="savedMapsPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Saved Maps">
@@ -1333,11 +1336,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane4" min="-2" pref="165" max="-2" attributes="0"/>
+                      <Component id="savedMapsPane" min="-2" pref="165" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton13" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton16" min="-2" max="-2" attributes="0"/>
+                          <Component id="loadSavedMapButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="deleteSavedMapButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="86" max="32767" attributes="0"/>
                   </Group>
@@ -1345,25 +1348,25 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane4" pref="0" max="32767" attributes="0"/>
+                  <Component id="savedMapsPane" pref="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="jButton13" min="-2" max="-2" attributes="0"/>
+                      <Component id="loadSavedMapButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton16" min="-2" max="-2" attributes="0"/>
+                      <Component id="deleteSavedMapButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+            <Container class="javax.swing.JScrollPane" name="savedMapsPane">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="jList3">
+                <Component class="javax.swing.JList" name="savedMapsList">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                       <StringArray count="3">
@@ -1379,19 +1382,19 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jButton13">
+            <Component class="javax.swing.JButton" name="loadSavedMapButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Load"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton16">
+            <Component class="javax.swing.JButton" name="deleteSavedMapButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Delete"/>
               </Properties>
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanel22">
+        <Container class="javax.swing.JPanel" name="searchSessionsPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Search Sessions">
