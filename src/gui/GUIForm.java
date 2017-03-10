@@ -32,8 +32,8 @@ public class GUIForm extends javax.swing.JFrame
     private void initComponents()
     {
 
-        jSeparator1 = new javax.swing.JSeparator();
-        jPanel1 = new javax.swing.JPanel();
+        topSeperator = new javax.swing.JSeparator();
+        mainPanel = new javax.swing.JPanel();
         statsButton = new javax.swing.JButton();
         statsPanel = new javax.swing.JPanel();
         roadsCostLabel = new javax.swing.JLabel();
@@ -142,26 +142,27 @@ public class GUIForm extends javax.swing.JFrame
         loadSavedMapButton = new javax.swing.JButton();
         deleteSavedMapButton = new javax.swing.JButton();
         searchSessionsPanel = new javax.swing.JPanel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jList5 = new javax.swing.JList<>();
-        jButton14 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
-        jPanel23 = new javax.swing.JPanel();
-        jButton11 = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jList4 = new javax.swing.JList<>();
-        jButton17 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        searchSessionsPane = new javax.swing.JScrollPane();
+        searchSessionsList = new javax.swing.JList<>();
+        loadSearchSessionsButton = new javax.swing.JButton();
+        deleteSearchSessionsButton = new javax.swing.JButton();
+        populationMapsPanel = new javax.swing.JPanel();
+        viewMapButton = new javax.swing.JButton();
+        populationMapsPane = new javax.swing.JScrollPane();
+        populationMapsList = new javax.swing.JList<>();
+        savePopulationMapButton = new javax.swing.JButton();
+        populationMapNameField = new javax.swing.JTextField();
+        messagesPane = new javax.swing.JScrollPane();
+        messagesOutputArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("City Evolver");
         setLocation(new java.awt.Point(0, 0));
         setName("CityEvolver"); // NOI18N
         setPreferredSize(new java.awt.Dimension(1280, 720));
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        mainPanel.setBackground(new java.awt.Color(102, 102, 102));
+        mainPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         statsButton.setText("Stats");
         statsButton.addActionListener(new java.awt.event.ActionListener()
@@ -342,23 +343,23 @@ public class GUIForm extends javax.swing.JFrame
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(statsButton))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(87, 87, 87)
                         .addComponent(statsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(621, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statsButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -972,17 +973,17 @@ public class GUIForm extends javax.swing.JFrame
 
         fileManagerPane.addTab("Saved Maps", savedMapsPanel);
 
-        jList5.setModel(new javax.swing.AbstractListModel<String>()
+        searchSessionsList.setModel(new javax.swing.AbstractListModel<String>()
         {
             String[] strings = { "World 1", "World 2", "Test" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane6.setViewportView(jList5);
+        searchSessionsPane.setViewportView(searchSessionsList);
 
-        jButton14.setText("Load");
+        loadSearchSessionsButton.setText("Load");
 
-        jButton15.setText("Delete");
+        deleteSearchSessionsButton.setText("Delete");
 
         javax.swing.GroupLayout searchSessionsPanelLayout = new javax.swing.GroupLayout(searchSessionsPanel);
         searchSessionsPanel.setLayout(searchSessionsPanelLayout);
@@ -990,90 +991,90 @@ public class GUIForm extends javax.swing.JFrame
             searchSessionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchSessionsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchSessionsPane, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(searchSessionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton14)
-                    .addComponent(jButton15))
+                    .addComponent(loadSearchSessionsButton)
+                    .addComponent(deleteSearchSessionsButton))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
         searchSessionsPanelLayout.setVerticalGroup(
             searchSessionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(searchSessionsPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(searchSessionsPanelLayout.createSequentialGroup()
-                .addComponent(jButton14)
+                .addComponent(loadSearchSessionsButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(jButton15)
+                .addComponent(deleteSearchSessionsButton)
                 .addContainerGap())
         );
 
         fileManagerPane.addTab("Search Sessions", searchSessionsPanel);
 
-        jButton11.setText("View");
+        viewMapButton.setText("View");
 
-        jList4.setModel(new javax.swing.AbstractListModel<String>()
+        populationMapsList.setModel(new javax.swing.AbstractListModel<String>()
         {
             String[] strings = { "World 1", "World 2", "Test" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane5.setViewportView(jList4);
+        populationMapsPane.setViewportView(populationMapsList);
 
-        jButton17.setText("Save");
+        savePopulationMapButton.setText("Save");
 
-        javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
-        jPanel23.setLayout(jPanel23Layout);
-        jPanel23Layout.setHorizontalGroup(
-            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel23Layout.createSequentialGroup()
+        javax.swing.GroupLayout populationMapsPanelLayout = new javax.swing.GroupLayout(populationMapsPanel);
+        populationMapsPanel.setLayout(populationMapsPanelLayout);
+        populationMapsPanelLayout.setHorizontalGroup(
+            populationMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, populationMapsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(populationMapsPane, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel23Layout.createSequentialGroup()
-                        .addComponent(jButton11)
+                .addGroup(populationMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(populationMapsPanelLayout.createSequentialGroup()
+                        .addComponent(viewMapButton)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel23Layout.createSequentialGroup()
-                        .addComponent(jButton17)
+                    .addGroup(populationMapsPanelLayout.createSequentialGroup()
+                        .addComponent(savePopulationMapButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)))
+                        .addComponent(populationMapNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel23Layout.setVerticalGroup(
-            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel23Layout.createSequentialGroup()
-                .addComponent(jButton11)
+        populationMapsPanelLayout.setVerticalGroup(
+            populationMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(populationMapsPanelLayout.createSequentialGroup()
+                .addComponent(viewMapButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton17)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(populationMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(savePopulationMapButton)
+                    .addComponent(populationMapNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(populationMapsPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
-        fileManagerPane.addTab("Population Maps", jPanel23);
+        fileManagerPane.addTab("Population Maps", populationMapsPanel);
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane7.setViewportView(jTextArea1);
+        messagesOutputArea.setEditable(false);
+        messagesOutputArea.setColumns(20);
+        messagesOutputArea.setRows(5);
+        messagesPane.setViewportView(messagesOutputArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
+            .addComponent(topSeperator)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(sideTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(fileManagerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
-                        .addComponent(jScrollPane7)
+                        .addComponent(messagesPane)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(gaMenuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -1085,13 +1086,13 @@ public class GUIForm extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(gaMenuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fileManagerPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane7))
+                    .addComponent(messagesPane))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(topSeperator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(sideTabbedPane)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1177,6 +1178,7 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JPanel blockKeyPanel;
     private javax.swing.JLabel costLabel;
     private javax.swing.JButton deleteSavedMapButton;
+    private javax.swing.JButton deleteSearchSessionsButton;
     private javax.swing.JLabel denseCommercialKeyLabel;
     private javax.swing.JPanel denseCommercialKeyPanel;
     private javax.swing.JLabel denseCommercialLabel;
@@ -1232,21 +1234,7 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JLabel industryLabel;
     private javax.swing.JSlider industrySlider;
     private javax.swing.JLabel industryUtilityLabel;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JList<String> jList4;
-    private javax.swing.JList<String> jList5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lightCommercialCostLabel;
     private javax.swing.JLabel lightCommercialKeyLabel;
     private javax.swing.JPanel lightCommercialKeyPanel;
@@ -1260,6 +1248,10 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JSlider lightResidentialSlider;
     private javax.swing.JLabel lightResidentialUtilityLabel;
     private javax.swing.JButton loadSavedMapButton;
+    private javax.swing.JButton loadSearchSessionsButton;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JTextArea messagesOutputArea;
+    private javax.swing.JScrollPane messagesPane;
     private javax.swing.JLabel mutationLabel;
     private javax.swing.JSlider mutationSlider;
     private javax.swing.JLabel mutationValueLabel;
@@ -1270,6 +1262,10 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JSlider policeSlider;
     private javax.swing.JLabel policeUtilityLabel;
     private javax.swing.JLabel populationLabel;
+    private javax.swing.JTextField populationMapNameField;
+    private javax.swing.JList<String> populationMapsList;
+    private javax.swing.JScrollPane populationMapsPane;
+    private javax.swing.JPanel populationMapsPanel;
     private javax.swing.JSlider populationSlider;
     private javax.swing.JLabel populationValueLabel;
     private javax.swing.JButton resetFitnessFunctionButton;
@@ -1281,18 +1277,23 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JSlider roadsSlider;
     private javax.swing.JLabel roadsUtilityLabel;
     private javax.swing.JButton saveGaButton;
+    private javax.swing.JButton savePopulationMapButton;
     private javax.swing.JList<String> savedMapsList;
     private javax.swing.JScrollPane savedMapsPane;
     private javax.swing.JPanel savedMapsPanel;
+    private javax.swing.JList<String> searchSessionsList;
+    private javax.swing.JScrollPane searchSessionsPane;
     private javax.swing.JPanel searchSessionsPanel;
     private javax.swing.JTabbedPane sideTabbedPane;
     private javax.swing.JButton startGaButton;
     private javax.swing.JButton statsButton;
     private javax.swing.JPanel statsPanel;
     private javax.swing.JButton stopGaButton;
+    private javax.swing.JSeparator topSeperator;
     private javax.swing.JLabel totalCostLabel;
     private javax.swing.JLabel totalUtilityLabel;
     private javax.swing.JLabel utilityLabel;
+    private javax.swing.JButton viewMapButton;
     private javax.swing.JLabel waterKeyLabel;
     private javax.swing.JPanel waterKeyPanel;
     // End of variables declaration//GEN-END:variables
