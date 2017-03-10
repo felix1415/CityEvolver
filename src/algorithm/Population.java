@@ -135,7 +135,7 @@ public class Population
             this.meanFitness += fitness;
         }
         this.meanFitness = this.meanFitness / POPULATION_NUM;
-        System.out.println("algorithm.Popultation.calculateFitness() " + this.fittest);
+//        System.out.println("algorithm.Popultation.calculateFitness() " + this.fittest);
     }
     
     void print()

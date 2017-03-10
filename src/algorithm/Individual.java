@@ -40,7 +40,7 @@ public class Individual
                 for (int k = 0; k < zLength ; k++)
                 {
                     this.gene[i][j][k] = new Cube(i, j, k, this.r.nextBoolean());
-                    this.gene[i][j][k].print();
+//                    this.gene[i][j][k].print();
                 }
             }
         }
@@ -74,7 +74,6 @@ public class Individual
                     if (i < xCross && j < yCross && k < zCross)
                     {
                         this.gene[i][j][k] = individual1.getGene()[i][j][k];
-                        System.out.println("algorithm.Individual.<init>()");
                     }
                     else
                     {
@@ -198,9 +197,6 @@ public class Individual
 
     public void draw()
     {
-//        new Cube(-1,0,1, true).draw();
-//        new Cube(-1,0,2, true).draw();
-        System.out.println("algorithm.Individual.draw()" + xLength + yLength + zLength);
         for (int i = 0; i < xLength; i++)
         {
             for (int j = 0; j < yLength ; j++)

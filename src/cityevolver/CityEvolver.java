@@ -2,7 +2,6 @@ package cityevolver;
 
 import algorithm.Individual;
 import algorithm.Population;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.LWJGLException;
@@ -14,10 +13,13 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class CityEvolver
 {
+    public static int xLength = 40;
+    public static int yLength = 5;
+    public static int zLength = 40;
 
     public static void main(String[] args)
     {
-        Population p = new Population(20, 1, 20);
+        Population p = new Population(xLength, yLength, zLength);
         p.run();
         Individual world = p.best();
         initDisplay();
@@ -61,11 +63,12 @@ public class CityEvolver
                 
                 glEndList();
 
-                renderAsWireFrame(true, displayListHandle);
+                renderWireFrame(true, displayListHandle);
                 
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
                 glEnable(GL_BLEND);
                 glEnable(GL_LINE_SMOOTH);
+                glCullFace(GL_BACK);
                 glCallList(displayListHandle);
                 
             }
@@ -88,7 +91,7 @@ public class CityEvolver
         Display.destroy();
     }
     
-    public static void renderAsWireFrame(boolean wireFrame, int handle)
+    public static void renderWireFrame(boolean wireFrame, int handle)
     {
         if(!wireFrame)
         {
