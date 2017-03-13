@@ -6,6 +6,7 @@ import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
 import org.lwjgl.util.vector.Vector3f;
@@ -22,7 +23,7 @@ public class Camera
         position = new Vector3f(x, y, z);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        gluPerspective(70, (float) 800 / (float) 600, 0.3f, 1000);
+        gluPerspective(70, (float) 960 / (float) 540, 0.3f, 1000);
         glMatrixMode(GL_MODELVIEW);
 
         glEnable(GL_DEPTH_TEST);
@@ -111,6 +112,12 @@ public class Camera
         glRotatef(yaw, 0.0f, 1.0f, 0.0f);
         //translate to the position vector's location
         glTranslatef(position.x, position.y, position.z);
+    }
+
+    void cleanUp()
+    {
+        Keyboard.destroy();
+        Mouse.destroy();
     }
 
 }

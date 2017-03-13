@@ -1,7 +1,9 @@
 package cityevolver;
 
+import gui.Camera;
 import algorithm.Individual;
 import algorithm.Population;
+import gui.Renderer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.LWJGLException;
@@ -19,16 +21,19 @@ public class CityEvolver
 
     public static void main(String[] args)
     {
-        Population p = new Population(xLength, yLength, zLength);
-        p.run();
-        Individual world = p.best();
-        initDisplay();
-
-        actionLoop(world);
-        cleanUp();
+//        Population p = new Population(xLength, yLength, zLength);
+//        p.run();
+//        Individual world = p.best();
+//        Cube world = new Cube(0.0f, 0.0f, -5.0f, true);
+//        initDisplay();
+//        actionLoop(world);
+//        cleanUp();
+        
+        Thread openGLInstance = new Thread(new Renderer());
+        openGLInstance.start(); 
     }
 
-    public static void actionLoop(Individual world)
+    public static void actionLoop(Cube world)
     {
         Camera camera = new Camera(0, 0, 0);
         

@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.Dimension;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,13 +15,15 @@ package gui;
 public class GUIForm extends javax.swing.JFrame
 {
 
+    Renderer renderer;
+    Thread openGLInstance;
     /**
      * Creates new form NewJFrame
      */
     public GUIForm()
     {
         initComponents();
-        statsPanel.setVisible(false);
+        renderer = new Renderer();
     }
 
     /**
@@ -33,37 +37,6 @@ public class GUIForm extends javax.swing.JFrame
     {
 
         topSeperator = new javax.swing.JSeparator();
-        mainPanel = new javax.swing.JPanel();
-        statsButton = new javax.swing.JButton();
-        statsPanel = new javax.swing.JPanel();
-        roadsCostLabel = new javax.swing.JLabel();
-        costLabel = new javax.swing.JLabel();
-        grassParksCostLabel = new javax.swing.JLabel();
-        lightResidentialCostLabel = new javax.swing.JLabel();
-        DenseResidentialCostLabel = new javax.swing.JLabel();
-        lightCommercialCostLabel = new javax.swing.JLabel();
-        denseCommericalCostLabel = new javax.swing.JLabel();
-        farmlandCostLabel = new javax.swing.JLabel();
-        industryCostLabel = new javax.swing.JLabel();
-        hosptialCostLabel = new javax.swing.JLabel();
-        policeCostLabel = new javax.swing.JLabel();
-        fireCostLabel = new javax.swing.JLabel();
-        educationCostLabel = new javax.swing.JLabel();
-        totalCostLabel = new javax.swing.JLabel();
-        denseCommericalUtilityLabel = new javax.swing.JLabel();
-        hospitalUtilityLabel = new javax.swing.JLabel();
-        denseResidentialUtilityLabel = new javax.swing.JLabel();
-        fireUtilityLabel = new javax.swing.JLabel();
-        GrassParksUtilityLabel = new javax.swing.JLabel();
-        lightResidentialUtilityLabel = new javax.swing.JLabel();
-        lightCommercialUtilityLabel = new javax.swing.JLabel();
-        policeUtilityLabel = new javax.swing.JLabel();
-        industryUtilityLabel = new javax.swing.JLabel();
-        roadsUtilityLabel = new javax.swing.JLabel();
-        utilityLabel = new javax.swing.JLabel();
-        educationUtilityLabel = new javax.swing.JLabel();
-        farmlandUtilityLabel = new javax.swing.JLabel();
-        totalUtilityLabel = new javax.swing.JLabel();
         gaMenuPanel = new javax.swing.JPanel();
         startGaButton = new javax.swing.JButton();
         stopGaButton = new javax.swing.JButton();
@@ -106,6 +79,36 @@ public class GUIForm extends javax.swing.JFrame
         fireLabel = new javax.swing.JLabel();
         educationLabel = new javax.swing.JLabel();
         resetFitnessFunctionButton = new javax.swing.JButton();
+        statsPanel = new javax.swing.JPanel();
+        roadsCostLabel = new javax.swing.JLabel();
+        costLabel = new javax.swing.JLabel();
+        grassParksCostLabel = new javax.swing.JLabel();
+        lightResidentialCostLabel = new javax.swing.JLabel();
+        DenseResidentialCostLabel = new javax.swing.JLabel();
+        lightCommercialCostLabel = new javax.swing.JLabel();
+        denseCommericalCostLabel = new javax.swing.JLabel();
+        farmlandCostLabel = new javax.swing.JLabel();
+        industryCostLabel = new javax.swing.JLabel();
+        hosptialCostLabel = new javax.swing.JLabel();
+        policeCostLabel = new javax.swing.JLabel();
+        fireCostLabel = new javax.swing.JLabel();
+        educationCostLabel = new javax.swing.JLabel();
+        totalCostLabel = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        utilityLabel = new javax.swing.JLabel();
+        roadsUtilityLabel = new javax.swing.JLabel();
+        GrassParksUtilityLabel = new javax.swing.JLabel();
+        lightResidentialUtilityLabel = new javax.swing.JLabel();
+        denseResidentialUtilityLabel = new javax.swing.JLabel();
+        lightCommercialUtilityLabel = new javax.swing.JLabel();
+        denseCommericalUtilityLabel = new javax.swing.JLabel();
+        farmlandUtilityLabel = new javax.swing.JLabel();
+        industryUtilityLabel = new javax.swing.JLabel();
+        hospitalUtilityLabel = new javax.swing.JLabel();
+        policeUtilityLabel = new javax.swing.JLabel();
+        fireUtilityLabel = new javax.swing.JLabel();
+        educationUtilityLabel = new javax.swing.JLabel();
+        totalUtilityLabel = new javax.swing.JLabel();
         blockKeyPanel = new javax.swing.JPanel();
         roadsKeyLabel = new javax.swing.JLabel();
         grassParksKeyLabel = new javax.swing.JLabel();
@@ -135,6 +138,7 @@ public class GUIForm extends javax.swing.JFrame
         immovableObjectKeyPanel = new javax.swing.JPanel();
         farmlandKeyLabel = new javax.swing.JLabel();
         farmlandKeyPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         fileManagerPane = new javax.swing.JTabbedPane();
         savedMapsPanel = new javax.swing.JPanel();
         savedMapsPane = new javax.swing.JScrollPane();
@@ -158,214 +162,9 @@ public class GUIForm extends javax.swing.JFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("City Evolver");
         setLocation(new java.awt.Point(0, 0));
-        setName("CityEvolver"); // NOI18N
+        setName("cityEvolverFrame"); // NOI18N
         setPreferredSize(new java.awt.Dimension(1280, 720));
-
-        mainPanel.setBackground(new java.awt.Color(102, 102, 102));
-        mainPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        statsButton.setText("Stats");
-        statsButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                statsButtonActionPerformed(evt);
-            }
-        });
-
-        statsPanel.setBackground(new java.awt.Color(204, 204, 204));
-        statsPanel.setName(""); // NOI18N
-
-        roadsCostLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        roadsCostLabel.setText("Roads: 50");
-
-        costLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        costLabel.setText("Cost");
-
-        grassParksCostLabel.setText("Grass/Parks: 50");
-
-        lightResidentialCostLabel.setText("LightResidential: 50");
-
-        DenseResidentialCostLabel.setText("DenseResidential: 50");
-
-        lightCommercialCostLabel.setText("LightCommercial: 50");
-
-        denseCommericalCostLabel.setText("DenseCommercial: 50");
-
-        farmlandCostLabel.setText("Farmland: 50");
-
-        industryCostLabel.setText("Industry: 50");
-
-        hosptialCostLabel.setText("Hospital: 50");
-
-        policeCostLabel.setText("Police: 50");
-
-        fireCostLabel.setText("Fire: 50");
-
-        educationCostLabel.setText("Education: 50");
-
-        totalCostLabel.setText("Total: 2000");
-
-        denseCommericalUtilityLabel.setText("DenseCommercial: 50 jobs");
-
-        hospitalUtilityLabel.setText("Hospital: 50 servings");
-
-        denseResidentialUtilityLabel.setText("DenseResidential: 50 population");
-
-        fireUtilityLabel.setText("Fire: 50 servings");
-
-        GrassParksUtilityLabel.setText("Grass/Parks: 50 m^3 of green space");
-
-        lightResidentialUtilityLabel.setText("LightResidential: 50 population");
-
-        lightCommercialUtilityLabel.setText("LightCommercial: 50 jobs");
-
-        policeUtilityLabel.setText("Police: 50 servings");
-
-        industryUtilityLabel.setText("Industry: 50 jobs");
-
-        roadsUtilityLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        roadsUtilityLabel.setText("Roads: 50 meters of road");
-
-        utilityLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        utilityLabel.setText("Utility");
-
-        educationUtilityLabel.setText("Education: 50 servings");
-
-        farmlandUtilityLabel.setText("Farmland: 50 servings");
-
-        totalUtilityLabel.setText("Total: 2000");
-
-        javax.swing.GroupLayout statsPanelLayout = new javax.swing.GroupLayout(statsPanel);
-        statsPanel.setLayout(statsPanelLayout);
-        statsPanelLayout.setHorizontalGroup(
-            statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(costLabel)
-                        .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(roadsCostLabel)
-                            .addComponent(industryCostLabel)
-                            .addComponent(DenseResidentialCostLabel)
-                            .addComponent(grassParksCostLabel)
-                            .addComponent(lightResidentialCostLabel)
-                            .addComponent(denseCommericalCostLabel)
-                            .addComponent(farmlandCostLabel)
-                            .addComponent(lightCommercialCostLabel)
-                            .addComponent(hosptialCostLabel)
-                            .addComponent(policeCostLabel)
-                            .addComponent(fireCostLabel)
-                            .addComponent(educationCostLabel)))
-                    .addComponent(totalCostLabel))
-                .addGap(37, 37, 37)
-                .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(utilityLabel)
-                        .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(roadsUtilityLabel)
-                            .addComponent(industryUtilityLabel)
-                            .addComponent(denseResidentialUtilityLabel)
-                            .addComponent(GrassParksUtilityLabel)
-                            .addComponent(lightResidentialUtilityLabel)
-                            .addComponent(denseCommericalUtilityLabel)
-                            .addComponent(farmlandUtilityLabel)
-                            .addComponent(lightCommercialUtilityLabel)
-                            .addComponent(hospitalUtilityLabel)
-                            .addComponent(policeUtilityLabel)
-                            .addComponent(fireUtilityLabel)
-                            .addComponent(educationUtilityLabel)))
-                    .addComponent(totalUtilityLabel))
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-        statsPanelLayout.setVerticalGroup(
-            statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(statsPanelLayout.createSequentialGroup()
-                        .addComponent(utilityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(roadsUtilityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(GrassParksUtilityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lightResidentialUtilityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(denseResidentialUtilityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lightCommercialUtilityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(denseCommericalUtilityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(farmlandUtilityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(industryUtilityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(hospitalUtilityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(policeUtilityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fireUtilityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(educationUtilityLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(totalUtilityLabel))
-                    .addGroup(statsPanelLayout.createSequentialGroup()
-                        .addComponent(costLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(roadsCostLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(grassParksCostLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lightResidentialCostLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(DenseResidentialCostLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lightCommercialCostLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(denseCommericalCostLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(farmlandCostLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(industryCostLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(hosptialCostLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(policeCostLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fireCostLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(educationCostLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(totalCostLabel)))
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(statsButton))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(statsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(621, Short.MAX_VALUE))
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(statsButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(statsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        setResizable(false);
 
         gaMenuPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -616,10 +415,190 @@ public class GUIForm extends javax.swing.JFrame
                     .addComponent(educationLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(resetFitnessFunctionButton)
-                .addContainerGap(227, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         sideTabbedPane.addTab("Fitness Function", fitnessFunctionPanel);
+
+        statsPanel.setName(""); // NOI18N
+
+        roadsCostLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        roadsCostLabel.setText("Roads: 50");
+
+        costLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        costLabel.setText("Cost");
+
+        grassParksCostLabel.setText("Grass/Parks: 50");
+
+        lightResidentialCostLabel.setText("LightResidential: 50");
+
+        DenseResidentialCostLabel.setText("DenseResidential: 50");
+
+        lightCommercialCostLabel.setText("LightCommercial: 50");
+
+        denseCommericalCostLabel.setText("DenseCommercial: 50");
+
+        farmlandCostLabel.setText("Farmland: 50");
+
+        industryCostLabel.setText("Industry: 50");
+
+        hosptialCostLabel.setText("Hospital: 50");
+
+        policeCostLabel.setText("Police: 50");
+
+        fireCostLabel.setText("Fire: 50");
+
+        educationCostLabel.setText("Education: 50");
+
+        totalCostLabel.setText("Total: 2000");
+
+        javax.swing.GroupLayout statsPanelLayout = new javax.swing.GroupLayout(statsPanel);
+        statsPanel.setLayout(statsPanelLayout);
+        statsPanelLayout.setHorizontalGroup(
+            statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(roadsCostLabel)
+                    .addComponent(industryCostLabel)
+                    .addComponent(DenseResidentialCostLabel)
+                    .addComponent(grassParksCostLabel)
+                    .addComponent(lightResidentialCostLabel)
+                    .addComponent(denseCommericalCostLabel)
+                    .addComponent(farmlandCostLabel)
+                    .addComponent(lightCommercialCostLabel)
+                    .addComponent(hosptialCostLabel)
+                    .addComponent(policeCostLabel)
+                    .addComponent(fireCostLabel)
+                    .addComponent(educationCostLabel)
+                    .addComponent(totalCostLabel)
+                    .addComponent(costLabel))
+                .addContainerGap(134, Short.MAX_VALUE))
+        );
+        statsPanelLayout.setVerticalGroup(
+            statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(costLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(roadsCostLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(grassParksCostLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lightResidentialCostLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(DenseResidentialCostLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lightCommercialCostLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(denseCommericalCostLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(farmlandCostLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(industryCostLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(hosptialCostLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(policeCostLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fireCostLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(educationCostLabel)
+                .addGap(18, 18, 18)
+                .addComponent(totalCostLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        sideTabbedPane.addTab("Cost", statsPanel);
+
+        utilityLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        utilityLabel.setText("Utility");
+
+        roadsUtilityLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        roadsUtilityLabel.setText("Roads: 50 meters of road");
+
+        GrassParksUtilityLabel.setText("Grass/Parks: 50 m^3 of green space");
+
+        lightResidentialUtilityLabel.setText("LightResidential: 50 population");
+
+        denseResidentialUtilityLabel.setText("DenseResidential: 50 population");
+
+        lightCommercialUtilityLabel.setText("LightCommercial: 50 jobs");
+
+        denseCommericalUtilityLabel.setText("DenseCommercial: 50 jobs");
+
+        farmlandUtilityLabel.setText("Farmland: 50 servings");
+
+        industryUtilityLabel.setText("Industry: 50 jobs");
+
+        hospitalUtilityLabel.setText("Hospital: 50 servings");
+
+        policeUtilityLabel.setText("Police: 50 servings");
+
+        fireUtilityLabel.setText("Fire: 50 servings");
+
+        educationUtilityLabel.setText("Education: 50 servings");
+
+        totalUtilityLabel.setText("Total: 2000");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(roadsUtilityLabel)
+                    .addComponent(industryUtilityLabel)
+                    .addComponent(denseResidentialUtilityLabel)
+                    .addComponent(GrassParksUtilityLabel)
+                    .addComponent(lightResidentialUtilityLabel)
+                    .addComponent(denseCommericalUtilityLabel)
+                    .addComponent(farmlandUtilityLabel)
+                    .addComponent(lightCommercialUtilityLabel)
+                    .addComponent(hospitalUtilityLabel)
+                    .addComponent(policeUtilityLabel)
+                    .addComponent(fireUtilityLabel)
+                    .addComponent(educationUtilityLabel)
+                    .addComponent(totalUtilityLabel)
+                    .addComponent(utilityLabel))
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(utilityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(roadsUtilityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(GrassParksUtilityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lightResidentialUtilityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(denseResidentialUtilityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lightCommercialUtilityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(denseCommericalUtilityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(farmlandUtilityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(industryUtilityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(hospitalUtilityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(policeUtilityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fireUtilityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(educationUtilityLabel)
+                .addGap(18, 18, 18)
+                .addComponent(totalUtilityLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        sideTabbedPane.addTab("Utility", jPanel1);
 
         roadsKeyLabel.setText("Roads");
 
@@ -828,8 +807,10 @@ public class GUIForm extends javax.swing.JFrame
         );
         farmlandKeyPanelLayout.setVerticalGroup(
             farmlandKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 16, Short.MAX_VALUE)
         );
+
+        jLabel1.setText("Block Key");
 
         javax.swing.GroupLayout blockKeyPanelLayout = new javax.swing.GroupLayout(blockKeyPanel);
         blockKeyPanel.setLayout(blockKeyPanelLayout);
@@ -837,58 +818,65 @@ public class GUIForm extends javax.swing.JFrame
             blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(blockKeyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(roadsKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(grassParksKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lightResidentialKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(desneResidentialKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lightCommercialKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(denseCommercialKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(industryKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(hospitalKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(policeKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fireKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(educationKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(waterKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(immovableObjectKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(farmlandKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(immovableObjectKeyLabel)
-                    .addComponent(waterKeyLabel)
-                    .addComponent(educationKeyLabel)
-                    .addComponent(grassParksKeyLabel)
-                    .addComponent(roadsKeyLabel)
-                    .addComponent(lightResidentialKeyLabel)
-                    .addComponent(denseCommercialKeyLabel)
-                    .addComponent(denseResidentialKeyLabel)
-                    .addComponent(industryKeyLabel)
-                    .addComponent(hospitalKeyLabel)
-                    .addComponent(policeKeyLabel)
-                    .addComponent(lightCommercialKeyLabel)
-                    .addComponent(fireKeyLabel)
-                    .addComponent(farmlandKeyLabel))
-                .addContainerGap(35, Short.MAX_VALUE))
+                    .addGroup(blockKeyPanelLayout.createSequentialGroup()
+                        .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(roadsKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(grassParksKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lightResidentialKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(desneResidentialKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lightCommercialKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(denseCommercialKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(industryKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(hospitalKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(policeKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fireKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(educationKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(waterKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(immovableObjectKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(farmlandKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(immovableObjectKeyLabel)
+                            .addComponent(waterKeyLabel)
+                            .addComponent(educationKeyLabel)
+                            .addComponent(grassParksKeyLabel)
+                            .addComponent(roadsKeyLabel)
+                            .addComponent(lightResidentialKeyLabel)
+                            .addComponent(denseCommercialKeyLabel)
+                            .addComponent(denseResidentialKeyLabel)
+                            .addComponent(industryKeyLabel)
+                            .addComponent(hospitalKeyLabel)
+                            .addComponent(policeKeyLabel)
+                            .addComponent(lightCommercialKeyLabel)
+                            .addComponent(fireKeyLabel)
+                            .addComponent(farmlandKeyLabel))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(blockKeyPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         blockKeyPanelLayout.setVerticalGroup(
             blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(blockKeyPanelLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, blockKeyPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(roadsKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(roadsKeyLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(roadsKeyLabel))
                 .addGap(10, 10, 10)
                 .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(grassParksKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(grassParksKeyLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(grassParksKeyLabel))
                 .addGap(10, 10, 10)
                 .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lightResidentialKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lightResidentialKeyLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lightResidentialKeyLabel))
                 .addGap(10, 10, 10)
                 .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(desneResidentialKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(denseResidentialKeyLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(denseResidentialKeyLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lightCommercialKeyLabel)
@@ -900,7 +888,7 @@ public class GUIForm extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(farmlandKeyLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(farmlandKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(farmlandKeyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(industryKeyLabel)
@@ -929,10 +917,10 @@ public class GUIForm extends javax.swing.JFrame
                 .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(immovableObjectKeyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(immovableObjectKeyLabel))
-                .addContainerGap(248, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        sideTabbedPane.addTab("Block Key", blockKeyPanel);
+        sideTabbedPane.addTab("Key", blockKeyPanel);
 
         fileManagerPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
@@ -945,6 +933,13 @@ public class GUIForm extends javax.swing.JFrame
         savedMapsPane.setViewportView(savedMapsList);
 
         loadSavedMapButton.setText("Load");
+        loadSavedMapButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                loadSavedMapButtonActionPerformed(evt);
+            }
+        });
 
         deleteSavedMapButton.setText("Delete");
 
@@ -1069,8 +1064,7 @@ public class GUIForm extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(sideTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(fileManagerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
@@ -1090,10 +1084,8 @@ public class GUIForm extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(topSeperator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(sideTabbedPane)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(sideTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(284, Short.MAX_VALUE))
         );
 
         pack();
@@ -1101,7 +1093,7 @@ public class GUIForm extends javax.swing.JFrame
 
     private void stopGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_stopGaButtonActionPerformed
     {//GEN-HEADEREND:event_stopGaButtonActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_stopGaButtonActionPerformed
 
     private void resetGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_resetGaButtonActionPerformed
@@ -1109,22 +1101,22 @@ public class GUIForm extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_resetGaButtonActionPerformed
 
-    private void statsButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_statsButtonActionPerformed
-    {//GEN-HEADEREND:event_statsButtonActionPerformed
-        if(statsPanel.isVisible())
-        {
-            statsPanel.setVisible(false);
-        }
-        else
-        {
-            statsPanel.setVisible(true);
-        }
-    }//GEN-LAST:event_statsButtonActionPerformed
-
     private void resetFitnessFunctionButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_resetFitnessFunctionButtonActionPerformed
     {//GEN-HEADEREND:event_resetFitnessFunctionButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_resetFitnessFunctionButtonActionPerformed
+
+    private void loadSavedMapButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_loadSavedMapButtonActionPerformed
+    {//GEN-HEADEREND:event_loadSavedMapButtonActionPerformed
+        if(!renderer.isRunning())
+        {
+            openGLInstance.interrupt();
+        }
+
+//        renderer.viewMap(individual);
+        openGLInstance = new Thread(renderer);
+        openGLInstance.start();
+    }//GEN-LAST:event_loadSavedMapButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1234,7 +1226,8 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JLabel industryLabel;
     private javax.swing.JSlider industrySlider;
     private javax.swing.JLabel industryUtilityLabel;
-    private javax.swing.JPanel jPanel7;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lightCommercialCostLabel;
     private javax.swing.JLabel lightCommercialKeyLabel;
     private javax.swing.JPanel lightCommercialKeyPanel;
@@ -1249,7 +1242,6 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JLabel lightResidentialUtilityLabel;
     private javax.swing.JButton loadSavedMapButton;
     private javax.swing.JButton loadSearchSessionsButton;
-    private javax.swing.JPanel mainPanel;
     private javax.swing.JTextArea messagesOutputArea;
     private javax.swing.JScrollPane messagesPane;
     private javax.swing.JLabel mutationLabel;
@@ -1286,7 +1278,6 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JPanel searchSessionsPanel;
     private javax.swing.JTabbedPane sideTabbedPane;
     private javax.swing.JButton startGaButton;
-    private javax.swing.JButton statsButton;
     private javax.swing.JPanel statsPanel;
     private javax.swing.JButton stopGaButton;
     private javax.swing.JSeparator topSeperator;
