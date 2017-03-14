@@ -23,6 +23,7 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class Renderer implements Runnable
 {
+    private static Renderer instance;
     private int displayListHandle;
     private int height;
     private int width;
@@ -50,7 +51,16 @@ public class Renderer implements Runnable
         this.width = width;
     }
 
-    public Renderer()
+    public static Renderer getInstance() 
+    {
+       if(instance == null) 
+       {
+          instance = new Renderer();
+       }
+       return instance;
+    }
+    
+    protected Renderer()
     {
         time = 0.0f;
         frameTime = 0.0;
@@ -183,7 +193,7 @@ public class Renderer implements Runnable
         glEnable(GL_COLOR_MATERIAL);
         
         currentTime = System.currentTimeMillis();
-        camera = new Camera(0, 0, 0);
+        camera = new Camera();
 
         while(running)
         {

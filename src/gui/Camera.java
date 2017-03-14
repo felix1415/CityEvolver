@@ -13,14 +13,13 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class Camera
 {
+    private Vector3f position;
+    private float yaw = 0.0f;
+    private float pitch = 0.0f;
 
-    Vector3f position;
-    float yaw = 0.0f;
-    float pitch = 0.0f;
-
-    public Camera(float x, float y, float z)
+    protected Camera()
     {
-        position = new Vector3f(x, y, z);
+        position = new Vector3f(0, 0, 0);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         gluPerspective(70, (float) 960 / (float) 540, 0.3f, 1000);

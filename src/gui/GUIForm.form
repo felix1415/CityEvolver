@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="City Evolver"/>
@@ -32,21 +36,21 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="topSeperator" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="sideTabbedPane" min="-2" pref="301" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="fileManagerPane" min="-2" pref="370" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                      <Component id="messagesPane" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="gaMenuPanel" min="-2" max="-2" attributes="0"/>
+                      <Component id="messagesPane" pref="304" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jTabbedPane1" min="-2" pref="571" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="topSeperator" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -56,16 +60,18 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="gaMenuPanel" min="-2" pref="127" max="-2" attributes="0"/>
-                  <Component id="fileManagerPane" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
-                  <Component id="messagesPane" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jTabbedPane1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="messagesPane" alignment="0" max="32767" attributes="0"/>
+                      <Component id="fileManagerPane" alignment="0" min="-2" pref="127" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="topSeperator" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="sideTabbedPane" min="-2" pref="512" max="-2" attributes="0"/>
-              <EmptySpace pref="284" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -73,181 +79,6 @@
   <SubComponents>
     <Component class="javax.swing.JSeparator" name="topSeperator">
     </Component>
-    <Container class="javax.swing.JPanel" name="gaMenuPanel">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder/>
-          </Border>
-        </Property>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="generationsLabel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="generationsSlider" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="generationsValueLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="mutationValueLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="mutationLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="populationLabel" min="-2" pref="75" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="populationSlider" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="populationValueLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="startGaButton" min="-2" pref="80" max="-2" attributes="0"/>
-                              <Component id="saveGaButton" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="mutationSlider" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="gaNameField" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="stopGaButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="resetGaButton" min="-2" pref="80" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="generationsSlider" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="generationsLabel" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="mutationSlider" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="mutationLabel" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="generationsValueLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="mutationValueLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="populationLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="populationSlider" min="-2" pref="20" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="populationValueLabel" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="startGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="stopGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="resetGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="saveGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="gaNameField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JButton" name="startGaButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Start"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="stopGaButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Stop"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopGaButtonActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="resetGaButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Reset"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetGaButtonActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JSlider" name="generationsSlider">
-          <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="generationsSliderStateChanged"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="generationsLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Generations"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="populationLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Population"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JSlider" name="populationSlider">
-        </Component>
-        <Component class="javax.swing.JLabel" name="mutationLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Mutation"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JSlider" name="mutationSlider">
-        </Component>
-        <Component class="javax.swing.JLabel" name="generationsValueLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="150"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="populationValueLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="150"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="mutationValueLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="150"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="saveGaButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Save"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="gaNameField">
-        </Component>
-      </SubComponents>
-    </Container>
     <Container class="javax.swing.JTabbedPane" name="sideTabbedPane">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1548,9 +1379,375 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Courier" size="12" style="0"/>
+            </Property>
             <Property name="rows" type="int" value="5"/>
+            <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="gaMenuPanel">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder/>
+              </Border>
+            </Property>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Genetic Algorithm">
+                <Property name="tabTitle" type="java.lang.String" value="Genetic Algorithm"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="generationsLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="generationsSlider" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="generationsValueLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="mutationValueLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="mutationLabel" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="populationLabel" alignment="0" min="-2" pref="75" max="-2" attributes="0"/>
+                                  <Component id="populationValueLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="saveGaButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="gaNameField" min="-2" pref="161" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="populationSlider" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="startGaButton" min="-2" pref="80" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="mutationSlider" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="stopGaButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="resetGaButton" min="-2" pref="80" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="generationsSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="generationsLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="mutationSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="mutationLabel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="generationsValueLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="mutationValueLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="populationLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="populationSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="startGaButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="populationValueLabel" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="saveGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="gaNameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="stopGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="resetGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="startGaButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Start"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="stopGaButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Stop"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopGaButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="resetGaButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Reset"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetGaButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JSlider" name="generationsSlider">
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="generationsSliderStateChanged"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="generationsLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Generations"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="populationLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Population"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSlider" name="populationSlider">
+            </Component>
+            <Component class="javax.swing.JLabel" name="mutationLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mutation"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSlider" name="mutationSlider">
+            </Component>
+            <Component class="javax.swing.JLabel" name="generationsValueLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="150"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="populationValueLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="150"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="mutationValueLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="150"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="saveGaButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Save"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="gaNameField">
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel2">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Initial Map">
+                <Property name="tabTitle" type="java.lang.String" value="Initial Map"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="inputMapsPane" min="-2" pref="165" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="deleteInputFileButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="loadInputFileButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="resetInitialMapMenuButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                                      <Component id="xBoundsLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                      <Component id="xBoundsField" min="-2" pref="45" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="yBoundsLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                      <Component id="yBoundsField" min="-2" pref="45" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="zBoundsLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                      <Component id="zBoundsField" min="-2" pref="45" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="loadInputFileRadioButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="useBoundsRadioButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="130" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="loadInputFileRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="useBoundsRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="xBoundsLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="xBoundsField" min="-2" max="-2" attributes="0"/>
+                          <Component id="yBoundsLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="zBoundsLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="zBoundsField" min="-2" max="-2" attributes="0"/>
+                          <Component id="yBoundsField" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="loadInputFileButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="deleteInputFileButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="resetInitialMapMenuButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="inputMapsPane" alignment="1" min="-2" pref="64" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="inputMapsPane">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JList" name="inputMapsList">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+                      <StringArray count="3">
+                        <StringItem index="0" value="World 1"/>
+                        <StringItem index="1" value="World 2"/>
+                        <StringItem index="2" value="Test"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JButton" name="loadInputFileButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Load"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loadInputFileButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="deleteInputFileButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Delete"/>
+              </Properties>
+            </Component>
+            <Component class="java.awt.TextField" name="xBoundsField">
+            </Component>
+            <Component class="javax.swing.JButton" name="resetInitialMapMenuButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Reset"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetInitialMapMenuButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="java.awt.TextField" name="yBoundsField">
+            </Component>
+            <Component class="java.awt.TextField" name="zBoundsField">
+            </Component>
+            <Component class="javax.swing.JLabel" name="xBoundsLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="X"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="yBoundsLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Y"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="zBoundsLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Z"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="loadInputFileRadioButton">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="buttonGroup1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Load Input File"/>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="loadInputFileRadioButtonItemStateChanged"/>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="loadInputFileRadioButtonStateChanged"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="useBoundsRadioButton">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="buttonGroup1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Use bounds"/>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="useBoundsRadioButtonItemStateChanged"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
   </SubComponents>

@@ -1,5 +1,6 @@
 package gui;
 
+import algorithm.GeneticAlgorithm;
 import java.awt.Dimension;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,15 +18,20 @@ import java.util.logging.Logger;
 public class GUIForm extends javax.swing.JFrame
 {
 
-    Renderer renderer;
     Thread openGLInstance;
+    Thread geneticAlgorithmInstance;
     /**
      * Creates new form NewJFrame
      */
     public GUIForm()
     {
         initComponents();
-        renderer = new Renderer();
+        xBoundsField.setEnabled(false);
+        yBoundsField.setEnabled(false);
+        zBoundsField.setEnabled(false);
+        inputMapsList.setEnabled(false);
+        deleteInputFileButton.setEnabled(false);
+        loadInputFileButton.setEnabled(false);
     }
 
     /**
@@ -38,22 +44,8 @@ public class GUIForm extends javax.swing.JFrame
     private void initComponents()
     {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         topSeperator = new javax.swing.JSeparator();
-        gaMenuPanel = new javax.swing.JPanel();
-        startGaButton = new javax.swing.JButton();
-        stopGaButton = new javax.swing.JButton();
-        resetGaButton = new javax.swing.JButton();
-        generationsSlider = new javax.swing.JSlider();
-        generationsLabel = new javax.swing.JLabel();
-        populationLabel = new javax.swing.JLabel();
-        populationSlider = new javax.swing.JSlider();
-        mutationLabel = new javax.swing.JLabel();
-        mutationSlider = new javax.swing.JSlider();
-        generationsValueLabel = new javax.swing.JLabel();
-        populationValueLabel = new javax.swing.JLabel();
-        mutationValueLabel = new javax.swing.JLabel();
-        saveGaButton = new javax.swing.JButton();
-        gaNameField = new javax.swing.JTextField();
         sideTabbedPane = new javax.swing.JTabbedPane();
         fitnessFunctionPanel = new javax.swing.JPanel();
         roadsSlider = new javax.swing.JSlider();
@@ -160,6 +152,36 @@ public class GUIForm extends javax.swing.JFrame
         populationMapNameField = new javax.swing.JTextField();
         messagesPane = new javax.swing.JScrollPane();
         messagesOutputArea = new javax.swing.JTextArea();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        gaMenuPanel = new javax.swing.JPanel();
+        startGaButton = new javax.swing.JButton();
+        stopGaButton = new javax.swing.JButton();
+        resetGaButton = new javax.swing.JButton();
+        generationsSlider = new javax.swing.JSlider();
+        generationsLabel = new javax.swing.JLabel();
+        populationLabel = new javax.swing.JLabel();
+        populationSlider = new javax.swing.JSlider();
+        mutationLabel = new javax.swing.JLabel();
+        mutationSlider = new javax.swing.JSlider();
+        generationsValueLabel = new javax.swing.JLabel();
+        populationValueLabel = new javax.swing.JLabel();
+        mutationValueLabel = new javax.swing.JLabel();
+        saveGaButton = new javax.swing.JButton();
+        gaNameField = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        inputMapsPane = new javax.swing.JScrollPane();
+        inputMapsList = new javax.swing.JList<>();
+        loadInputFileButton = new javax.swing.JButton();
+        deleteInputFileButton = new javax.swing.JButton();
+        xBoundsField = new java.awt.TextField();
+        resetInitialMapMenuButton = new javax.swing.JButton();
+        yBoundsField = new java.awt.TextField();
+        zBoundsField = new java.awt.TextField();
+        xBoundsLabel = new javax.swing.JLabel();
+        yBoundsLabel = new javax.swing.JLabel();
+        zBoundsLabel = new javax.swing.JLabel();
+        loadInputFileRadioButton = new javax.swing.JRadioButton();
+        useBoundsRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("City Evolver");
@@ -167,123 +189,6 @@ public class GUIForm extends javax.swing.JFrame
         setName("cityEvolverFrame"); // NOI18N
         setPreferredSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
-
-        gaMenuPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        startGaButton.setText("Start");
-
-        stopGaButton.setText("Stop");
-        stopGaButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                stopGaButtonActionPerformed(evt);
-            }
-        });
-
-        resetGaButton.setText("Reset");
-        resetGaButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                resetGaButtonActionPerformed(evt);
-            }
-        });
-
-        generationsSlider.addChangeListener(new javax.swing.event.ChangeListener()
-        {
-            public void stateChanged(javax.swing.event.ChangeEvent evt)
-            {
-                generationsSliderStateChanged(evt);
-            }
-        });
-
-        generationsLabel.setText("Generations");
-
-        populationLabel.setText("Population");
-
-        mutationLabel.setText("Mutation");
-
-        generationsValueLabel.setText("150");
-
-        populationValueLabel.setText("150");
-
-        mutationValueLabel.setText("150");
-
-        saveGaButton.setText("Save");
-
-        javax.swing.GroupLayout gaMenuPanelLayout = new javax.swing.GroupLayout(gaMenuPanel);
-        gaMenuPanel.setLayout(gaMenuPanelLayout);
-        gaMenuPanelLayout.setHorizontalGroup(
-            gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(gaMenuPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(gaMenuPanelLayout.createSequentialGroup()
-                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(gaMenuPanelLayout.createSequentialGroup()
-                                .addComponent(generationsLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(generationsSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(generationsValueLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mutationValueLabel)
-                            .addComponent(mutationLabel)))
-                    .addGroup(gaMenuPanelLayout.createSequentialGroup()
-                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(gaMenuPanelLayout.createSequentialGroup()
-                                .addComponent(populationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(populationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(populationValueLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(startGaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(saveGaButton))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mutationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(gaNameField, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, gaMenuPanelLayout.createSequentialGroup()
-                            .addComponent(stopGaButton)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(resetGaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 10, Short.MAX_VALUE))
-        );
-        gaMenuPanelLayout.setVerticalGroup(
-            gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(gaMenuPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(generationsSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(generationsLabel)
-                    .addComponent(mutationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mutationLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(generationsValueLabel)
-                    .addComponent(mutationValueLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(gaMenuPanelLayout.createSequentialGroup()
-                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(populationLabel)
-                            .addComponent(populationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(populationValueLabel))
-                    .addGroup(gaMenuPanelLayout.createSequentialGroup()
-                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(startGaButton)
-                            .addComponent(stopGaButton)
-                            .addComponent(resetGaButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(saveGaButton)
-                            .addComponent(gaNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(64, 64, 64))
-        );
 
         sideTabbedPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
@@ -1061,14 +966,257 @@ public class GUIForm extends javax.swing.JFrame
 
         messagesOutputArea.setEditable(false);
         messagesOutputArea.setColumns(20);
+        messagesOutputArea.setFont(new java.awt.Font("Courier", 0, 12)); // NOI18N
         messagesOutputArea.setRows(5);
+        messagesOutputArea.setWrapStyleWord(true);
         messagesPane.setViewportView(messagesOutputArea);
+
+        gaMenuPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        startGaButton.setText("Start");
+
+        stopGaButton.setText("Stop");
+        stopGaButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                stopGaButtonActionPerformed(evt);
+            }
+        });
+
+        resetGaButton.setText("Reset");
+        resetGaButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                resetGaButtonActionPerformed(evt);
+            }
+        });
+
+        generationsSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                generationsSliderStateChanged(evt);
+            }
+        });
+
+        generationsLabel.setText("Generations");
+
+        populationLabel.setText("Population");
+
+        mutationLabel.setText("Mutation");
+
+        generationsValueLabel.setText("150");
+
+        populationValueLabel.setText("150");
+
+        mutationValueLabel.setText("150");
+
+        saveGaButton.setText("Save");
+
+        javax.swing.GroupLayout gaMenuPanelLayout = new javax.swing.GroupLayout(gaMenuPanel);
+        gaMenuPanel.setLayout(gaMenuPanelLayout);
+        gaMenuPanelLayout.setHorizontalGroup(
+            gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gaMenuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(gaMenuPanelLayout.createSequentialGroup()
+                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(gaMenuPanelLayout.createSequentialGroup()
+                                .addComponent(generationsLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(generationsSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(generationsValueLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mutationValueLabel)
+                            .addComponent(mutationLabel)))
+                    .addGroup(gaMenuPanelLayout.createSequentialGroup()
+                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(populationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(populationValueLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(gaMenuPanelLayout.createSequentialGroup()
+                                .addComponent(saveGaButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(gaNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(gaMenuPanelLayout.createSequentialGroup()
+                                .addComponent(populationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(startGaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mutationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(gaMenuPanelLayout.createSequentialGroup()
+                        .addComponent(stopGaButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(resetGaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        gaMenuPanelLayout.setVerticalGroup(
+            gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gaMenuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(generationsSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(generationsLabel)
+                    .addComponent(mutationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mutationLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(generationsValueLabel)
+                    .addComponent(mutationValueLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(gaMenuPanelLayout.createSequentialGroup()
+                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(populationLabel)
+                            .addComponent(populationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(startGaButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(populationValueLabel)
+                            .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(saveGaButton)
+                                .addComponent(gaNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(stopGaButton)
+                        .addComponent(resetGaButton)))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Genetic Algorithm", gaMenuPanel);
+
+        inputMapsList.setModel(new javax.swing.AbstractListModel<String>()
+        {
+            String[] strings = { "World 1", "World 2", "Test" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        inputMapsPane.setViewportView(inputMapsList);
+
+        loadInputFileButton.setText("Load");
+        loadInputFileButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                loadInputFileButtonActionPerformed(evt);
+            }
+        });
+
+        deleteInputFileButton.setText("Delete");
+
+        resetInitialMapMenuButton.setText("Reset");
+        resetInitialMapMenuButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                resetInitialMapMenuButtonActionPerformed(evt);
+            }
+        });
+
+        xBoundsLabel.setText("X");
+
+        yBoundsLabel.setText("Y");
+
+        zBoundsLabel.setText("Z");
+
+        buttonGroup1.add(loadInputFileRadioButton);
+        loadInputFileRadioButton.setText("Load Input File");
+        loadInputFileRadioButton.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                loadInputFileRadioButtonItemStateChanged(evt);
+            }
+        });
+        loadInputFileRadioButton.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                loadInputFileRadioButtonStateChanged(evt);
+            }
+        });
+
+        buttonGroup1.add(useBoundsRadioButton);
+        useBoundsRadioButton.setText("Use bounds");
+        useBoundsRadioButton.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                useBoundsRadioButtonItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(inputMapsPane, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(deleteInputFileButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(loadInputFileButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(resetInitialMapMenuButton))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addComponent(xBoundsLabel)
+                                .addGap(2, 2, 2)
+                                .addComponent(xBoundsField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(yBoundsLabel)
+                                .addGap(2, 2, 2)
+                                .addComponent(yBoundsField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(zBoundsLabel)
+                                .addGap(2, 2, 2)
+                                .addComponent(zBoundsField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(loadInputFileRadioButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(useBoundsRadioButton)))
+                .addContainerGap(130, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(loadInputFileRadioButton)
+                    .addComponent(useBoundsRadioButton))
+                .addGap(2, 2, 2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(xBoundsLabel)
+                    .addComponent(xBoundsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yBoundsLabel)
+                    .addComponent(zBoundsLabel)
+                    .addComponent(zBoundsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yBoundsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(loadInputFileButton)
+                            .addComponent(deleteInputFileButton)
+                            .addComponent(resetInitialMapMenuButton))
+                        .addContainerGap())
+                    .addComponent(inputMapsPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        jTabbedPane1.addTab("Initial Map", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(topSeperator)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1077,25 +1225,27 @@ public class GUIForm extends javax.swing.JFrame
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(fileManagerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(messagesPane)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(gaMenuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(messagesPane, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(topSeperator, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(gaMenuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fileManagerPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(messagesPane))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(messagesPane, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(fileManagerPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(topSeperator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(sideTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(284, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -1120,7 +1270,7 @@ public class GUIForm extends javax.swing.JFrame
     {//GEN-HEADEREND:event_loadSavedMapButtonActionPerformed
         if(openGLInstance != null && openGLInstance.isAlive())
         {
-            renderer.setRunning(false);
+            Renderer.getInstance().setRunning(false);
             try
             {
                 openGLInstance.join();
@@ -1131,9 +1281,9 @@ public class GUIForm extends javax.swing.JFrame
         }
         
 
-        renderer.setRunning(true);
-//        renderer.viewMap(individual);
-        openGLInstance = new Thread(renderer);
+        Renderer.getInstance().setRunning(true);
+//        Renderer.getInstance().viewMap(individual);
+        openGLInstance = new Thread(Renderer.getInstance());
         openGLInstance.start();
     }//GEN-LAST:event_loadSavedMapButtonActionPerformed
 
@@ -1161,6 +1311,134 @@ public class GUIForm extends javax.swing.JFrame
             generationsValueLabel.setText(Integer.toString(value));
         }
     }//GEN-LAST:event_generationsSliderStateChanged
+
+    private void loadInputFileButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_loadInputFileButtonActionPerformed
+    {//GEN-HEADEREND:event_loadInputFileButtonActionPerformed
+        int x = 0;
+        int y = 0;
+        int z = 0;
+        
+        if(loadInputFileRadioButton.isSelected())
+        {
+            //load file
+        }
+        else if(useBoundsRadioButton.isSelected())
+        {
+            try
+            {
+                x = Integer.parseInt(xBoundsField.getText());
+                y = Integer.parseInt(yBoundsField.getText());
+                z = Integer.parseInt(zBoundsField.getText());
+                if(x <= 0 || y <= 0 || z <= 0)
+                {
+                    log("Initial map bounds is equal to or less than 0, all values must be positive.", true);
+                    return;
+                }
+            }
+            catch(Exception e)
+            {
+                log("Initial map bounds could not be cast to integers, check input and try again.", true);
+                return;
+            }
+            log("Create initial map with bounds " + x + "," + y + "," + z);
+            GeneticAlgorithm.getInstance().setBounds(x, y, z);
+        }
+        
+        xBoundsField.setEnabled(false);
+        yBoundsField.setEnabled(false);
+        zBoundsField.setEnabled(false);
+        inputMapsList.setEnabled(false);
+        deleteInputFileButton.setEnabled(false);
+        loadInputFileButton.setEnabled(false);
+    }//GEN-LAST:event_loadInputFileButtonActionPerformed
+
+    private void log(String text, boolean error)
+    {
+        String output = "";
+        if (error)
+        {
+            output += "ERROR:";
+        }
+        
+        output += text + System.lineSeparator();
+        
+        if(output.length() > 60)
+        {
+            output = lineSplit(output);
+        }
+        
+        if(messagesOutputArea.getText() != "")
+        {
+            messagesOutputArea.setText(output + messagesOutputArea.getText());
+        }
+        else
+        {
+           messagesOutputArea.setText(output); 
+        }
+    }
+    
+    private void log(String text)
+    {
+        log(text, false);
+    }
+    
+    private String lineSplit(String text)
+    {
+        if(text.length() < 35)
+        {
+            return text;
+        }
+        String firstLine = text.substring(0, 35);
+        String secondLine = lineSplit(text.substring(35)).replaceFirst("^\\s*", "");
+        return firstLine + System.lineSeparator() + "      " + secondLine;
+    }
+    
+    private void loadInputFileRadioButtonStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_loadInputFileRadioButtonStateChanged
+    {//GEN-HEADEREND:event_loadInputFileRadioButtonStateChanged
+        
+    }//GEN-LAST:event_loadInputFileRadioButtonStateChanged
+
+    private void loadInputFileRadioButtonItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_loadInputFileRadioButtonItemStateChanged
+    {//GEN-HEADEREND:event_loadInputFileRadioButtonItemStateChanged
+        loadInputFileButton.setEnabled(true);
+        if(loadInputFileRadioButton.isSelected())
+        {
+            xBoundsField.setEnabled(false);
+            yBoundsField.setEnabled(false);
+            zBoundsField.setEnabled(false);
+            
+            inputMapsList.setEnabled(true);
+            deleteInputFileButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_loadInputFileRadioButtonItemStateChanged
+
+    private void useBoundsRadioButtonItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_useBoundsRadioButtonItemStateChanged
+    {//GEN-HEADEREND:event_useBoundsRadioButtonItemStateChanged
+        loadInputFileButton.setEnabled(true);
+        if(useBoundsRadioButton.isSelected())
+        {
+            inputMapsList.setEnabled(false);
+            deleteInputFileButton.setEnabled(false);
+            
+            xBoundsField.setEnabled(true);
+            yBoundsField.setEnabled(true);
+            zBoundsField.setEnabled(true);
+        }
+    }//GEN-LAST:event_useBoundsRadioButtonItemStateChanged
+
+    private void resetInitialMapMenuButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_resetInitialMapMenuButtonActionPerformed
+    {//GEN-HEADEREND:event_resetInitialMapMenuButtonActionPerformed
+        xBoundsField.setEnabled(true);
+        yBoundsField.setEnabled(true);
+        zBoundsField.setEnabled(true);
+        inputMapsList.setEnabled(true);
+        deleteInputFileButton.setEnabled(true);
+        loadInputFileButton.setEnabled(true);
+        
+        xBoundsField.setText("");
+        yBoundsField.setText("");
+        zBoundsField.setText("");
+    }//GEN-LAST:event_resetInitialMapMenuButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1212,7 +1490,9 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JLabel DenseResidentialCostLabel;
     private javax.swing.JLabel GrassParksUtilityLabel;
     private javax.swing.JPanel blockKeyPanel;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel costLabel;
+    private javax.swing.JButton deleteInputFileButton;
     private javax.swing.JButton deleteSavedMapButton;
     private javax.swing.JButton deleteSearchSessionsButton;
     private javax.swing.JLabel denseCommercialKeyLabel;
@@ -1270,8 +1550,12 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JLabel industryLabel;
     private javax.swing.JSlider industrySlider;
     private javax.swing.JLabel industryUtilityLabel;
+    private javax.swing.JList<String> inputMapsList;
+    private javax.swing.JScrollPane inputMapsPane;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lightCommercialCostLabel;
     private javax.swing.JLabel lightCommercialKeyLabel;
     private javax.swing.JPanel lightCommercialKeyPanel;
@@ -1284,6 +1568,8 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JLabel lightResidentialLabel;
     private javax.swing.JSlider lightResidentialSlider;
     private javax.swing.JLabel lightResidentialUtilityLabel;
+    private javax.swing.JButton loadInputFileButton;
+    private javax.swing.JRadioButton loadInputFileRadioButton;
     private javax.swing.JButton loadSavedMapButton;
     private javax.swing.JButton loadSearchSessionsButton;
     private javax.swing.JTextArea messagesOutputArea;
@@ -1306,6 +1592,7 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JLabel populationValueLabel;
     private javax.swing.JButton resetFitnessFunctionButton;
     private javax.swing.JButton resetGaButton;
+    private javax.swing.JButton resetInitialMapMenuButton;
     private javax.swing.JLabel roadsCostLabel;
     private javax.swing.JLabel roadsKeyLabel;
     private javax.swing.JPanel roadsKeyPanel;
@@ -1327,9 +1614,16 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JSeparator topSeperator;
     private javax.swing.JLabel totalCostLabel;
     private javax.swing.JLabel totalUtilityLabel;
+    private javax.swing.JRadioButton useBoundsRadioButton;
     private javax.swing.JLabel utilityLabel;
     private javax.swing.JButton viewMapButton;
     private javax.swing.JLabel waterKeyLabel;
     private javax.swing.JPanel waterKeyPanel;
+    private java.awt.TextField xBoundsField;
+    private javax.swing.JLabel xBoundsLabel;
+    private java.awt.TextField yBoundsField;
+    private javax.swing.JLabel yBoundsLabel;
+    private java.awt.TextField zBoundsField;
+    private javax.swing.JLabel zBoundsLabel;
     // End of variables declaration//GEN-END:variables
 }
