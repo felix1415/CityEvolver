@@ -79,6 +79,17 @@ public class Renderer implements Runnable
     {
         try
         {
+            if (Display.isCreated())
+            {
+                try
+                {
+                    Display.destroy();
+                }
+                catch(Exception e)
+                {
+                    
+                }
+            }            
             Display.setDisplayMode(new DisplayMode(960, 540));
             Display.setLocation(312, 310);
             Display.create();
@@ -151,6 +162,7 @@ public class Renderer implements Runnable
     @Override
     public void run()
     {
+        Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         if(canvas != null)
         {
             embedDisplayToCanvas(canvas, 960, 540);
@@ -172,16 +184,18 @@ public class Renderer implements Runnable
         
         currentTime = System.currentTimeMillis();
         camera = new Camera(0, 0, 0);
-        
+
         while(running)
         {
+            Display.setLocation(312, 310);
             render();
             if(Display.isCloseRequested())
             {
                 this.cleanUp();
-                this.running = false;
+                return;
             }
         }
+        this.cleanUp();
     }
     
     public synchronized boolean isRunning()
@@ -191,7 +205,6 @@ public class Renderer implements Runnable
     
     public synchronized void setRunning(boolean running)
     {
-        this.running = running;
-        this.cleanUp();
+        this.running = running;        
     }
 }

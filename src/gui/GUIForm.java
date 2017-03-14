@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.Dimension;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -185,6 +187,14 @@ public class GUIForm extends javax.swing.JFrame
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
                 resetGaButtonActionPerformed(evt);
+            }
+        });
+
+        generationsSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                generationsSliderStateChanged(evt);
             }
         });
 
@@ -1108,15 +1118,49 @@ public class GUIForm extends javax.swing.JFrame
 
     private void loadSavedMapButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_loadSavedMapButtonActionPerformed
     {//GEN-HEADEREND:event_loadSavedMapButtonActionPerformed
-        if(!renderer.isRunning())
+        if(openGLInstance != null && openGLInstance.isAlive())
         {
-            openGLInstance.interrupt();
+            renderer.setRunning(false);
+            try
+            {
+                openGLInstance.join();
+            } catch (InterruptedException ex)
+            {
+                Logger.getLogger(GUIForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        
 
+        renderer.setRunning(true);
 //        renderer.viewMap(individual);
         openGLInstance = new Thread(renderer);
         openGLInstance.start();
     }//GEN-LAST:event_loadSavedMapButtonActionPerformed
+
+    private void generationsSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_generationsSliderStateChanged
+    {//GEN-HEADEREND:event_generationsSliderStateChanged
+        int value = generationsSlider.getValue();
+        if (generationsSlider.getMaximum() == generationsSlider.getValue())
+        {
+            value = Integer.MAX_VALUE;
+        }
+        else if (generationsSlider.getMinimum() == generationsSlider.getValue())
+        {
+            value = 1;
+        }
+        else
+        {
+            value =  generationsSlider.getValue() * 500; 
+        }
+        if (value == Integer.MAX_VALUE)
+        {
+            generationsValueLabel.setText("Infinity");
+        }
+        else
+        {
+            generationsValueLabel.setText(Integer.toString(value));
+        }
+    }//GEN-LAST:event_generationsSliderStateChanged
 
     /**
      * @param args the command line arguments

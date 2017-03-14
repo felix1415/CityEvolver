@@ -201,6 +201,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JSlider" name="generationsSlider">
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="generationsSliderStateChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="generationsLabel">
           <Properties>

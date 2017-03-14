@@ -32,6 +32,7 @@ public class Camera
     public void input(float delta)
     {
         float multiplier = 1.0f;
+        
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
         {
             multiplier = multiplier * 4;
