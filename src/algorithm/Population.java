@@ -6,6 +6,9 @@
 package algorithm;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -14,12 +17,12 @@ import java.util.Random;
  */
 public class Population
 {
-    public final int POPULATION_NUM = 40;
+    public int populationNumber;
     public final int X_LENGTH;
     public final int Y_LENGTH;
     public final int Z_LENGTH;
-    public final int GENERATIONS = 5000;
-    public final double MUTATION_NUM = 0.2;
+    public int totalGenerations;
+    public double mutationRate;
     
     private Individual [] population;
     
@@ -30,17 +33,21 @@ public class Population
     private int fittestIndividual;
     private int currentGeneration;
 
-    public Population(int x, int y, int z)
+    public Population(int x, int y, int z, int populationNumber, int generations, float mutationRate)
     {
-        X_LENGTH = x;
-        Y_LENGTH = y;
-        Z_LENGTH = z;
+        this.X_LENGTH = x;
+        this.Y_LENGTH = y;
+        this.Z_LENGTH = z;
+        this.populationNumber = populationNumber;
+        this.totalGenerations = generations;
+        this.mutationRate = mutationRate;
+        
                 
-        this.population = new Individual[POPULATION_NUM];
+        this.population = new Individual[this.populationNumber];
         this.random = new Random();
         currentGeneration = 0;
         
-        for (int i = 0; i < POPULATION_NUM; i++)
+        for (int i = 0; i < this.populationNumber; i++)
         {
             this.population[i] = new Individual(X_LENGTH, Y_LENGTH, Z_LENGTH, i);
         }
@@ -48,18 +55,18 @@ public class Population
     
     void populationStep()
     {
-        if(currentGeneration > GENERATIONS)
+        if(currentGeneration > totalGenerations)
         {
             return;
         }
-        int parent1 = random.nextInt(POPULATION_NUM);
-        int parent2 = random.nextInt(POPULATION_NUM);
+        int parent1 = random.nextInt(populationNumber);
+        int parent2 = random.nextInt(populationNumber);
 
         //crossover
         Individual offspring = this.crossover(parent1, parent2);
 
         //mutation
-        offspring.mutation(MUTATION_NUM);
+        offspring.mutation(mutationRate);
 
         //calculate fitness
         offspring.calcFitness();
@@ -77,17 +84,17 @@ public class Population
         this.calculateFitness();
 //        this.printPopulation();
 //        this.print();
-        for (int i = 0; i < GENERATIONS; i++)
+        for (int i = 0; i < totalGenerations; i++)
         {
             // selection
-            int parent1 = random.nextInt(POPULATION_NUM);
-            int parent2 = random.nextInt(POPULATION_NUM);
+            int parent1 = random.nextInt(populationNumber);
+            int parent2 = random.nextInt(populationNumber);
             
             //crossover
             Individual offspring = this.crossover(parent1, parent2);
             
             //mutation
-            offspring.mutation(MUTATION_NUM);
+            offspring.mutation(mutationRate);
             
             //calculate fitness
             offspring.calcFitness();
@@ -104,7 +111,7 @@ public class Population
     
     void selection(Individual offspring)
     {
-        int randomMember = random.nextInt(POPULATION_NUM);
+        int randomMember = random.nextInt(populationNumber);
         if(offspring.getFitness() > population[randomMember].getFitness())
         {
             population[randomMember] = offspring;
@@ -116,14 +123,15 @@ public class Population
         int xCross = random.nextInt(X_LENGTH);
         int yCross = random.nextInt(Y_LENGTH);
         int zCross = random.nextInt(Z_LENGTH);
-        return new Individual(population[parent1], population[parent2], xCross, yCross, zCross);
+        int newIndex = this.currentGeneration + this.populationNumber;
+        return new Individual(population[parent1], population[parent2], xCross, yCross, zCross, newIndex);
     }
         
     public void calculateFitness()
     {
         this.meanFitness = 0;
         this.fittest = 0;
-        for (int i = 0; i < POPULATION_NUM; i++)
+        for (int i = 0; i < populationNumber; i++)
         {
             this.population[i].calcFitness();
             int fitness = this.population[i].getFitness();
@@ -134,7 +142,7 @@ public class Population
             }
             this.meanFitness += fitness;
         }
-        this.meanFitness = this.meanFitness / POPULATION_NUM;
+        this.meanFitness = this.meanFitness / populationNumber;
 //        System.out.println("algorithm.Popultation.calculateFitness() " + this.fittest);
     }
     
@@ -145,7 +153,7 @@ public class Population
     
     public void printPopulation()
     {
-        for (int i = 0; i < POPULATION_NUM; i++)
+        for (int i = 0; i < populationNumber; i++)
         {
             this.population[i].print();
         }
@@ -154,5 +162,50 @@ public class Population
     public Individual best()
     {
         return this.population[fittestIndividual];
+    }
+    
+    public ArrayList<String> getSolutionMapList()
+    {
+        String[] mapNamesArray = new String[population.length];
+        int[] fitnessArray = new int[population.length];
+        for (int i = 0; i < population.length; i++)
+        {
+            mapNamesArray[i] = population[i].getName();
+            fitnessArray[i] = population[i].getFitness();
+        }
+        
+        // bubble sort, quick and easy to implement, it's O(n^2), 
+        // but it'll only deal with a maximum of 50 elements
+        int i;
+        boolean flag = true;
+        int tempNum;
+        String tempString;
+
+        while (flag)
+        {
+            flag = false;
+            for (i = 0; i < population.length - 1; i++)
+            {
+                if (fitnessArray[i] < fitnessArray[i + 1])
+                {
+                    tempNum = fitnessArray[i];
+                    fitnessArray[i] = fitnessArray[i + 1];
+                    fitnessArray[i + 1] = tempNum;
+
+                    tempString = mapNamesArray[i];
+                    mapNamesArray[i] = mapNamesArray[i + 1];
+                    mapNamesArray[i + 1] = tempString;
+
+                    flag = true;
+                }
+            }
+        }
+        return new ArrayList<>(Arrays.asList(mapNamesArray));
+    }
+    
+    public boolean compareArrayList(ArrayList<String> old)
+    {
+        ArrayList<String> current = getSolutionMapList();
+        return current.equals(old);
     }
 }

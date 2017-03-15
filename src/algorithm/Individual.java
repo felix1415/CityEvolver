@@ -58,13 +58,13 @@ public class Individual
         this.r = new Random();
     }
 
-    Individual(Individual individual1, Individual individual2, int xCross, int yCross, int zCross)
+    Individual(Individual individual1, Individual individual2, int xCross, int yCross, int zCross, int index)
     {
         this.gene = new Cube[individual1.getXLength()][individual1.getYLength()][individual1.getZLength()];
         this.xLength = individual1.getXLength();
         this.yLength = individual1.getYLength();
         this.zLength = individual1.getZLength();  
-        this.index = (individual1.getIndex() * individual2.getIndex()) + 100;
+        this.index = index;
         for (int i = 0; i < xLength; i++)
         {
             for (int j = 0; j < yLength ; j++)
@@ -186,6 +186,11 @@ public class Individual
                 }
             }
         }
+    }
+    
+    public String getName()
+    {
+        return "Soloution Map " + Integer.toString(this.index) + " Fitness: " + this.getFitness();
     }
 
     public void print()
