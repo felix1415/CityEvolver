@@ -37,7 +37,7 @@ public class Renderer implements Runnable
     private double currentTime;
     private int frames;
     
-    Renderer(Canvas canvas, int height, int width)
+    protected Renderer(Canvas canvas, int height, int width)
     {
         time = 0.0f;
         frameTime = 0.0;
@@ -117,12 +117,12 @@ public class Renderer implements Runnable
         Display.destroy();
     }
     
-    public void viewMap(Individual individual)
+    public synchronized void viewMap(Individual individual)
     {
         this.individual = individual;
     }
     
-    public void render()
+    private void render()
     {
         double newTime = System.currentTimeMillis();
         double delta = newTime - currentTime;
@@ -141,8 +141,10 @@ public class Renderer implements Runnable
 
             glNewList(displayListHandle, GL_COMPILE);
 
-            Cube c = new Cube(0.0f, 0.0f, -5.0f, true);
-            c.draw();
+            
+            this.individual.draw();
+//            Cube c = new Cube(0.0f, 0.0f, -5.0f, true);
+//            c.draw();
 
             glEndList();
 

@@ -6,8 +6,10 @@
 package algorithm;
 
 
+import gui.GUIForm;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -24,7 +26,7 @@ public class Population
     public int totalGenerations;
     public double mutationRate;
     
-    private Individual [] population;
+    private final Individual [] population;
     
     private final Random random;
     
@@ -42,14 +44,13 @@ public class Population
         this.totalGenerations = generations;
         this.mutationRate = mutationRate;
         
-                
         this.population = new Individual[this.populationNumber];
         this.random = new Random();
         currentGeneration = 0;
         
         for (int i = 0; i < this.populationNumber; i++)
         {
-            this.population[i] = new Individual(X_LENGTH, Y_LENGTH, Z_LENGTH, i);
+            this.population[i] = new Individual(X_LENGTH, Y_LENGTH, Z_LENGTH, i + 1);
         }
     }
     
@@ -103,9 +104,11 @@ public class Population
             this.selection(offspring);
             
             this.calculateFitness();
+            currentGeneration++;
+
+            int tempGenNum = i + 1;
             
-//            this.printPopulation();
-//            this.print();
+            GUIForm.getInstance().log("Completed " + tempGenNum + " generation");
         }
     }
     
@@ -159,7 +162,7 @@ public class Population
         }
     }
 
-    public Individual best()
+    public Individual getBestIndividual()
     {
         return this.population[fittestIndividual];
     }
@@ -207,5 +210,17 @@ public class Population
     {
         ArrayList<String> current = getSolutionMapList();
         return current.equals(old);
+    }
+    
+    protected synchronized void updateGeneratedPopulationList()
+    {
+        GUIForm.getInstance().setGeneratedPopulationListPopulation(this);
+    }
+    
+    
+
+    public Individual getIndividual(int index)
+    {
+        return this.population[index];
     }
 }

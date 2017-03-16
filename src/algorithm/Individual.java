@@ -98,7 +98,7 @@ public class Individual
         return fitness;
     }
 
-    public void calcFitness()
+    public synchronized void calcFitness()
     {
         this.fitness = 0;
         int numberOfRoadBlocks = 0;

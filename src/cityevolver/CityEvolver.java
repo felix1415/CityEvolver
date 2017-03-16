@@ -1,29 +1,52 @@
 package cityevolver;
 
-import gui.Camera;
+import algorithm.GeneticAlgorithm;
 import algorithm.Individual;
-import algorithm.Population;
 import gui.GUIForm;
-import gui.Renderer;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
 import static org.lwjgl.opengl.GL11.*;
 
 public class CityEvolver
 {
-    public static int xLength = 40;
-    public static int yLength = 5;
-    public static int zLength = 40;
+//    public static int xLength = 40;
+//    public static int yLength = 5;
+//    public static int zLength = 40;
+    
+    static Thread guiInstance = new Thread(GUIForm.getInstance());
+    static Thread geneticAlgorithmInstance = null;
+    static ArrayList<String> solutionMapNames = new ArrayList<>();
 
     public static void main(String[] args)
     {
-        GUIForm g = new GUIForm();
-        g.setVisible(true);        
+        guiInstance.start();
+        while(true)
+        {
+            try
+            {
+                Thread.sleep(10);
+            } catch (InterruptedException ex)
+            {
+                Logger.getLogger(CityEvolver.class.getName()).log(Level.SEVERE, null, ex);
+                System.exit(0);
+            }
+            
+            if(GUIForm.getInstance().runGeneticAlgorithm() && geneticAlgorithmInstance == null)
+            {
+                geneticAlgorithmInstance = new Thread(GeneticAlgorithm.getInstance());
+                geneticAlgorithmInstance.start();
+                
+                GeneticAlgorithm.getInstance().updateGeneratedPopulationList();
+            }
+                       
+        }
+        
+    }
+    
+    private static void updatePopulationMenu()
+    {
+        
     }
     
     public static void renderWireFrame(boolean wireFrame, int handle)

@@ -1,9 +1,13 @@
 package gui;
 
 import algorithm.GeneticAlgorithm;
+import algorithm.Individual;
+import algorithm.Population;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UIManager;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,14 +19,34 @@ import java.util.logging.Logger;
  *
  * @author alexgray
  */
-public class GUIForm extends javax.swing.JFrame
+public class GUIForm extends javax.swing.JFrame implements Runnable
 {
 
     Thread openGLInstance;
     Thread geneticAlgorithmInstance;
+    
+    boolean runGABoolean = false;
+    ArrayList<String> mapSolutionArrayList = null;
+    
+    String mapToViewString = null;
+    boolean mapIsToBeLoaded = false;
+    boolean viewMapButtonPressed = false;
+    Population generatedPopulation = null;
     /**
      * Creates new form NewJFrame
      */
+    
+    private static GUIForm instance = null;
+    
+    public static GUIForm getInstance() 
+    {
+       if(instance == null) 
+       {
+          instance = new GUIForm();
+       }
+       return instance;
+    }
+    
     public GUIForm()
     {
         initComponents();
@@ -32,6 +56,9 @@ public class GUIForm extends javax.swing.JFrame
         inputMapsList.setEnabled(false);
         deleteInputFileButton.setEnabled(false);
         loadInputFileButton.setEnabled(false);
+        populationValueLabel.setText(Integer.toString(populationGetRealValue()));
+        mutationValueLabel.setText(Float.toString(mutationGetRealValue()));
+        generationsValueLabel.setText(Integer.toString(generationsGetRealValue()));
     }
 
     /**
@@ -150,6 +177,7 @@ public class GUIForm extends javax.swing.JFrame
         populationMapsList = new javax.swing.JList<>();
         savePopulationMapButton = new javax.swing.JButton();
         populationMapNameField = new javax.swing.JTextField();
+        refreshPopulationMapListButton = new javax.swing.JButton();
         messagesPane = new javax.swing.JScrollPane();
         messagesOutputArea = new javax.swing.JTextArea();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -776,7 +804,7 @@ public class GUIForm extends javax.swing.JFrame
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, blockKeyPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(roadsKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(roadsKeyLabel))
@@ -832,7 +860,7 @@ public class GUIForm extends javax.swing.JFrame
                 .addGroup(blockKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(immovableObjectKeyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(immovableObjectKeyLabel))
-                .addContainerGap())
+                .addContainerGap(120, Short.MAX_VALUE))
         );
 
         sideTabbedPane.addTab("Key", blockKeyPanel);
@@ -864,20 +892,23 @@ public class GUIForm extends javax.swing.JFrame
             savedMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(savedMapsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(savedMapsPane, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(savedMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loadSavedMapButton)
-                    .addComponent(deleteSavedMapButton))
-                .addContainerGap(86, Short.MAX_VALUE))
+                    .addGroup(savedMapsPanelLayout.createSequentialGroup()
+                        .addComponent(loadSavedMapButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteSavedMapButton)
+                        .addGap(0, 170, Short.MAX_VALUE))
+                    .addComponent(savedMapsPane))
+                .addContainerGap())
         );
         savedMapsPanelLayout.setVerticalGroup(
             savedMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(savedMapsPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(savedMapsPanelLayout.createSequentialGroup()
-                .addComponent(loadSavedMapButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(deleteSavedMapButton)
+                .addComponent(savedMapsPane, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(savedMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteSavedMapButton)
+                    .addComponent(loadSavedMapButton))
                 .addContainerGap())
         );
 
@@ -901,26 +932,36 @@ public class GUIForm extends javax.swing.JFrame
             searchSessionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchSessionsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(searchSessionsPane, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(searchSessionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loadSearchSessionsButton)
-                    .addComponent(deleteSearchSessionsButton))
-                .addContainerGap(86, Short.MAX_VALUE))
+                    .addGroup(searchSessionsPanelLayout.createSequentialGroup()
+                        .addComponent(loadSearchSessionsButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteSearchSessionsButton)
+                        .addGap(0, 170, Short.MAX_VALUE))
+                    .addComponent(searchSessionsPane))
+                .addContainerGap())
         );
         searchSessionsPanelLayout.setVerticalGroup(
             searchSessionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(searchSessionsPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(searchSessionsPanelLayout.createSequentialGroup()
-                .addComponent(loadSearchSessionsButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(deleteSearchSessionsButton)
+                .addComponent(searchSessionsPane, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(searchSessionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteSearchSessionsButton)
+                    .addComponent(loadSearchSessionsButton))
                 .addContainerGap())
         );
 
         fileManagerPane.addTab("Search Sessions", searchSessionsPanel);
 
         viewMapButton.setText("View");
+        viewMapButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                viewMapButtonActionPerformed(evt);
+            }
+        });
 
         populationMapsList.setModel(new javax.swing.AbstractListModel<String>()
         {
@@ -932,34 +973,45 @@ public class GUIForm extends javax.swing.JFrame
 
         savePopulationMapButton.setText("Save");
 
+        refreshPopulationMapListButton.setText("Refresh");
+        refreshPopulationMapListButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                refreshPopulationMapListButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout populationMapsPanelLayout = new javax.swing.GroupLayout(populationMapsPanel);
         populationMapsPanel.setLayout(populationMapsPanelLayout);
         populationMapsPanelLayout.setHorizontalGroup(
             populationMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, populationMapsPanelLayout.createSequentialGroup()
+            .addGroup(populationMapsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(populationMapsPane, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(populationMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(populationMapsPane)
                     .addGroup(populationMapsPanelLayout.createSequentialGroup()
                         .addComponent(viewMapButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(populationMapsPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(savePopulationMapButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(populationMapNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)))
+                        .addComponent(populationMapNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(refreshPopulationMapListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         populationMapsPanelLayout.setVerticalGroup(
             populationMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(populationMapsPanelLayout.createSequentialGroup()
-                .addComponent(viewMapButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, populationMapsPanelLayout.createSequentialGroup()
+                .addComponent(populationMapsPane, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(populationMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(viewMapButton)
                     .addComponent(savePopulationMapButton)
-                    .addComponent(populationMapNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(populationMapNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(refreshPopulationMapListButton))
                 .addContainerGap())
-            .addComponent(populationMapsPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         fileManagerPane.addTab("Population Maps", populationMapsPanel);
@@ -974,6 +1026,13 @@ public class GUIForm extends javax.swing.JFrame
         gaMenuPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         startGaButton.setText("Start");
+        startGaButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                startGaButtonActionPerformed(evt);
+            }
+        });
 
         stopGaButton.setText("Stop");
         stopGaButton.addActionListener(new java.awt.event.ActionListener()
@@ -1005,7 +1064,23 @@ public class GUIForm extends javax.swing.JFrame
 
         populationLabel.setText("Population");
 
+        populationSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                populationSliderStateChanged(evt);
+            }
+        });
+
         mutationLabel.setText("Mutation");
+
+        mutationSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                mutationSliderStateChanged(evt);
+            }
+        });
 
         generationsValueLabel.setText("150");
 
@@ -1032,7 +1107,10 @@ public class GUIForm extends javax.swing.JFrame
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(mutationValueLabel)
-                            .addComponent(mutationLabel)))
+                            .addGroup(gaMenuPanelLayout.createSequentialGroup()
+                                .addComponent(mutationLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(mutationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(gaMenuPanelLayout.createSequentialGroup()
                         .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(populationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1040,21 +1118,18 @@ public class GUIForm extends javax.swing.JFrame
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(gaMenuPanelLayout.createSequentialGroup()
-                                .addComponent(saveGaButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(gaNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(gaMenuPanelLayout.createSequentialGroup()
                                 .addComponent(populationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(startGaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mutationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(gaMenuPanelLayout.createSequentialGroup()
-                        .addComponent(stopGaButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(resetGaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(startGaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(stopGaButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(resetGaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(gaMenuPanelLayout.createSequentialGroup()
+                                .addComponent(saveGaButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(gaNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
         gaMenuPanelLayout.setVerticalGroup(
             gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1071,20 +1146,18 @@ public class GUIForm extends javax.swing.JFrame
                     .addComponent(mutationValueLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(gaMenuPanelLayout.createSequentialGroup()
-                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(populationLabel)
-                            .addComponent(populationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(startGaButton, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(populationValueLabel)
-                            .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(saveGaButton)
-                                .addComponent(gaNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(populationLabel)
+                    .addComponent(populationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(startGaButton)
                         .addComponent(stopGaButton)
                         .addComponent(resetGaButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(populationValueLabel)
+                    .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(saveGaButton)
+                        .addComponent(gaNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -1238,9 +1311,8 @@ public class GUIForm extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(messagesPane, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(fileManagerPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(messagesPane, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fileManagerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(topSeperator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
@@ -1289,19 +1361,7 @@ public class GUIForm extends javax.swing.JFrame
 
     private void generationsSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_generationsSliderStateChanged
     {//GEN-HEADEREND:event_generationsSliderStateChanged
-        int value = generationsSlider.getValue();
-        if (generationsSlider.getMaximum() == generationsSlider.getValue())
-        {
-            value = Integer.MAX_VALUE;
-        }
-        else if (generationsSlider.getMinimum() == generationsSlider.getValue())
-        {
-            value = 1;
-        }
-        else
-        {
-            value =  generationsSlider.getValue() * 500; 
-        }
+        int value = generationsGetRealValue();
         if (value == Integer.MAX_VALUE)
         {
             generationsValueLabel.setText("Infinity");
@@ -1312,6 +1372,43 @@ public class GUIForm extends javax.swing.JFrame
         }
     }//GEN-LAST:event_generationsSliderStateChanged
 
+    private int generationsGetRealValue()
+    {
+        if (generationsSlider.getMaximum() == generationsSlider.getValue())
+        {
+            return Integer.MAX_VALUE;
+        }
+        else if (generationsSlider.getMinimum() == generationsSlider.getValue())
+        {
+            return 1;
+        }
+        else
+        {
+            return generationsSlider.getValue() * 500; 
+        }
+    }
+    
+    private int populationGetRealValue()
+    {
+        if (populationSlider.getMaximum() == populationSlider.getValue())
+        {
+            return 50;
+        }
+        else if (populationSlider.getMinimum() == populationSlider.getValue())
+        {
+            return 1;
+        }
+        else
+        {
+            return populationSlider.getValue() / 2; 
+        }
+    }
+    
+    private float mutationGetRealValue()
+    {
+        return (float) ((float)mutationSlider.getValue() * 0.01);
+    }
+    
     private void loadInputFileButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_loadInputFileButtonActionPerformed
     {//GEN-HEADEREND:event_loadInputFileButtonActionPerformed
         int x = 0;
@@ -1352,7 +1449,7 @@ public class GUIForm extends javax.swing.JFrame
         loadInputFileButton.setEnabled(false);
     }//GEN-LAST:event_loadInputFileButtonActionPerformed
 
-    private void log(String text, boolean error)
+    public synchronized void log(String text, boolean error)
     {
         String output = "";
         if (error)
@@ -1377,7 +1474,7 @@ public class GUIForm extends javax.swing.JFrame
         }
     }
     
-    private void log(String text)
+    public synchronized void log(String text)
     {
         log(text, false);
     }
@@ -1393,9 +1490,14 @@ public class GUIForm extends javax.swing.JFrame
         return firstLine + System.lineSeparator() + "      " + secondLine;
     }
     
+    public boolean runGeneticAlgorithm()
+    {
+        return runGABoolean;
+    }
+    
     private void loadInputFileRadioButtonStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_loadInputFileRadioButtonStateChanged
     {//GEN-HEADEREND:event_loadInputFileRadioButtonStateChanged
-        
+        //load file
     }//GEN-LAST:event_loadInputFileRadioButtonStateChanged
 
     private void loadInputFileRadioButtonItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_loadInputFileRadioButtonItemStateChanged
@@ -1435,56 +1537,147 @@ public class GUIForm extends javax.swing.JFrame
         deleteInputFileButton.setEnabled(true);
         loadInputFileButton.setEnabled(true);
         
-        xBoundsField.setText("");
-        yBoundsField.setText("");
-        zBoundsField.setText("");
+        xBoundsField.setText("0");
+        yBoundsField.setText("0");
+        zBoundsField.setText("0");
     }//GEN-LAST:event_resetInitialMapMenuButtonActionPerformed
 
+    private void mutationSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_mutationSliderStateChanged
+    {//GEN-HEADEREND:event_mutationSliderStateChanged
+        mutationValueLabel.setText(Float.toString(mutationGetRealValue()));
+    }//GEN-LAST:event_mutationSliderStateChanged
+
+    private void populationSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_populationSliderStateChanged
+    {//GEN-HEADEREND:event_populationSliderStateChanged
+        populationValueLabel.setText(Integer.toString(populationGetRealValue()));
+    }//GEN-LAST:event_populationSliderStateChanged
+
+    private void startGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_startGaButtonActionPerformed
+    {//GEN-HEADEREND:event_startGaButtonActionPerformed
+        GeneticAlgorithm.getInstance().setPopulation(populationGetRealValue());
+        GeneticAlgorithm.getInstance().setGenerations(generationsGetRealValue());
+        GeneticAlgorithm.getInstance().setMutation(mutationGetRealValue());
+        
+        GeneticAlgorithm.getInstance().initialise();
+        this.runGABoolean = true;
+        log("Initialised GA. Starting search.");
+    }//GEN-LAST:event_startGaButtonActionPerformed
+    
+    public synchronized ArrayList<String> getPopulationMapsList()
+    {
+        return mapSolutionArrayList;
+    }
+    
+    private void viewMapButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_viewMapButtonActionPerformed
+    {//GEN-HEADEREND:event_viewMapButtonActionPerformed
+        mapToViewString = populationMapsList.getSelectedValue();
+        int index = -1;
+        for (String string : mapSolutionArrayList)
+        {
+            if(string.equals(mapToViewString))
+            {
+                index = mapSolutionArrayList.indexOf(string);
+                break;
+            }
+        }
+        System.out.println(index);
+        Renderer.getInstance().viewMap(this.generatedPopulation.getIndividual(index));
+        this.viewMap();
+        
+    }//GEN-LAST:event_viewMapButtonActionPerformed
+
+    private void refreshPopulationMapListButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_refreshPopulationMapListButtonActionPerformed
+    {//GEN-HEADEREND:event_refreshPopulationMapListButtonActionPerformed
+        GeneticAlgorithm.getInstance().updateGeneratedPopulationList();
+    }//GEN-LAST:event_refreshPopulationMapListButtonActionPerformed
+    
+    public synchronized void setGeneratedPopulationListPopulation(Population popIn)
+    {
+        this.generatedPopulation = popIn;
+        setPopulationMapsList(popIn.getSolutionMapList());
+    }
+    
+    private void setPopulationMapsList(ArrayList<String> mapSolutionList)
+    {
+        mapSolutionArrayList = mapSolutionList;
+        String[] arr = new String[mapSolutionArrayList.size()];
+        for (int i = 0; i < mapSolutionArrayList.size(); i++)
+        {
+           arr[i] = mapSolutionArrayList.get(i);
+        }
+        this.populationMapsList.setListData(arr);
+    }
+    
+    private void viewMap()
+    {
+        if(openGLInstance != null && openGLInstance.isAlive())
+        {
+            Renderer.getInstance().setRunning(false);
+            try
+            {
+                openGLInstance.join();
+            } catch (InterruptedException ex)
+            {
+                Logger.getLogger(GUIForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        Renderer.getInstance().setRunning(true);
+//        Renderer.getInstance().viewMap(individual);
+        openGLInstance = new Thread(Renderer.getInstance());
+        openGLInstance.start();
+    }
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[])
-    {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex)
-        {
-            java.util.logging.Logger.getLogger(GUIForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex)
-        {
-            java.util.logging.Logger.getLogger(GUIForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
-        {
-            java.util.logging.Logger.getLogger(GUIForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
-            java.util.logging.Logger.getLogger(GUIForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                new GUIForm().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[])
+//    {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try
+//        {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+//            {
+//                if ("Nimbus".equals(info.getName()))
+//                {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex)
+//        {
+//            java.util.logging.Logger.getLogger(GUIForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex)
+//        {
+//            java.util.logging.Logger.getLogger(GUIForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex)
+//        {
+//            java.util.logging.Logger.getLogger(GUIForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex)
+//        {
+//            java.util.logging.Logger.getLogger(GUIForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable()
+//        {
+//            public void run()
+//            {
+////                try { 
+////                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"); 
+////                } catch (Exception ex) { 
+////                    ex.printStackTrace(); 
+////                }
+//                new GUIForm().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DenseResidentialCostLabel;
@@ -1590,6 +1783,7 @@ public class GUIForm extends javax.swing.JFrame
     private javax.swing.JPanel populationMapsPanel;
     private javax.swing.JSlider populationSlider;
     private javax.swing.JLabel populationValueLabel;
+    private javax.swing.JButton refreshPopulationMapListButton;
     private javax.swing.JButton resetFitnessFunctionButton;
     private javax.swing.JButton resetGaButton;
     private javax.swing.JButton resetInitialMapMenuButton;
@@ -1626,4 +1820,10 @@ public class GUIForm extends javax.swing.JFrame
     private java.awt.TextField zBoundsField;
     private javax.swing.JLabel zBoundsLabel;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run()
+    {
+        GUIForm.getInstance().setVisible(true);
+    }
 }

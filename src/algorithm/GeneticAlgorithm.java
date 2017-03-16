@@ -79,8 +79,10 @@ public class GeneticAlgorithm implements Runnable
     {
         this.population = new Population(xBound, yBound, zBound, populationNumber, generations, mutation);
     }
-    
-    
-    
-    
+
+    public synchronized void updateGeneratedPopulationList()
+    {
+        this.population.updateGeneratedPopulationList();
+    }
+
 }
