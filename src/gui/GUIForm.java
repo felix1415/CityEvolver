@@ -1344,12 +1344,25 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
     private void resetGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_resetGaButtonActionPerformed
     {//GEN-HEADEREND:event_resetGaButtonActionPerformed
-        // TODO add your handling code here:
+        populationSlider.setValue(50);
+        generationsSlider.setValue(50);
+        mutationSlider.setValue(50);
     }//GEN-LAST:event_resetGaButtonActionPerformed
 
     private void resetFitnessFunctionButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_resetFitnessFunctionButtonActionPerformed
     {//GEN-HEADEREND:event_resetFitnessFunctionButtonActionPerformed
-        // TODO add your handling code here:
+        roadsSlider.setValue(50);
+        grassParksSlider.setValue(50);
+        lightResidentialSlider.setValue(50);
+        denseResidentialSlider.setValue(50);
+        lightCommercialSider.setValue(50);
+        denseCommercialSlider.setValue(50);
+        farmlandSlider.setValue(50);
+        industrySlider.setValue(50);
+        hospitalSlider.setValue(50);
+        policeSlider.setValue(50);
+        fireSlider.setValue(50);
+        educationSlider.setValue(50);
     }//GEN-LAST:event_resetFitnessFunctionButtonActionPerformed
 
     private void loadSavedMapButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_loadSavedMapButtonActionPerformed
