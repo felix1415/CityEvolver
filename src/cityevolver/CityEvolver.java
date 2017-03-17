@@ -18,6 +18,17 @@ public class CityEvolver
         guiInstance.start();
         while(true)
         {
+            // get start/stop from GUI
+            if(GUIForm.getInstance().runGeneticAlgorithm() == false)
+            {
+                GeneticAlgorithm.getInstance().setRunning(false);
+            }
+            else
+            {
+                GeneticAlgorithm.getInstance().setRunning(true);
+            }
+            
+            //if run and thread not alive
             if(GUIForm.getInstance().runGeneticAlgorithm() && geneticAlgorithmInstance == null)
             {
                 geneticAlgorithmInstance = new Thread(GeneticAlgorithm.getInstance());
@@ -27,6 +38,7 @@ public class CityEvolver
                 GeneticAlgorithm.getInstance().updateGeneratedPopulationList();
             } 
             
+            //if stop run and thread is alive
             if(!GUIForm.getInstance().runGeneticAlgorithm() && geneticAlgorithmInstance != null)
             {
                 try
@@ -36,7 +48,7 @@ public class CityEvolver
                 {
                     Logger.getLogger(GUIForm.class.getName()).log(Level.SEVERE, null, ex);
                 }   
-                                
+                geneticAlgorithmInstance = null;
             }
         }
     }

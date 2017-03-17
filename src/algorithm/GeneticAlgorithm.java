@@ -5,6 +5,7 @@
  */
 package algorithm;
 
+import gui.GUIForm;
 import java.util.ArrayList;
 
 /**
@@ -29,18 +30,27 @@ public class GeneticAlgorithm implements Runnable
     private Population population;
     private float mutation;
     
+    private boolean running;
+    
     private int xBound;
     private int yBound;
     private int zBound;
     
     protected GeneticAlgorithm() 
     {
+        running = false;
     }
 
     @Override
     public void run()
     {
-        this.population.run();
+        this.running = true;
+        System.out.println("algorithm.GeneticAlgorithm.run()");
+        this.population.calculateFitness();
+        while(this.running)
+        {
+            this.population.populationStep();
+        }
     }
     
     public void setBounds(int x, int y, int z)
@@ -77,12 +87,34 @@ public class GeneticAlgorithm implements Runnable
 
     public void initialise()
     {
-        this.population = new Population(xBound, yBound, zBound, populationNumber, generations, mutation);
+        try
+        {
+            this.population = new Population(xBound, yBound, zBound, populationNumber, generations, mutation);
+        }
+        catch(Exception e)
+        {
+            GUIForm.getInstance().log("Set initial map value", true);
+        }
+    }
+    
+    public synchronized boolean isInitialised()
+    {
+        return this.population != null;
     }
 
     public synchronized void updateGeneratedPopulationList()
     {
         this.population.updateGeneratedPopulationList();
+    }
+
+    public synchronized boolean getRunning()
+    {
+        return running;
+    }
+    
+    public synchronized void setRunning(boolean running)
+    {
+        this.running = running;
     }
 
 }

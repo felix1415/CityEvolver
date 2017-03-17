@@ -26,6 +26,8 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     Thread geneticAlgorithmInstance;
     
     boolean runGABoolean = false;
+    boolean gaReset = false;
+    boolean gaRestart = false;
     ArrayList<String> mapSolutionArrayList = null;
     
     String mapToViewString = null;
@@ -196,6 +198,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         mutationValueLabel = new javax.swing.JLabel();
         saveGaButton = new javax.swing.JButton();
         gaNameField = new javax.swing.JTextField();
+        resetSearchGaButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         inputMapsPane = new javax.swing.JScrollPane();
         inputMapsList = new javax.swing.JList<>();
@@ -210,6 +213,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         zBoundsLabel = new javax.swing.JLabel();
         loadInputFileRadioButton = new javax.swing.JRadioButton();
         useBoundsRadioButton = new javax.swing.JRadioButton();
+        canvas1 = new java.awt.Canvas();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("City Evolver");
@@ -1090,6 +1094,15 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
         saveGaButton.setText("Save");
 
+        resetSearchGaButton.setText("Reset Search");
+        resetSearchGaButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                resetSearchGaButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout gaMenuPanelLayout = new javax.swing.GroupLayout(gaMenuPanel);
         gaMenuPanel.setLayout(gaMenuPanelLayout);
         gaMenuPanelLayout.setHorizontalGroup(
@@ -1128,7 +1141,9 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                             .addGroup(gaMenuPanelLayout.createSequentialGroup()
                                 .addComponent(saveGaButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(gaNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(gaNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(resetSearchGaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(0, 13, Short.MAX_VALUE))
         );
         gaMenuPanelLayout.setVerticalGroup(
@@ -1157,7 +1172,8 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                     .addComponent(populationValueLabel)
                     .addGroup(gaMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(saveGaButton)
-                        .addComponent(gaNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(gaNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(resetSearchGaButton)))
                 .addContainerGap())
         );
 
@@ -1204,13 +1220,6 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             public void itemStateChanged(java.awt.event.ItemEvent evt)
             {
                 loadInputFileRadioButtonItemStateChanged(evt);
-            }
-        });
-        loadInputFileRadioButton.addChangeListener(new javax.swing.event.ChangeListener()
-        {
-            public void stateChanged(javax.swing.event.ChangeEvent evt)
-            {
-                loadInputFileRadioButtonStateChanged(evt);
             }
         });
 
@@ -1295,6 +1304,8 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(sideTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
+                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(fileManagerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1316,8 +1327,10 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(topSeperator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addComponent(sideTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sideTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -1325,7 +1338,8 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
     private void stopGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_stopGaButtonActionPerformed
     {//GEN-HEADEREND:event_stopGaButtonActionPerformed
-
+        this.setRunGeneticAlgorithm(false);
+        this.gaRestart = true;
     }//GEN-LAST:event_stopGaButtonActionPerformed
 
     private void resetGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_resetGaButtonActionPerformed
@@ -1454,7 +1468,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         String output = "";
         if (error)
         {
-            output += "ERROR:";
+            output += "ERROR: ";
         }
         
         output += text + System.lineSeparator();
@@ -1490,16 +1504,16 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         return firstLine + System.lineSeparator() + "      " + secondLine;
     }
     
-    public boolean runGeneticAlgorithm()
+    public synchronized boolean runGeneticAlgorithm()
     {
         return runGABoolean;
     }
     
-    private void loadInputFileRadioButtonStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_loadInputFileRadioButtonStateChanged
-    {//GEN-HEADEREND:event_loadInputFileRadioButtonStateChanged
-        //load file
-    }//GEN-LAST:event_loadInputFileRadioButtonStateChanged
-
+    public synchronized void setRunGeneticAlgorithm(boolean value)
+    {
+        this.runGABoolean = value;
+    }
+    
     private void loadInputFileRadioButtonItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_loadInputFileRadioButtonItemStateChanged
     {//GEN-HEADEREND:event_loadInputFileRadioButtonItemStateChanged
         loadInputFileButton.setEnabled(true);
@@ -1554,13 +1568,39 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
     private void startGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_startGaButtonActionPerformed
     {//GEN-HEADEREND:event_startGaButtonActionPerformed
-        GeneticAlgorithm.getInstance().setPopulation(populationGetRealValue());
-        GeneticAlgorithm.getInstance().setGenerations(generationsGetRealValue());
-        GeneticAlgorithm.getInstance().setMutation(mutationGetRealValue());
+        //if just restarting the GA, set it and end
+        if(gaRestart)
+        {
+            this.setRunGeneticAlgorithm(true);
+            return;
+        }
+        //if we're not reseting the GA, we don't need to do this
+        //if this is a new search we need to get the values and initialise
+        if(!this.gaReset)
+        {
+            GeneticAlgorithm.getInstance().setPopulation(populationGetRealValue());
+            GeneticAlgorithm.getInstance().setGenerations(generationsGetRealValue());
+            GeneticAlgorithm.getInstance().setMutation(mutationGetRealValue());
+            
+            GeneticAlgorithm.getInstance().initialise();
+        }
+        // if we are reseting the ga, un set the flag
+        else
+        {
+            this.gaReset = false;
+        }
         
-        GeneticAlgorithm.getInstance().initialise();
-        this.runGABoolean = true;
-        log("Initialised GA. Starting search.");
+        //make sure ga is initialised
+        if(GeneticAlgorithm.getInstance().isInitialised())
+        {
+            this.setRunGeneticAlgorithm(true);
+            log("Initialised GA. Starting search.");
+        }
+        else
+        {
+            log("Could not initialise GA", true);
+        }
+        
     }//GEN-LAST:event_startGaButtonActionPerformed
     
     public synchronized ArrayList<String> getPopulationMapsList()
@@ -1583,13 +1623,26 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         System.out.println(index);
         Renderer.getInstance().viewMap(this.generatedPopulation.getIndividual(index));
         this.viewMap();
-        
     }//GEN-LAST:event_viewMapButtonActionPerformed
 
     private void refreshPopulationMapListButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_refreshPopulationMapListButtonActionPerformed
     {//GEN-HEADEREND:event_refreshPopulationMapListButtonActionPerformed
         GeneticAlgorithm.getInstance().updateGeneratedPopulationList();
     }//GEN-LAST:event_refreshPopulationMapListButtonActionPerformed
+
+    private void resetSearchGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_resetSearchGaButtonActionPerformed
+    {//GEN-HEADEREND:event_resetSearchGaButtonActionPerformed
+        if(!GeneticAlgorithm.getInstance().isInitialised())
+        {
+            this.log("No search has been initialised, cannot reset search.", true);
+            return;
+        }
+        this.setRunGeneticAlgorithm(false);
+        this.gaReset = true;
+        
+        GeneticAlgorithm.getInstance().setRunning(false);
+        GeneticAlgorithm.getInstance().initialise();
+    }//GEN-LAST:event_resetSearchGaButtonActionPerformed
     
     public synchronized void setGeneratedPopulationListPopulation(Population popIn)
     {
@@ -1623,7 +1676,6 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         }
         
         Renderer.getInstance().setRunning(true);
-//        Renderer.getInstance().viewMap(individual);
         openGLInstance = new Thread(Renderer.getInstance());
         openGLInstance.start();
     }
@@ -1684,6 +1736,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     private javax.swing.JLabel GrassParksUtilityLabel;
     private javax.swing.JPanel blockKeyPanel;
     private javax.swing.ButtonGroup buttonGroup1;
+    private java.awt.Canvas canvas1;
     private javax.swing.JLabel costLabel;
     private javax.swing.JButton deleteInputFileButton;
     private javax.swing.JButton deleteSavedMapButton;
@@ -1787,6 +1840,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton resetFitnessFunctionButton;
     private javax.swing.JButton resetGaButton;
     private javax.swing.JButton resetInitialMapMenuButton;
+    private javax.swing.JButton resetSearchGaButton;
     private javax.swing.JLabel roadsCostLabel;
     private javax.swing.JLabel roadsKeyLabel;
     private javax.swing.JPanel roadsKeyPanel;

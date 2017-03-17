@@ -41,6 +41,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="sideTabbedPane" min="-2" pref="301" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                      <Component id="canvas1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -68,8 +70,11 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="topSeperator" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-              <Component id="sideTabbedPane" min="-2" pref="512" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="sideTabbedPane" min="-2" pref="512" max="-2" attributes="0"/>
+                  <Component id="canvas1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="18" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -1473,6 +1478,8 @@
                                       <Component id="saveGaButton" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="gaNameField" min="-2" pref="161" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="resetSearchGaButton" min="-2" pref="155" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -1512,6 +1519,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="saveGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="gaNameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="resetSearchGaButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -1595,6 +1603,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="gaNameField">
+            </Component>
+            <Component class="javax.swing.JButton" name="resetSearchGaButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Reset Search"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetSearchGaButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -1756,7 +1772,6 @@
               </Properties>
               <Events>
                 <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="loadInputFileRadioButtonItemStateChanged"/>
-                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="loadInputFileRadioButtonStateChanged"/>
               </Events>
             </Component>
             <Component class="javax.swing.JRadioButton" name="useBoundsRadioButton">
@@ -1774,5 +1789,7 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="java.awt.Canvas" name="canvas1">
+    </Component>
   </SubComponents>
 </Form>

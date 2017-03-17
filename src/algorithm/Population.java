@@ -37,6 +37,11 @@ public class Population
 
     public Population(int x, int y, int z, int populationNumber, int generations, float mutationRate)
     {
+        if (x <= 0 || y <= 0 || z <= 0 || populationNumber <= 0 || generations <= 0)
+        {
+            throw new IllegalArgumentException();
+        }
+        
         this.X_LENGTH = x;
         this.Y_LENGTH = y;
         this.Z_LENGTH = z;
@@ -54,7 +59,7 @@ public class Population
         }
     }
     
-    void populationStep()
+    public void populationStep()
     {
         if(currentGeneration > totalGenerations)
         {
@@ -78,37 +83,16 @@ public class Population
         this.calculateFitness();
         
         currentGeneration++;
+        
+        GUIForm.getInstance().log("Completed " + currentGeneration + " generation");
     }
 
     public void run()
     {
         this.calculateFitness();
-//        this.printPopulation();
-//        this.print();
         for (int i = 0; i < totalGenerations; i++)
         {
-            // selection
-            int parent1 = random.nextInt(populationNumber);
-            int parent2 = random.nextInt(populationNumber);
-            
-            //crossover
-            Individual offspring = this.crossover(parent1, parent2);
-            
-            //mutation
-            offspring.mutation(mutationRate);
-            
-            //calculate fitness
-            offspring.calcFitness();
-            
-            //replacement
-            this.selection(offspring);
-            
-            this.calculateFitness();
-            currentGeneration++;
-
-            int tempGenNum = i + 1;
-            
-            GUIForm.getInstance().log("Completed " + tempGenNum + " generation");
+            this.populationStep();
         }
     }
     
