@@ -5,7 +5,7 @@
  */
 package algorithm;
 
-import cityevolver.Cube;
+import cityevolver.Block;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -16,7 +16,7 @@ import java.util.Random;
 public class Individual
 {
     
-    private Cube[][][] gene;
+    private Block[][][] gene;
     private final int xLength;
     private final int yLength;
     private final int zLength;
@@ -27,7 +27,7 @@ public class Individual
     public Individual(int xLength, int yLength, int zLength, int index)
     {
         this.index = index;
-        this.gene = new Cube[xLength][yLength][zLength];
+        this.gene = new Block[xLength][yLength][zLength];
         this.fitness = 0;
         this.xLength = xLength;
         this.yLength = yLength;
@@ -39,7 +39,7 @@ public class Individual
             {
                 for (int k = 0; k < zLength ; k++)
                 {
-                    this.gene[i][j][k] = new Cube(i, j, k, this.r.nextBoolean());
+                    this.gene[i][j][k] = new Block(i, j, k, (byte)this.r.nextInt(2));
 //                    this.gene[i][j][k].print();
                 }
             }
@@ -60,7 +60,7 @@ public class Individual
 
     Individual(Individual individual1, Individual individual2, int xCross, int yCross, int zCross, int index)
     {
-        this.gene = new Cube[individual1.getXLength()][individual1.getYLength()][individual1.getZLength()];
+        this.gene = new Block[individual1.getXLength()][individual1.getYLength()][individual1.getZLength()];
         this.xLength = individual1.getXLength();
         this.yLength = individual1.getYLength();
         this.zLength = individual1.getZLength();  
@@ -151,9 +151,14 @@ public class Individual
         
     }
 
-    public Cube[][][] getGene()
+    public Block[][][] getGene()
     {
         return gene;
+    }
+    
+    public Block getGene(int x, int y, int z)
+    {
+        return gene[x][y][z];
     }
 
     public int getXLength()
@@ -181,7 +186,7 @@ public class Individual
                 {
                     if(mutationVal > r.nextDouble())
                     {
-                        this.gene[i][j][k] = new Cube(i, j, k, this.r.nextBoolean());
+                        this.gene[i][j][k] = new Block(i, j, k, (byte)this.r.nextInt(2));
                     }
                 }
             }

@@ -976,6 +976,13 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         populationMapsPane.setViewportView(populationMapsList);
 
         savePopulationMapButton.setText("Save");
+        savePopulationMapButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                savePopulationMapButtonActionPerformed(evt);
+            }
+        });
 
         refreshPopulationMapListButton.setText("Refresh");
         refreshPopulationMapListButton.addActionListener(new java.awt.event.ActionListener()
@@ -1656,6 +1663,11 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         GeneticAlgorithm.getInstance().setRunning(false);
         GeneticAlgorithm.getInstance().initialise();
     }//GEN-LAST:event_resetSearchGaButtonActionPerformed
+
+    private void savePopulationMapButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_savePopulationMapButtonActionPerformed
+    {//GEN-HEADEREND:event_savePopulationMapButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_savePopulationMapButtonActionPerformed
     
     public synchronized void setGeneratedPopulationListPopulation(Population popIn)
     {

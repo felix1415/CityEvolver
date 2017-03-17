@@ -5,7 +5,7 @@
  */
 package algorithm;
 
-import cityevolver.Cube;
+import cityevolver.Block;
 
 /**
  *
@@ -13,18 +13,18 @@ import cityevolver.Cube;
  */
 public class HardConstraintEnforcement
 {
-    Cube[][][] gene;
+    Block[][][] gene;
     
     protected HardConstraintEnforcement() 
     {
         gene = null;
     }
     
-    public Cube[][][] applyConstraints(Cube[][][] gene)
+    public Block[][][] applyConstraints(Block[][][] gene)
     {
         return gene;
     }
-//    public boolean adjacentBlockAreRoadBlocks(int x, int y, int z, Cube[][][] gene)
+//    public boolean adjacentBlockAreRoadBlocks(int x, int y, int z, Block[][][] gene)
 //    {
 //        if(x + 1 < CityEvolver)
 //        {

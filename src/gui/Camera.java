@@ -114,7 +114,6 @@ public class Camera
         glRotatef(yaw, 0.0f, 1.0f, 0.0f);
         //translate to the position vector's location
         glTranslatef(position.x, position.y, position.z);
-        System.out.println("gui.Camera.cameraView() " + position.x + "," + position.y +","+ position.z + " pitch" +pitch + " yaw" + yaw);
     }
 
     void cleanUp()

@@ -23,8 +23,10 @@ public class Renderer implements Runnable
 {
     private static Renderer instance;
     private int displayListHandle;
-    private int height;
-    private int width;
+    private int x = 305;
+    private int y = 300;
+    private int height = 510;
+    private int width = 970;
     private boolean running;
     private Camera camera;
     private Canvas canvas;
@@ -98,11 +100,13 @@ public class Renderer implements Runnable
                     
                 }
             }            
-            Display.setDisplayMode(new DisplayMode(960, 540));
-            Display.setLocation(312, 310);
+            Display.setDisplayMode(new DisplayMode(width, height));
+            Display.setLocation(x, y);
             Display.create();
+            //sky colour
+            glClearColor( 0.53f, 0.8f, 0.92f, 1);
             Display.setResizable(false);
-            Display.setTitle("City Evolver Viewer");            
+            Display.setTitle("City Evolver Viewer");
         } catch (LWJGLException ex)
         {
             Logger.getLogger(CityEvolver.class.getName()).log(Level.SEVERE, null, ex);
@@ -188,14 +192,14 @@ public class Renderer implements Runnable
         Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         if(canvas != null)
         {
-            embedDisplayToCanvas(canvas, 960, 540);
+            embedDisplayToCanvas(canvas, width, height);
         }
         else
         {
             initDisplay();
         }
         
-        glViewport(0, 0, 960, 540);
+        glViewport(0, 0, width, height);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         
@@ -210,7 +214,8 @@ public class Renderer implements Runnable
 
         while(running)
         {
-            Display.setLocation(312, 310);
+            Display.setLocation(x, y);
+            Display.setTitle(Display.getX() + " " + Display.getY() + " ");
             render();
             if(Display.isCloseRequested())
             {
