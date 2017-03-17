@@ -7,8 +7,6 @@ package gui;
 
 import algorithm.Individual;
 import cityevolver.CityEvolver;
-import static cityevolver.CityEvolver.renderWireFrame;
-import cityevolver.Cube;
 import java.awt.Canvas;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -169,6 +167,19 @@ public class Renderer implements Runnable
             frames = 0;
             frameTime = 0.0;
         }
+    }
+    
+    public static void renderWireFrame(boolean wireFrame, int handle)
+    {
+        if(!wireFrame)
+        {
+            return;
+        }
+        glEnable(GL_POLYGON_OFFSET_FILL);
+        glColor3f(0, 0, 0); // Color for shape outline
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // enable wireframe for front and back
+        glCallList(handle); // Call the same rendering routine for the previous polygon.
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //fill shape again
     }
 
     @Override
