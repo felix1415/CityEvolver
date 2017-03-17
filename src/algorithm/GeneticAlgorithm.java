@@ -45,7 +45,6 @@ public class GeneticAlgorithm implements Runnable
     public void run()
     {
         this.running = true;
-        System.out.println("algorithm.GeneticAlgorithm.run()");
         this.population.calculateFitness();
         while(this.running)
         {
