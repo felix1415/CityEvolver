@@ -14,12 +14,14 @@ import org.lwjgl.util.vector.Vector3f;
 public class Camera
 {
     private Vector3f position;
-    private float yaw = 0.0f;
-    private float pitch = 0.0f;
+    private float yaw;
+    private float pitch;
 
     protected Camera()
     {
-        position = new Vector3f(0, 0, 0);
+        position = new Vector3f(10, -10, -15);
+        yaw = 45;
+        pitch = 0;
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         gluPerspective(70, (float) 960 / (float) 540, 0.3f, 1000);
@@ -112,6 +114,7 @@ public class Camera
         glRotatef(yaw, 0.0f, 1.0f, 0.0f);
         //translate to the position vector's location
         glTranslatef(position.x, position.y, position.z);
+        System.out.println("gui.Camera.cameraView() " + position.x + "," + position.y +","+ position.z + " pitch" +pitch + " yaw" + yaw);
     }
 
     void cleanUp()
