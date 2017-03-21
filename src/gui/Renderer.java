@@ -14,6 +14,10 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
+import org.lwjgl.BufferUtils; 
+import java.nio.FloatBuffer;
+
 
 /**
  *
@@ -37,6 +41,13 @@ public class Renderer implements Runnable
     private double currentTime;
     private int frames;
     
+    int vertexSize = 3; //XYZ
+    int colorSize = 3; //RGB
+    FloatBuffer vertexData;
+    FloatBuffer colorData;
+    int VBOVertexHandle;
+    int VBOColorHandle;
+    
     protected Renderer(Canvas canvas, int height, int width)
     {
         time = 0.0f;
@@ -49,6 +60,8 @@ public class Renderer implements Runnable
         this.canvas = canvas;
         this.height = height;
         this.width = width;
+        
+        
     }
 
     public static Renderer getInstance() 
@@ -112,9 +125,11 @@ public class Renderer implements Runnable
             Logger.getLogger(CityEvolver.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        
     }
     public void cleanUp()
     {
+        individual.cleanUp();
         camera.cleanUp();
         Display.destroy();
     }
@@ -135,31 +150,9 @@ public class Renderer implements Runnable
 
         glLoadIdentity();
         camera.cameraView();
+        
+        individual.render();        
 
-        glPushMatrix();
-        {
-
-            displayListHandle = glGenLists(1);
-
-            glNewList(displayListHandle, GL_COMPILE);
-
-            
-            this.individual.draw();
-//            Cube c = new Cube(0.0f, 0.0f, -5.0f, true);
-//            c.draw();
-
-            glEndList();
-
-            renderWireFrame(true, displayListHandle);
-
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glEnable(GL_BLEND);
-            glEnable(GL_LINE_SMOOTH);
-            glCullFace(GL_BACK);
-            glCallList(displayListHandle);
-
-        }
-        glPopMatrix();
         Display.update();
         
         time += delta;
@@ -211,12 +204,12 @@ public class Renderer implements Runnable
         
         currentTime = System.currentTimeMillis();
         camera = new Camera();
-
+        
         while(running)
         {
             Display.setLocation(x, y);
-            Display.setTitle(Display.getX() + " " + Display.getY() + " ");
             render();
+            Display.sync(60);
             if(Display.isCloseRequested())
             {
                 this.cleanUp();

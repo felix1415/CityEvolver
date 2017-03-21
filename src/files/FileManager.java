@@ -84,7 +84,7 @@ public class FileManager
                         writer.write(x + ",");
                         writer.write(y + ",");
                         writer.write(z + ",");
-                        writer.write(in.getGene(x,y,z).getType());
+                        writer.write((byte)in.getGene(x,y,z).getType().ordinal());
                         
                         writer.write("\n");    
                     }

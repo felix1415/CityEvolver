@@ -1,97 +1,149 @@
 package cityevolver;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glVertex3f;
-
 public class Block
 {
-    private int y;
-    private int z;
-    private byte type;
-    private int x;
-    
-    public enum BlockType {
-        AIR, IMMOVABLE, WATER, ROAD, GRASS, 
-        LIGHTRESIDENTIAL, DENSERESIDENTIAL, 
-        LIGHTCOMMERCIAL, DENSECOMMERCIAL, 
-        FARMLAND, INDUSTRY, HOSPTIAL, 
-        POLICE, FIRE, EDUCATION
-    }
+    private final int y;
+    private final int z;
+    private final BlockType type;
+    private final int x;
+    private float [] vertexData;
+    private float [] colourData;
 
-    public Block(int x, int y, int z, byte type)
+    public Block(int x, int y, int z, BlockType type)
     {
         this.x = x;
         this.y = y;
         this.z = z;
-        this.type = type;
-        
+        this.type = BlockType.WATER;
     }
 
-    public byte getType()
+    public BlockType getType()
     {
         return type;
     }
 
     public boolean isRoad()
     {
-        return type == 1;
+        return type.ordinal() == 1;
     }
     
-    public void draw()
+    public int getNumberOfVertices()
     {
-        glBegin(GL_QUADS);
+        return vertexData.length;
+    }
+    
+    public float [] getVertexData()
+    {
+        return vertexData;
+    }
+    
+    public float [] getColourData()
+    {
+        return colourData;
+    }
+    
+    public void calculateBuffers()
+    {
+        if(this.getType() == BlockType.AIR)
         {
-
-            
-            if(isRoad())
-            {
-                glColor3f(0.5f, 0.5f, 0.5f);
-            }
-            else
-            {
-                glColor3f(0f, 1f, 0f);
-            }
-            
-            //FrontFace
-            glVertex3f(x, y, 1 + z);
-            glVertex3f(1 + x, y, 1 + z);
-            glVertex3f(1 + x, 1 + y, 1 + z);
-            glVertex3f(x, 1 + y, 1 + z);
-
-            //BackFace
-            glVertex3f(x, y, z);
-            glVertex3f(x, 1 + y, z);
-            glVertex3f(1 + x, 1 + y, z);
-            glVertex3f(1 + x, y, z);
-
-            //BottomFace
-            glVertex3f(x, y, z);
-            glVertex3f(x, y, 1 + z);
-            glVertex3f(x, 1 + y, 1 + z);
-            glVertex3f(x, 1 + y, z);
-
-            //TopFace
-            glVertex3f(1 + x, y, z);
-            glVertex3f(1 + x, y, 1 + z);
-            glVertex3f(1 + x, 1 + y, 1 + z);
-            glVertex3f(1 + x, 1 + y, z);
-
-            //LeftFace
-            glVertex3f(x, y, z);
-            glVertex3f(1 + x, y, z);
-            glVertex3f(1 + x, y, 1 + z);
-            glVertex3f(x, y, 1 + z);
-
-            //Right Face
-            glVertex3f(x, 1 + y, z);
-            glVertex3f(1 + x, 1 + y, z);
-            glVertex3f(1 + x, 1 + y, 1 + z);
-            glVertex3f(x, 1 + y, 1 + z);
+            return;
         }
-        glEnd();
+        
+        if(this.getType() == BlockType.WATER || 
+            this.getType() == BlockType.ROAD ||
+            this.getType() == BlockType.GRASS) 
+        {
+            vertexData = new float[]
+            {   
+                //bottom face
+                x, y, z,
+                x, y, 1 + z,
+                1 + x, y, z,
+                1 + x, y, z,
+                1 + x, y, 1 + z,
+                x, y, z + 1
+            };
+            
+            
+//                bottom face
+//                x, y, z,
+//                x, y, 1 + z,
+//                1 + x, y, z,
+//                1 + x, y, z,
+//                1 + x, y, 1 + z,
+//                x, y, z + 1
+            
+//top face
+//x, 1 + y, z,
+//                x, 1 + y, 1 + z,
+//                1 + x, 1 + y, z,
+//                1 + x, 1 + y, z,
+//                1 + x, 1 + y, 1 + z,
+//                x, 1 + y, z + 1
+
+//            left side
+//            x, y, z,
+//            x, y, 1 + z,
+//            x, 1 + y, z,
+//            x, 1 + y, z,
+//            x, y + 1, z +1,
+//            x, y, z + 1
+
+//              right face
+//                1 + x, y, z,
+//                1 + x, y, 1 + z,
+//                1 + x, 1 + y, z,
+//                1 + x, 1 + y, z,
+//                1 + x, y + 1, z +1,
+//                1 + x, y, z + 1
+
+//front face
+//x, y, z,
+//                1 + x, y, z,
+//                x, 1 + y, z,
+//                x, 1 + y, z,
+//                1 + x, y + 1, z,
+//                1 + x, y, z
+
+//back face
+//x, y, 1 + z,
+//                1 + x, y, 1 + z,
+//                x, 1 + y, 1 + z,
+//                x, 1 + y, 1 + z,
+//                1 + x, y + 1, 1 + z,
+//                1 + x, y, 1 + z
+            
+            colourData = getColour(this.getType());
+            return;
+        }            
+    }
+    
+    public float [] getColour(BlockType type)
+    {
+        switch(type)
+        {
+            case WATER:
+                return new float[]
+                {
+                    0f, 1f, 1f,
+                    0f, 1f, 1f,
+                    0f, 1f, 1f,
+                    0f, 1f, 1f,
+                    0f, 1f, 1f,
+                    0f, 1f, 1f,
+                };
+            case ROAD:
+                return new float[]
+                {
+                    0.5f, 0.5f, 0.5f,
+                    0.5f, 0.5f, 0.5f,
+                    0.5f, 0.5f, 0.5f,
+                    0.5f, 0.5f, 0.5f,
+                    0.5f, 0.5f, 0.5f,
+                    0.5f, 0.5f, 0.5f,
+                };
+        }
+        return null;
     }
 
     public void print()

@@ -6,8 +6,13 @@
 package algorithm;
 
 import cityevolver.Block;
+import cityevolver.BlockType;
+import java.nio.FloatBuffer;
 import java.util.Arrays;
 import java.util.Random;
+import org.lwjgl.BufferUtils;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
 
 /**
  *
@@ -21,8 +26,15 @@ public class Individual
     private final int yLength;
     private final int zLength;
     private int fitness;
-    private Random r;
+    private final Random r;
     private final int index;
+    
+    private boolean individualChanged = true;
+    private int numberOfVertices;
+    FloatBuffer vertexData;
+    FloatBuffer colourData;
+    int VBOVertexHandle;
+    int VBOColourHandle;
 
     public Individual(int xLength, int yLength, int zLength, int index)
     {
@@ -39,11 +51,11 @@ public class Individual
             {
                 for (int k = 0; k < zLength ; k++)
                 {
-                    this.gene[i][j][k] = new Block(i, j, k, (byte)this.r.nextInt(2));
-//                    this.gene[i][j][k].print();
+                    this.gene[i][j][k] = new Block(i, j, k, BlockType.values()[this.r.nextInt(2)]);
                 }
             }
         }
+        this.numberOfVertices = 0;
     }
 
     public Individual(Individual in)
@@ -186,7 +198,7 @@ public class Individual
                 {
                     if(mutationVal > r.nextDouble())
                     {
-                        this.gene[i][j][k] = new Block(i, j, k, (byte)this.r.nextInt(2));
+                        this.gene[i][j][k] = new Block(i, j, k, BlockType.values()[this.r.nextInt(2)]);
                     }
                 }
             }
@@ -204,20 +216,129 @@ public class Individual
         System.out.print(Arrays.toString(this.gene));
         System.out.println("-" + this.fitness);
     }
-
-    public void draw()
+    
+    private int calcNumberOfVertices()
     {
+        if(individualChanged)
+        {
+            for (int i = 0; i < xLength; i++)
+            {
+                for (int j = 0; j < yLength ; j++)
+                {
+                    for (int k = 0; k < zLength ; k++)
+                    {
+                        numberOfVertices += this.gene[i][j][k].getNumberOfVertices();
+                    }
+                }
+            }
+        }
+        return numberOfVertices;
+    }
+    
+    public float [] getVertexBuffer()
+    {
+        float [] vertices = new float[0];
         for (int i = 0; i < xLength; i++)
         {
             for (int j = 0; j < yLength ; j++)
             {
                 for (int k = 0; k < zLength ; k++)
                 {
-                    
-                    this.gene[i][j][k].draw();
+                    vertices = concatenateFloatArrays(vertices, this.gene[i][j][k].getVertexData());
                 }
             }
         }
+        return vertices;
+    }
+    
+    public float [] getColourBuffer()
+    {
+        float [] vertices = new float[0];
+        for (int i = 0; i < xLength; i++)
+        {
+            for (int j = 0; j < yLength ; j++)
+            {
+                for (int k = 0; k < zLength ; k++)
+                {
+                    vertices = concatenateFloatArrays(vertices, this.gene[i][j][k].getColourData());
+                }
+            }
+        }
+        return vertices;
+    }
+    
+    public float [] calculateBuffers()
+    {
+        float [] vertices = new float[0];
+        for (int i = 0; i < xLength; i++)
+        {
+            for (int j = 0; j < yLength ; j++)
+            {
+                for (int k = 0; k < zLength ; k++)
+                {
+                    this.gene[i][j][k].calculateBuffers();
+                }
+            }
+        }
+        return vertices;
+    }
+    
+    public float [] concatenateFloatArrays(float [] array1, float [] array2)
+    {
+        float [] concat = new float[array1.length + array2.length];
+        System.arraycopy(array1, 0, concat, 0, array1.length);
+        System.arraycopy(array2, 0, concat, array1.length, array2.length);
+        return concat;
+    }
+
+    public void render()
+    {
+        if(individualChanged)
+        {
+            calculateBuffers();
+            calcNumberOfVertices();
+            
+            vertexData = BufferUtils.createFloatBuffer(numberOfVertices);
+            colourData = BufferUtils.createFloatBuffer(numberOfVertices);
+            
+            vertexData.put(getVertexBuffer());
+            colourData.put(getColourBuffer());
+            
+            vertexData.flip();
+            colourData.flip();
+            
+            VBOVertexHandle = glGenBuffers();
+            glBindBuffer(GL_ARRAY_BUFFER, VBOVertexHandle);
+            glBufferData(GL_ARRAY_BUFFER, vertexData, GL_STATIC_DRAW);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            
+            VBOColourHandle = glGenBuffers();
+            glBindBuffer(GL_ARRAY_BUFFER, VBOColourHandle);
+            glBufferData(GL_ARRAY_BUFFER, colourData, GL_STATIC_DRAW);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            
+            individualChanged = false;
+        }
+        
+        glBindBuffer(GL_ARRAY_BUFFER, VBOVertexHandle);
+        glVertexPointer(3, GL_FLOAT, 0, 0l);
+
+        glBindBuffer(GL_ARRAY_BUFFER, VBOColourHandle);
+        glColorPointer(3, GL_FLOAT, 0, 0l);
+
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
+
+        glDrawArrays(GL_TRIANGLES, 0, numberOfVertices/3);
+
+        glDisableClientState(GL_COLOR_ARRAY);
+        glDisableClientState(GL_VERTEX_ARRAY);
+    }
+
+    public void cleanUp()
+    {
+        glDeleteBuffers(VBOVertexHandle);
+        glDeleteBuffers(VBOColourHandle);
     }
     
     

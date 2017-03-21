@@ -1641,7 +1641,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             }
         }
         System.out.println(index);
-        Renderer.getInstance().viewMap(this.generatedPopulation.getIndividual(index));
+        Renderer.getInstance().viewMap(this.generatedPopulation.getIndividual(index));        
         this.viewMap();
     }//GEN-LAST:event_viewMapButtonActionPerformed
 
