@@ -39,7 +39,8 @@ public class Population
     {
         if (x <= 0 || y <= 0 || z <= 0 || populationNumber <= 0 || generations <= 0)
         {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("" + String.valueOf(x) + 
+                    String.valueOf(y) + "" + String.valueOf(populationNumber));
         }
         
         this.X_LENGTH = x;
@@ -130,7 +131,6 @@ public class Population
             this.meanFitness += fitness;
         }
         this.meanFitness = this.meanFitness / populationNumber;
-//        System.out.println("algorithm.Popultation.calculateFitness() " + this.fittest);
     }
     
     void print()

@@ -7,6 +7,8 @@ package algorithm;
 
 import cityevolver.Block;
 import cityevolver.BlockType;
+import static cityevolver.Utils.concatenateFloatArrays;
+import static cityevolver.Utils.getRandomBlock;
 import java.nio.FloatBuffer;
 import java.util.Arrays;
 import java.util.Random;
@@ -51,7 +53,29 @@ public class Individual
             {
                 for (int k = 0; k < zLength ; k++)
                 {
-                    this.gene[i][j][k] = new Block(i, j, k, BlockType.values()[this.r.nextInt(2)]);
+                    this.gene[i][j][k] = new Block(i, j, k, getRandomBlock());
+                }
+            }
+        }
+        this.numberOfVertices = 0;
+    }
+    
+    public Individual() // test
+    {
+        this.index = -1;
+        this.gene = new Block[1][1][4];
+        this.fitness = 0;
+        this.xLength = 1;
+        this.yLength = 1;
+        this.zLength = 3;
+        this.r = new Random();
+        for (int i = 0; i < xLength; i++)
+        {
+            for (int j = 0; j < yLength ; j++)
+            {
+                for (int k = 0; k < zLength ; k++)
+                {
+                    this.gene[i][j][k] = new Block(i, j, k, BlockType.values()[k+2]);
                 }
             }
         }
@@ -77,6 +101,7 @@ public class Individual
         this.yLength = individual1.getYLength();
         this.zLength = individual1.getZLength();  
         this.index = index;
+        
         for (int i = 0; i < xLength; i++)
         {
             for (int j = 0; j < yLength ; j++)
@@ -198,7 +223,7 @@ public class Individual
                 {
                     if(mutationVal > r.nextDouble())
                     {
-                        this.gene[i][j][k] = new Block(i, j, k, BlockType.values()[this.r.nextInt(2)]);
+                        this.gene[i][j][k] = new Block(i, j, k, getRandomBlock());
                     }
                 }
             }
@@ -253,18 +278,18 @@ public class Individual
     
     public float [] getColourBuffer()
     {
-        float [] vertices = new float[0];
+        float [] colour = null;
         for (int i = 0; i < xLength; i++)
         {
             for (int j = 0; j < yLength ; j++)
             {
                 for (int k = 0; k < zLength ; k++)
                 {
-                    vertices = concatenateFloatArrays(vertices, this.gene[i][j][k].getColourData());
+                    colour = concatenateFloatArrays(colour, this.gene[i][j][k].getColourData());
                 }
             }
         }
-        return vertices;
+        return colour;
     }
     
     public float [] calculateBuffers()
@@ -281,14 +306,6 @@ public class Individual
             }
         }
         return vertices;
-    }
-    
-    public float [] concatenateFloatArrays(float [] array1, float [] array2)
-    {
-        float [] concat = new float[array1.length + array2.length];
-        System.arraycopy(array1, 0, concat, 0, array1.length);
-        System.arraycopy(array2, 0, concat, array1.length, array2.length);
-        return concat;
     }
 
     public void render()

@@ -1,5 +1,7 @@
 package cityevolver;
 
+import static cityevolver.Utils.concatenateFloatArrays;
+
 public class Block
 {
     private final int y;
@@ -14,7 +16,8 @@ public class Block
         this.x = x;
         this.y = y;
         this.z = z;
-        this.type = BlockType.WATER;
+        this.type = type;
+        System.out.println("cityevolver.Block.<init>() " + type.name());
     }
 
     public BlockType getType()
@@ -29,7 +32,14 @@ public class Block
     
     public int getNumberOfVertices()
     {
-        return vertexData.length;
+        if(vertexData != null)
+        {
+            return vertexData.length;
+        }
+        else
+        {
+            return 0;
+        }
     }
     
     public float [] getVertexData()
@@ -63,87 +73,168 @@ public class Block
                 1 + x, y, 1 + z,
                 x, y, z + 1
             };
-            
-            
-//                bottom face
-//                x, y, z,
-//                x, y, 1 + z,
-//                1 + x, y, z,
-//                1 + x, y, z,
-//                1 + x, y, 1 + z,
-//                x, y, z + 1
-            
-//top face
-//x, 1 + y, z,
-//                x, 1 + y, 1 + z,
-//                1 + x, 1 + y, z,
-//                1 + x, 1 + y, z,
-//                1 + x, 1 + y, 1 + z,
-//                x, 1 + y, z + 1
-
-//            left side
-//            x, y, z,
-//            x, y, 1 + z,
-//            x, 1 + y, z,
-//            x, 1 + y, z,
-//            x, y + 1, z +1,
-//            x, y, z + 1
-
-//              right face
-//                1 + x, y, z,
-//                1 + x, y, 1 + z,
-//                1 + x, 1 + y, z,
-//                1 + x, 1 + y, z,
-//                1 + x, y + 1, z +1,
-//                1 + x, y, z + 1
-
-//front face
-//x, y, z,
-//                1 + x, y, z,
-//                x, 1 + y, z,
-//                x, 1 + y, z,
-//                1 + x, y + 1, z,
-//                1 + x, y, z
-
-//back face
-//x, y, 1 + z,
-//                1 + x, y, 1 + z,
-//                x, 1 + y, 1 + z,
-//                x, 1 + y, 1 + z,
-//                1 + x, y + 1, 1 + z,
-//                1 + x, y, 1 + z
-            
-            colourData = getColour(this.getType());
-            return;
-        }            
+        }
+        else
+        {
+            vertexData = new float[]
+            {   
+                //bottom face
+                x, y, z,
+                x, y, 1 + z,
+                1 + x, y, z,
+                1 + x, y, z,
+                1 + x, y, 1 + z,
+                x, y, z + 1,
+                
+                //top face
+                x, 1 + y, z,
+                x, 1 + y, 1 + z,
+                1 + x, 1 + y, z,
+                1 + x, 1 + y, z,
+                1 + x, 1 + y, 1 + z,
+                x, 1 + y, z + 1,
+                
+                //left side
+                x, y, z,
+                x, y, 1 + z,
+                x, 1 + y, z,
+                x, 1 + y, z,
+                x, y + 1, z +1,
+                x, y, z + 1,
+                
+                //right face
+                1 + x, y, z,
+                1 + x, y, 1 + z,
+                1 + x, 1 + y, z,
+                1 + x, 1 + y, z,
+                1 + x, y + 1, z +1,
+                1 + x, y, z + 1,
+                
+                //front face
+                x, y, z,
+                1 + x, y, z,
+                x, 1 + y, z,
+                x, 1 + y, z,
+                1 + x, y + 1, z,
+                1 + x, y, z,
+                
+                //back face
+                x, y, 1 + z,
+                1 + x, y, 1 + z,
+                x, 1 + y, 1 + z,
+                x, 1 + y, 1 + z,
+                1 + x, y + 1, 1 + z,
+                1 + x, y, 1 + z
+            };
+        }   
+        colourData = getColour(this.getType());
     }
     
     public float [] getColour(BlockType type)
     {
+        float [] colour = null;
         switch(type)
         {
+            case IMMOVABLE:
+                for (int i = 0; i < 36; i++)
+                {
+                    colour = concatenateFloatArrays(colour, new float [] {0f, 0f, 0f} );
+                }
+                break;
+                
             case WATER:
-                return new float[]
+                for (int i = 0; i < 6; i++)
                 {
-                    0f, 1f, 1f,
-                    0f, 1f, 1f,
-                    0f, 1f, 1f,
-                    0f, 1f, 1f,
-                    0f, 1f, 1f,
-                    0f, 1f, 1f,
-                };
+                    colour = concatenateFloatArrays(colour, new float [] {0f, 1f, 1f} );
+                }
+                break;
+                
             case ROAD:
-                return new float[]
+                for (int i = 0; i < 6; i++)
                 {
-                    0.5f, 0.5f, 0.5f,
-                    0.5f, 0.5f, 0.5f,
-                    0.5f, 0.5f, 0.5f,
-                    0.5f, 0.5f, 0.5f,
-                    0.5f, 0.5f, 0.5f,
-                    0.5f, 0.5f, 0.5f,
-                };
+                    colour = concatenateFloatArrays(colour, new float [] {0.5f, 0.5f, 0.5f} );
+                }
+                break;
+                
+            case GRASS:
+                for (int i = 0; i < 6; i++)
+                {
+                    colour = concatenateFloatArrays(colour, new float [] {0.063f, 0.82f, 0f} );
+                }
+                break;
+                
+            case LIGHTRESIDENTIAL:
+                for (int i = 0; i < 36; i++)
+                {
+                    colour = concatenateFloatArrays(colour, new float [] {0f, 1f, 0.78f} );
+                }
+                break;
+                
+            case DENSERESIDENTIAL:
+                for (int i = 0; i < 36; i++)
+                {
+                    colour = concatenateFloatArrays(colour, new float [] {0f, 0.39f, 0f} );
+                }
+                break;
+                
+            case LIGHTCOMMERCIAL:
+                for (int i = 0; i < 36; i++)
+                {
+                    colour = concatenateFloatArrays(colour, new float [] {0f, 1f, 1f} );
+                }
+                break;
+                
+            case DENSECOMMERCIAL:
+                for (int i = 0; i < 36; i++)
+                {
+                    colour = concatenateFloatArrays(colour, new float [] {0f, 0f, 1f} );
+                }
+                break;
+                
+            case FARMLAND:
+                for (int i = 0; i < 36; i++)
+                {
+                    colour = concatenateFloatArrays(colour, new float [] {1f, 0.925f, 0.545f} );
+                }
+                break;
+                
+            case INDUSTRY:
+                for (int i = 0; i < 36; i++)
+                {
+                    colour = concatenateFloatArrays(colour, new float [] {1f, 0.79f, 0f} );
+                }
+                break;
+                
+            case HOSPTIAL:
+                for (int i = 0; i < 36; i++)
+                {
+                    colour = concatenateFloatArrays(colour, new float [] {1f, 1f, 1f} );
+                }
+                break;
+                
+            case POLICE:
+                for (int i = 0; i < 36; i++)
+                {
+                    colour = concatenateFloatArrays(colour, new float [] {0.749f, 0.373f, 1f} );
+                }
+                break;
+                
+            case FIRE:
+                for (int i = 0; i < 36; i++)
+                {
+                    colour = concatenateFloatArrays(colour, new float [] {1f, 0f, 0.2f} );
+                }
+                break;
+                
+            case EDUCATION:
+                for (int i = 0; i < 36; i++)
+                {
+                    colour = concatenateFloatArrays(colour, new float [] {0.396f, 0.263f, 0.129f} );
+                }
+                break;
+                
         }
-        return null;
+        return colour;
     }
 
     public void print()

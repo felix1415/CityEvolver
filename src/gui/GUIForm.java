@@ -1346,6 +1346,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     private void stopGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_stopGaButtonActionPerformed
     {//GEN-HEADEREND:event_stopGaButtonActionPerformed
         this.setRunGeneticAlgorithm(false);
+        GeneticAlgorithm.getInstance().setRunning(false);
         this.gaRestart = true;
     }//GEN-LAST:event_stopGaButtonActionPerformed
 
@@ -1481,6 +1482,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         inputMapsList.setEnabled(false);
         deleteInputFileButton.setEnabled(false);
         loadInputFileButton.setEnabled(false);
+        
     }//GEN-LAST:event_loadInputFileButtonActionPerformed
 
     public synchronized void log(String text, boolean error)
@@ -1640,7 +1642,6 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                 break;
             }
         }
-        System.out.println(index);
         Renderer.getInstance().viewMap(this.generatedPopulation.getIndividual(index));        
         this.viewMap();
     }//GEN-LAST:event_viewMapButtonActionPerformed

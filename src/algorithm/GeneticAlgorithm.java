@@ -92,7 +92,7 @@ public class GeneticAlgorithm implements Runnable
         }
         catch(Exception e)
         {
-            GUIForm.getInstance().log("Set initial map value", true);
+            GUIForm.getInstance().log("Set initial map value: " + e.toString(), true);
         }
     }
     

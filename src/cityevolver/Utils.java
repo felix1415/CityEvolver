@@ -5,14 +5,41 @@
  */
 package cityevolver;
 
+import java.util.Random;
+
 /**
  *
  * @author alexgray
  */
 public class Utils
 {
-    public static BlockType randomBlockType(int type)
+    
+    private static Random random = new Random(1);
+    public static float [] concatenateFloatArrays(float [] array1, float [] array2)
     {
-        return BlockType.values()[type];
+        if(array1 == null)
+        {
+            return array2;
+        }
+        else if(array2 == null)
+        {
+            return array1;
+        }
+        else if(array2 == null && array1 == null)
+        {
+            return null;
+        }
+        else
+        {
+            float [] concat = new float[array1.length + array2.length];
+            System.arraycopy(array1, 0, concat, 0, array1.length);
+            System.arraycopy(array2, 0, concat, array1.length, array2.length);
+            return concat;
+        }   
+    }
+    
+    public static BlockType getRandomBlock()
+    {
+        return BlockType.values()[random.nextInt(BlockType.values().length)];
     }
 }
