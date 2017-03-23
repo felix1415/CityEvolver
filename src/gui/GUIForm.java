@@ -3,6 +3,7 @@ package gui;
 import algorithm.GeneticAlgorithm;
 import algorithm.Individual;
 import algorithm.Population;
+import files.FileManager;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -34,6 +35,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     boolean mapIsToBeLoaded = false;
     boolean viewMapButtonPressed = false;
     Population generatedPopulation = null;
+    Individual viewingIndividual = null;
     /**
      * Creates new form NewJFrame
      */
@@ -420,7 +422,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                     .addComponent(educationCostLabel)
                     .addComponent(totalCostLabel)
                     .addComponent(costLabel))
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
         statsPanelLayout.setVerticalGroup(
             statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -509,7 +511,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                     .addComponent(educationUtilityLabel)
                     .addComponent(totalUtilityLabel)
                     .addComponent(utilityLabel))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1345,9 +1347,13 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
     private void stopGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_stopGaButtonActionPerformed
     {//GEN-HEADEREND:event_stopGaButtonActionPerformed
-        this.setRunGeneticAlgorithm(false);
-        GeneticAlgorithm.getInstance().setRunning(false);
-        this.gaRestart = true;
+        if(this.runGeneticAlgorithm())
+        {
+            this.setRunGeneticAlgorithm(false);
+            GeneticAlgorithm.getInstance().setRunning(false);
+            this.gaRestart = true;
+        }
+        
     }//GEN-LAST:event_stopGaButtonActionPerformed
 
     private void resetGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_resetGaButtonActionPerformed
@@ -1604,6 +1610,19 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             GeneticAlgorithm.getInstance().setGenerations(generationsGetRealValue());
             GeneticAlgorithm.getInstance().setMutation(mutationGetRealValue());
             
+            GeneticAlgorithm.getInstance().setRoadValue(roadsSlider.getValue());
+            GeneticAlgorithm.getInstance().setGrassValue(grassParksSlider.getValue());
+            GeneticAlgorithm.getInstance().setLightResidentialValue(lightResidentialSlider.getValue());
+            GeneticAlgorithm.getInstance().setDenseResidentialValue(denseResidentialSlider.getValue());
+            GeneticAlgorithm.getInstance().setLightCommercialValue(lightCommercialSider.getValue());
+            GeneticAlgorithm.getInstance().setDenseCommercialValue(denseCommercialSlider.getValue());
+            GeneticAlgorithm.getInstance().setFarmlandValue(farmlandSlider.getValue());
+            GeneticAlgorithm.getInstance().setIndustryValue(industrySlider.getValue());
+            GeneticAlgorithm.getInstance().setHospitalValue(hospitalSlider.getValue());
+            GeneticAlgorithm.getInstance().setPoliceValue(policeSlider.getValue());
+            GeneticAlgorithm.getInstance().setFireValue(fireSlider.getValue());
+            GeneticAlgorithm.getInstance().setEducationValue(educationSlider.getValue());
+            
             GeneticAlgorithm.getInstance().initialise();
         }
         // if we are reseting the ga, un set the flag
@@ -1630,20 +1649,43 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         return mapSolutionArrayList;
     }
     
+    private int getSelectedIndividualFromPopulationList()
+    {
+        String map = populationMapsList.getSelectedValue();
+        int index = -1;
+        try
+        {
+            for (String string : mapSolutionArrayList)
+            {
+                if(string.equals(map))
+                {
+                    index = mapSolutionArrayList.indexOf(string);
+                    break;
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            this.log("Couldn't traverse solution list.", true);
+        }
+        return index;
+    }
+    
     private void viewMapButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_viewMapButtonActionPerformed
     {//GEN-HEADEREND:event_viewMapButtonActionPerformed
         mapToViewString = populationMapsList.getSelectedValue();
-        int index = -1;
-        for (String string : mapSolutionArrayList)
+        
+        int index = getSelectedIndividualFromPopulationList();
+        if(index != -1)
         {
-            if(string.equals(mapToViewString))
-            {
-                index = mapSolutionArrayList.indexOf(string);
-                break;
-            }
+            this.viewMap(this.generatedPopulation.getIndividual(index));   
         }
-        Renderer.getInstance().viewMap(this.generatedPopulation.getIndividual(index));        
-        this.viewMap();
+        else
+        {
+            this.log("Unknown error while trying to load a generated solution", true);
+            return;
+        }
+        
     }//GEN-LAST:event_viewMapButtonActionPerformed
 
     private void refreshPopulationMapListButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_refreshPopulationMapListButtonActionPerformed
@@ -1667,7 +1709,39 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
     private void savePopulationMapButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_savePopulationMapButtonActionPerformed
     {//GEN-HEADEREND:event_savePopulationMapButtonActionPerformed
-        // TODO add your handling code here:
+        String name = populationMapNameField.getText();
+        if(name.equals(""))
+        {
+            this.log("Map to save needs a name.", true);
+        }
+        else if(FileManager.getInstance().doesFileExist(name))
+        {
+            this.log("Map filename already exists.", true);
+        }
+        else if (populationMapsList.isSelectionEmpty())
+        {
+            this.log("Select a map to save.", true);
+        }
+        else
+        {
+            int index = getSelectedIndividualFromPopulationList();
+            if(index != -1)
+            {
+                boolean success = FileManager.getInstance().saveCEO(this.generatedPopulation.getIndividual(index), name);
+                if(success)
+                {
+                    this.log("Map '" + name + "' succsefully saved.");
+                }
+                else
+                {
+                    this.log("Unknown error while saving '" + name + "'", true);
+                }
+            }
+            else
+            {
+                this.log("Unknown error while trying to load a generated solution", true);
+            }
+        }
     }//GEN-LAST:event_savePopulationMapButtonActionPerformed
     
     public synchronized void setGeneratedPopulationListPopulation(Population popIn)
@@ -1687,20 +1761,24 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         this.populationMapsList.setListData(arr);
     }
     
-    private void viewMap()
+    public void viewMap(Individual individual)
     {
+        viewingIndividual = new Individual(individual);
+        System.out.println("gui.GUIForm.viewMap()");
         if(openGLInstance != null && openGLInstance.isAlive())
         {
-            Renderer.getInstance().setRunning(false);
             try
             {
+                Renderer.getInstance().setRunning(false);
                 openGLInstance.join();
-            } catch (InterruptedException ex)
+            } catch (Exception ex)
             {
                 Logger.getLogger(GUIForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }            
         }
         
+        Renderer.getInstance().viewMap(viewingIndividual);
+   
         Renderer.getInstance().setRunning(true);
         openGLInstance = new Thread(Renderer.getInstance());
         openGLInstance.start();

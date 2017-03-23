@@ -1,12 +1,12 @@
 package cityevolver;
 
 import algorithm.GeneticAlgorithm;
+import algorithm.Individual;
 import files.FileManager;
 import gui.GUIForm;
-import java.util.ArrayList;
+import gui.Renderer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static org.lwjgl.opengl.GL11.*;
 
 public class CityEvolver
 {   
@@ -15,7 +15,13 @@ public class CityEvolver
 
     public static void main(String[] args)
     {
-//        FileManager.getInstance().saveCEO(null, "test");
+        Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+//        FileManager.getInstance().saveCEO(new Individual(), "test");
+//        Individual loaded = FileManager.getInstance().loadCEO("test");
+//
+//        guiInstance.start();
+//        Renderer.getInstance().viewMap(loaded);
+//        GUIForm.getInstance().viewMap();
 //        System.exit(0);
                 
         guiInstance.start();

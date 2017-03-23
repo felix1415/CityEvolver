@@ -24,7 +24,7 @@ import java.nio.FloatBuffer;
 public class Renderer implements Runnable
 {
     private static Renderer instance;
-    private int displayListHandle;
+
     private int x = 305;
     private int y = 300;
     private int height = 510;
@@ -32,7 +32,7 @@ public class Renderer implements Runnable
     private boolean running;
     private Camera camera;
     private Canvas canvas;
-    private Individual individual;
+    private Individual individual = null;
     
     private double time;
     private double frameTime;
@@ -54,7 +54,6 @@ public class Renderer implements Runnable
         frames = 0;
         running = true;
         
-        displayListHandle = -1;
         this.canvas = canvas;
         this.height = height;
         this.width = width;
@@ -70,7 +69,7 @@ public class Renderer implements Runnable
        }
        return instance;
     }
-    
+      
     protected Renderer()
     {
         time = 0.0f;
@@ -78,8 +77,6 @@ public class Renderer implements Runnable
         currentTime = 0;
         frames = 0;
         running = true;
-        
-        displayListHandle = -1;
     }
     
     private void embedDisplayToCanvas(Canvas parentCanvas, int height, int width)
@@ -125,16 +122,37 @@ public class Renderer implements Runnable
         
         
     }
-    public void cleanUp()
+    public synchronized void cleanUp()
     {
-        individual.cleanUp();
-        camera.cleanUp();
-        Display.destroy();
+        try
+        {
+            individual.cleanUp();
+            camera.cleanUp();
+            Display.destroy();
+        }
+        catch(Exception ex)
+        {
+            //sometimes we call this when cleanup has already been performed, just in case.
+            //th
+        }
+        System.out.println("gui.Renderer.cleanUp()");
     }
     
     public synchronized void viewMap(Individual individual)
     {
         this.individual = individual;
+    }
+    
+    public synchronized String getCurrentIndividualName()
+    {
+        if(this.individual != null)
+        {
+            return this.individual.getName();
+        }
+        else
+        {
+            return null;
+        }
     }
     
     private void render()
@@ -180,7 +198,7 @@ public class Renderer implements Runnable
     @Override
     public void run()
     {
-        Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+        Thread.currentThread().setPriority(Thread.MAX_PRIORITY - 1);
         if(canvas != null)
         {
             embedDisplayToCanvas(canvas, width, height);

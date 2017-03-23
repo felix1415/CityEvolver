@@ -17,7 +17,7 @@ public class Block
         this.y = y;
         this.z = z;
         this.type = type;
-        System.out.println("cityevolver.Block.<init>() " + type.name());
+//        System.out.println("cityevolver.Block.<init>() " + type.name());
     }
 
     public BlockType getType()
@@ -54,6 +54,7 @@ public class Block
     
     public void calculateBuffers()
     {
+        vertexData = null;
         if(this.getType() == BlockType.AIR)
         {
             return;
@@ -240,5 +241,18 @@ public class Block
     public void print()
     {
         System.out.println("x" + x + " y" + y + " z" + z);
+    }
+
+    public boolean isLowestLevel()
+    {
+        return this.y == 0;
+    }
+    
+    public boolean isJoinableBlock()
+    {
+        return this.type != BlockType.AIR 
+                && this.type != BlockType.WATER
+                && this.type != BlockType.GRASS
+                && this.type != BlockType.ROAD;
     }
 }

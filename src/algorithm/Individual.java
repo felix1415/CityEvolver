@@ -33,12 +33,12 @@ public class Individual
     
     private boolean individualChanged = true;
     private int numberOfVertices;
-    FloatBuffer vertexData;
-    FloatBuffer colourData;
-    int VBOVertexHandle;
-    int VBOColourHandle;
+    FloatBuffer vertexData = null;
+    FloatBuffer colourData = null;
+    int VBOVertexHandle = -1;
+    int VBOColourHandle = -1;
 
-    public Individual(int xLength, int yLength, int zLength, int index)
+    public Individual(int xLength, int yLength, int zLength, int index) // intial
     {
         this.index = index;
         this.gene = new Block[xLength][yLength][zLength];
@@ -60,14 +60,45 @@ public class Individual
         this.numberOfVertices = 0;
     }
     
+    public Individual(int x, int y, int z, Block[][][] blocks) //load in
+    {
+        this.xLength = x;
+        this.yLength = y;
+        this.zLength = z;
+        this.gene = new Block[xLength][yLength][zLength];
+        this.index = -1;
+        this.fitness = 0;
+        this.numberOfVertices = 0;
+        this.r = new Random();
+        
+        for (int i = 0; i < xLength; i++)
+        {
+            for (int j = 0; j < yLength ; j++)
+            {
+                for (int k = 0; k < zLength ; k++)
+                {
+                    if(blocks[i][j][k] != null)
+                    {
+                        this.gene[i][j][k] = blocks[i][j][k];
+                    }
+                    else
+                    {
+                        this.gene[i][j][k] = new Block(i, j, k, BlockType.AIR);
+                    }
+                }
+            }
+        }
+    }
+    
     public Individual() // test
     {
         this.index = -1;
-        this.gene = new Block[1][1][4];
-        this.fitness = 0;
         this.xLength = 1;
         this.yLength = 1;
-        this.zLength = 3;
+        this.zLength = BlockType.values().length;
+        this.gene = new Block[xLength][yLength][zLength];
+        this.fitness = 0;
+        
         this.r = new Random();
         for (int i = 0; i < xLength; i++)
         {
@@ -75,14 +106,14 @@ public class Individual
             {
                 for (int k = 0; k < zLength ; k++)
                 {
-                    this.gene[i][j][k] = new Block(i, j, k, BlockType.values()[k+2]);
+                    this.gene[i][j][k] = new Block(i, j, k, BlockType.values()[k]);
                 }
             }
         }
         this.numberOfVertices = 0;
     }
 
-    public Individual(Individual in)
+    public Individual(Individual in) // copy
     {
         this.index = in.getIndex() + 100;
         this.gene = in.getGene().clone();
@@ -94,7 +125,7 @@ public class Individual
         this.r = new Random();
     }
 
-    Individual(Individual individual1, Individual individual2, int xCross, int yCross, int zCross, int index)
+    Individual(Individual individual1, Individual individual2, int xCross, int yCross, int zCross, int index) //crossover
     {
         this.gene = new Block[individual1.getXLength()][individual1.getYLength()][individual1.getZLength()];
         this.xLength = individual1.getXLength();
@@ -139,6 +170,8 @@ public class Individual
     {
         this.fitness = 0;
         int numberOfRoadBlocks = 0;
+        
+        this.gene = HardConstraintEnforcement.applyConstraints(xLength, yLength, zLength, this.gene);
         for (int i = 0; i < xLength; i++)
         {
             for (int j = 0; j < yLength ; j++)
@@ -185,7 +218,6 @@ public class Individual
             numberOfRoadBlocks = numberOfRoadBlocks * 2;
         }
         this.fitness = numberOfRoadBlocks;
-        
     }
 
     public Block[][][] getGene()
@@ -197,7 +229,7 @@ public class Individual
     {
         return gene[x][y][z];
     }
-
+    
     public int getXLength()
     {
         return xLength;
@@ -244,6 +276,7 @@ public class Individual
     
     private int calcNumberOfVertices()
     {
+        numberOfVertices = 0;
         if(individualChanged)
         {
             for (int i = 0; i < xLength; i++)
@@ -292,9 +325,8 @@ public class Individual
         return colour;
     }
     
-    public float [] calculateBuffers()
+    public void calculateBuffers()
     {
-        float [] vertices = new float[0];
         for (int i = 0; i < xLength; i++)
         {
             for (int j = 0; j < yLength ; j++)
@@ -305,13 +337,14 @@ public class Individual
                 }
             }
         }
-        return vertices;
     }
 
     public void render()
     {
         if(individualChanged)
         {
+            vertexData = null;
+            colourData = null;
             calculateBuffers();
             calcNumberOfVertices();
             
@@ -347,7 +380,7 @@ public class Individual
         glEnableClientState(GL_COLOR_ARRAY);
 
         glDrawArrays(GL_TRIANGLES, 0, numberOfVertices/3);
-
+        
         glDisableClientState(GL_COLOR_ARRAY);
         glDisableClientState(GL_VERTEX_ARRAY);
     }
@@ -356,6 +389,7 @@ public class Individual
     {
         glDeleteBuffers(VBOVertexHandle);
         glDeleteBuffers(VBOColourHandle);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
     
     

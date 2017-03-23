@@ -364,7 +364,7 @@
                           <Component id="totalCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="costLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="134" max="32767" attributes="0"/>
+                      <EmptySpace pref="136" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -511,7 +511,7 @@
                           <Component id="totalUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="utilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="44" max="32767" attributes="0"/>
+                      <EmptySpace pref="46" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
