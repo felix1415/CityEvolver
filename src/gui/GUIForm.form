@@ -105,64 +105,75 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jSeparator1" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="industrySlider" min="-2" pref="124" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="industryLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="denseResidentialSlider" pref="124" max="32767" attributes="0"/>
-                                  <Component id="farmlandSlider" pref="0" max="32767" attributes="0"/>
-                                  <Component id="denseCommercialSlider" alignment="1" pref="0" max="32767" attributes="0"/>
-                                  <Component id="lightResidentialSlider" alignment="1" pref="0" max="32767" attributes="0"/>
-                                  <Component id="grassParksSlider" alignment="1" pref="0" max="32767" attributes="0"/>
-                                  <Component id="roadsSlider" alignment="1" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="denseResidentialLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="grassParksLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="roadsLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lightResidentialLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="denseCommercialLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="farmlandLabel" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="roadSlider" min="-2" pref="124" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="roadsLabel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="airSlider" min="-2" pref="124" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="airLabel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="resetFitnessFunctionButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="industrySlider" min="-2" pref="124" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="industryLabel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="lightCommercialSlider" min="-2" pref="124" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lightCommercialLabel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="hospitalSlider" min="-2" pref="124" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="hospitalLabel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="policeSlider" min="-2" pref="124" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="policeLabel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="fireSlider" min="-2" pref="124" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="fireLabel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="educationSlider" min="-2" pref="124" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="educationLabel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="grassParksSlider" alignment="0" pref="0" max="32767" attributes="0"/>
+                                          <Component id="lightResidentialSlider" alignment="0" pref="0" max="32767" attributes="0"/>
+                                          <Component id="denseResidentialSlider" alignment="0" pref="0" max="32767" attributes="0"/>
+                                          <Component id="denseCommercialSlider" alignment="0" pref="0" max="32767" attributes="0"/>
+                                          <Component id="farmlandSlider" min="-2" pref="124" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="denseResidentialLabel" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lightResidentialLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="denseCommercialLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="farmlandLabel" min="-2" max="-2" attributes="0"/>
+                                          <Component id="grassParksLabel" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lightCommercialSider" min="-2" pref="124" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lightCommercialLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="hospitalSlider" min="-2" pref="124" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="hospitalLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="policeSlider" min="-2" pref="124" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="policeLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="fireSlider" min="-2" pref="124" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="fireLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="educationSlider" min="-2" pref="124" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="educationLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="resetFitnessFunctionButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -171,9 +182,16 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="roadsSlider" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="airSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="airLabel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="roadSlider" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="roadsLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="grassParksSlider" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
@@ -186,16 +204,16 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="denseResidentialSlider" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="denseResidentialLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="denseResidentialLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="denseResidentialSlider" min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="lightCommercialSider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="lightCommercialSlider" min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="lightCommercialLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="denseCommercialSlider" min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="denseCommercialLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -231,13 +249,19 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="resetFitnessFunctionButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="75" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JSlider" name="roadsSlider">
+            <Component class="javax.swing.JSlider" name="roadSlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="roadSliderStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="roadsLabel">
               <Properties>
@@ -245,6 +269,12 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSlider" name="grassParksSlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="grassParksSliderStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="grassParksLabel">
               <Properties>
@@ -252,6 +282,12 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSlider" name="lightResidentialSlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="lightResidentialSliderStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lightResidentialLabel">
               <Properties>
@@ -259,6 +295,12 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSlider" name="denseCommercialSlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="denseCommercialSliderStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="denseCommercialLabel">
               <Properties>
@@ -266,6 +308,12 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSlider" name="farmlandSlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="farmlandSliderStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="farmlandLabel">
               <Properties>
@@ -273,13 +321,25 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSlider" name="denseResidentialSlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="denseResidentialSliderStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="denseResidentialLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="DenseResidential: 50"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSlider" name="lightCommercialSider">
+            <Component class="javax.swing.JSlider" name="lightCommercialSlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="lightCommercialSliderStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lightCommercialLabel">
               <Properties>
@@ -287,6 +347,12 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSlider" name="industrySlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="industrySliderStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="industryLabel">
               <Properties>
@@ -294,12 +360,36 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSlider" name="hospitalSlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="hospitalSliderStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSlider" name="policeSlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="policeSliderStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSlider" name="fireSlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="fireSliderStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSlider" name="educationSlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="educationSliderStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="hospitalLabel">
               <Properties>
@@ -328,6 +418,22 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetFitnessFunctionButtonActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JSlider" name="airSlider">
+              <Properties>
+                <Property name="value" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="airSliderStateChanged"/>
+                <EventHandler event="caretPositionChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="airSliderCaretPositionChanged"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="airLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Air: 50"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSeparator" name="jSeparator1">
             </Component>
           </SubComponents>
         </Container>
@@ -861,7 +967,7 @@
             <Container class="javax.swing.JPanel" name="lightResidentialKeyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="c8" green="ff" red="0" type="rgb"/>
+                  <Color blue="c8" green="ff" red="8a" type="rgb"/>
                 </Property>
               </Properties>
 

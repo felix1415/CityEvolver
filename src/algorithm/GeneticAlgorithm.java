@@ -5,8 +5,12 @@
  */
 package algorithm;
 
+import cityevolver.BlockType;
 import gui.GUIForm;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -36,6 +40,20 @@ public class GeneticAlgorithm implements Runnable
     private int yBound;
     private int zBound;
     
+    private int roadsValue;
+    private int grassValue;
+    private int lightResidentialValue;
+    private int denseResidentialValue;
+    private int lightCommercialValue;
+    private int denseCommercialValue;
+    private int farmlandValue;
+    private int industryValue;
+    private int hospitalValue;
+    private int policeValue;
+    private int fireValue;
+    private int educationValue;
+    private int airValue;
+    
     protected GeneticAlgorithm() 
     {
         running = false;
@@ -52,24 +70,24 @@ public class GeneticAlgorithm implements Runnable
         }
     }
     
-    public void setBounds(int x, int y, int z)
+    public synchronized void setBounds(int x, int y, int z)
     {
         this.xBound = x;
         this.yBound = y;
         this.zBound = z;
     }
 
-    public void setGenerations(int generations)
+    public synchronized void setGenerations(int generations)
     {
         this.generations = generations;
     }
 
-    public void setPopulation(int populationNum)
+    public synchronized void setPopulation(int populationNum)
     {
         this.populationNumber = populationNum;
     }
 
-    public void setMutation(float mutation)
+    public synchronized void setMutation(float mutation)
     {
         this.mutation = mutation;
     }
@@ -84,10 +102,18 @@ public class GeneticAlgorithm implements Runnable
         return this.population.getSolutionMapList();
     }
 
-    public void initialise()
+    public synchronized void initialise()
     {
         try
         {
+            System.out.println(xBound);
+            System.out.println(yBound);
+            System.out.println(zBound);
+            System.out.println(populationNumber);
+            System.out.println(generations);
+            System.out.println(mutation);
+            
+            
             this.population = new Population(xBound, yBound, zBound, populationNumber, generations, mutation);
         }
         catch(Exception e)
@@ -116,64 +142,159 @@ public class GeneticAlgorithm implements Runnable
         this.running = running;
     }
 
-    public void setRoadValue(int value)
+    public synchronized void setRoadValue(int value)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        roadsValue = value;
     }
 
-    public void setGrassValue(int value)
+    public void setAirValue(int airValue)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.airValue = airValue;
     }
 
-    public void setLightResidentialValue(int value)
+    public synchronized void setGrassValue(int value)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        grassValue = value;
     }
 
-    public void setLightCommercialValue(int value)
+    public synchronized void setLightResidentialValue(int value)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        lightResidentialValue = value;
     }
 
-    public void setDenseResidentialValue(int value)
+    public synchronized void setLightCommercialValue(int value)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        lightCommercialValue = value;
     }
 
-    public void setDenseCommercialValue(int value)
+    public synchronized void setDenseResidentialValue(int value)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        denseResidentialValue = value;
     }
 
-    public void setFarmlandValue(int value)
+    public synchronized void setDenseCommercialValue(int value)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        denseCommercialValue = value;
     }
 
-    public void setHospitalValue(int value)
+    public synchronized void setFarmlandValue(int value)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        farmlandValue = value;
     }
 
-    public void setIndustryValue(int value)
+    public synchronized void setHospitalValue(int value)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        hospitalValue = value;
     }
 
-    public void setFireValue(int value)
+    public synchronized void setIndustryValue(int value)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        industryValue = value;
     }
 
-    public void setPoliceValue(int value)
+    public synchronized void setFireValue(int value)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        fireValue = value;
     }
 
-    public void setEducationValue(int value)
+    public synchronized void setPoliceValue(int value)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        policeValue = value;
     }
 
+    public synchronized void setEducationValue(int value)
+    {
+        educationValue = value;
+    }
+    
+    public int getAirValue()
+    {
+        return airValue;
+    }
+
+    public synchronized int getRoadsValue()
+    {
+        return roadsValue;
+    }
+
+    public synchronized int getGrassValue()
+    {
+        return grassValue;
+    }
+
+    public synchronized int getLightResidentialValue()
+    {
+        return lightResidentialValue;
+    }
+
+    public synchronized int getDenseResidentialValue()
+    {
+        return denseResidentialValue;
+    }
+
+    public synchronized int getLightCommercialValue()
+    {
+        return lightCommercialValue;
+    }
+
+    public synchronized int getDenseCommercialValue()
+    {
+        return denseCommercialValue;
+    }
+
+    public synchronized int getFarmlandValue()
+    {
+        return farmlandValue;
+    }
+
+    public synchronized int getIndustryValue()
+    {
+        return industryValue;
+    }
+
+    public synchronized int getHospitalValue()
+    {
+        return hospitalValue;
+    }
+
+    public synchronized int getPoliceValue()
+    {
+        return policeValue;
+    }
+
+    public synchronized int getFireValue()
+    {
+        return fireValue;
+    }
+
+    public synchronized int getEducationValue()
+    {
+        return educationValue;
+    }
+    
+    public synchronized ArrayList<Tuple> getBlocksForSearch()
+    {
+        ArrayList<Tuple> allBlockValues = new ArrayList<>();
+        allBlockValues.add(new Tuple(airValue, BlockType.AIR));
+        allBlockValues.add(new Tuple(roadsValue, BlockType.ROAD));
+        allBlockValues.add(new Tuple(grassValue, BlockType.GRASS));
+        allBlockValues.add(new Tuple(lightResidentialValue, BlockType.LIGHTRESIDENTIAL));
+        allBlockValues.add(new Tuple(denseResidentialValue, BlockType.DENSERESIDENTIAL));
+        allBlockValues.add(new Tuple(lightCommercialValue, BlockType.LIGHTCOMMERCIAL));
+        allBlockValues.add(new Tuple(denseCommercialValue, BlockType.DENSECOMMERCIAL));
+        allBlockValues.add(new Tuple(farmlandValue, BlockType.FARMLAND));
+        allBlockValues.add(new Tuple(industryValue, BlockType.INDUSTRY));
+        allBlockValues.add(new Tuple(hospitalValue, BlockType.HOSPTIAL));
+        allBlockValues.add(new Tuple(policeValue, BlockType.POLICE));
+        allBlockValues.add(new Tuple(fireValue, BlockType.FIRE));
+        allBlockValues.add(new Tuple(educationValue, BlockType.EDUCATION));
+        
+        ArrayList<Tuple> blocksForSearch = new ArrayList<>();
+        allBlockValues.stream().filter((tuple) -> ((int)tuple.x > 0)).forEach((tuple) ->
+        {
+            blocksForSearch.add(tuple);
+        });
+        
+        return blocksForSearch;
+    }
 }

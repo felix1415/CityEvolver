@@ -34,19 +34,6 @@ public class Population
     private int fittest;
     private int fittestIndividual;
     private int currentGeneration;
-    
-    private int roadsValue;
-    private int grassValue;
-    private int lightResidentialValue;
-    private int denseResidentialValue;
-    private int lightCommercialValue;
-    private int denseCommercialValue;
-    private int farmlandValue;
-    private int industryValue;
-    private int hospitalValue;
-    private int policeValue;
-    private int fireValue;
-    private int educationValue;
 
     public Population(int x, int y, int z, int populationNumber, int generations, float mutationRate)
     {
@@ -66,7 +53,7 @@ public class Population
         this.population = new Individual[this.populationNumber];
         this.random = new Random();
         currentGeneration = 0;
-        
+        System.out.println("algorithm.Population.<init>()");
         for (int i = 0; i < this.populationNumber; i++)
         {
             this.population[i] = new Individual(X_LENGTH, Y_LENGTH, Z_LENGTH, i + 1);
@@ -219,63 +206,4 @@ public class Population
         return this.population[index];
     }
     
-    public void setRoadValue(int value)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setGrassValue(int value)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setLightResidentialValue(int value)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setLightCommercialValue(int value)
-    {
-        lightCommercialValue = value;
-    }
-
-    public void setDenseResidentialValue(int value)
-    {
-        denseResidentialValue = value;
-    }
-
-    public void setDenseCommercialValue(int value)
-    {
-        denseCommercialValue = value;
-    }
-
-    public void setFarmlandValue(int value)
-    {
-        farmlandValue = value;
-    }
-
-    public void setHospitalValue(int value)
-    {
-        hospitalValue = value;
-    }
-
-    public void setIndustryValue(int value)
-    {
-        industryValue = value;
-    }
-
-    public void setFireValue(int value)
-    {
-        fireValue = value;
-    }
-
-    public void setPoliceValue(int value)
-    {
-        policeValue = value;
-    }
-
-    public void setEducationValue(int value)
-    {
-        educationValue = value;
-    }
 }

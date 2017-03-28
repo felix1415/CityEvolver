@@ -27,7 +27,72 @@ public class Block
 
     public boolean isRoad()
     {
-        return type.ordinal() == 1;
+        return type == BlockType.ROAD;
+    }
+    
+    public boolean isGrass()
+    {
+        return type == BlockType.GRASS;
+    }
+    
+    public boolean isWater()
+    {
+        return type == BlockType.WATER;
+    }
+     
+    public boolean isAir()
+    {
+        return type == BlockType.AIR;
+    }
+    
+    public boolean isLResidential()
+    {
+        return type == BlockType.LIGHTRESIDENTIAL;
+    }
+    
+    public boolean isDResidential()
+    {
+        return type == BlockType.DENSERESIDENTIAL;
+    }
+    
+    public boolean isLCommercial()
+    {
+        return type == BlockType.LIGHTCOMMERCIAL;
+    }
+    
+    public boolean isDCommercial()
+    {
+        return type == BlockType.DENSECOMMERCIAL;
+    }
+    
+    public boolean isFarmland()
+    {
+        return type == BlockType.FARMLAND;
+    }
+    
+    public boolean isIndustry()
+    {
+        return type == BlockType.INDUSTRY;
+    }
+    
+    public boolean isHospital()
+    {
+        return type == BlockType.HOSPTIAL;
+    }
+    
+    public boolean isPolice()
+    {
+        return type == BlockType.POLICE;
+    }
+    
+    public boolean isFire()
+    {
+        return type == BlockType.FIRE;
+    }
+    
+    public boolean isEducation()
+    {
+        return type == BlockType.EDUCATION;
     }
     
     public int getNumberOfVertices()
@@ -146,7 +211,7 @@ public class Block
             case WATER:
                 for (int i = 0; i < 6; i++)
                 {
-                    colour = concatenateFloatArrays(colour, new float [] {0f, 1f, 1f} );
+                    colour = concatenateFloatArrays(colour, new float [] {0f, 0.756f, 0.933f} );
                 }
                 break;
                 
@@ -167,7 +232,7 @@ public class Block
             case LIGHTRESIDENTIAL:
                 for (int i = 0; i < 36; i++)
                 {
-                    colour = concatenateFloatArrays(colour, new float [] {0f, 1f, 0.78f} );
+                    colour = concatenateFloatArrays(colour, new float [] {0.541f, 1f, 0.784f} );
                 }
                 break;
                 
@@ -255,4 +320,36 @@ public class Block
                 && this.type != BlockType.GRASS
                 && this.type != BlockType.ROAD;
     }
+
+    public int getY()
+    {
+        return y;
+    }
+
+    public int getZ()
+    {
+        return z;
+    }
+
+    public int getX()
+    {
+        return x;
+    }
+
+    public boolean isType(BlockType type)
+    {
+        return type.equals(this.type);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Block{" + "y=" + y + ", z=" + z + ", type=" + type + ", x=" + x + '}';
+    }
+    
+    
+    
+    
+    
+    
 }

@@ -5,16 +5,26 @@
  */
 package algorithm;
 
+
 import cityevolver.Block;
 import cityevolver.BlockType;
+import cityevolver.Utils;
 import static cityevolver.Utils.concatenateFloatArrays;
-import static cityevolver.Utils.getRandomBlock;
 import java.nio.FloatBuffer;
 import java.util.Arrays;
 import java.util.Random;
 import org.lwjgl.BufferUtils;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
+import java.util.ArrayList;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
 
 /**
  *
@@ -30,6 +40,7 @@ public class Individual
     private int fitness;
     private final Random r;
     private final int index;
+    public Tuple connected = null;
     
     private boolean individualChanged = true;
     private int numberOfVertices;
@@ -37,9 +48,12 @@ public class Individual
     FloatBuffer colourData = null;
     int VBOVertexHandle = -1;
     int VBOColourHandle = -1;
+    
+    private final ArrayList<Tuple> blocksAndValuesForSearch;
 
     public Individual(int xLength, int yLength, int zLength, int index) // intial
     {
+        this.blocksAndValuesForSearch = GeneticAlgorithm.getInstance().getBlocksForSearch();
         this.index = index;
         this.gene = new Block[xLength][yLength][zLength];
         this.fitness = 0;
@@ -53,7 +67,7 @@ public class Individual
             {
                 for (int k = 0; k < zLength ; k++)
                 {
-                    this.gene[i][j][k] = new Block(i, j, k, getRandomBlock());
+                    this.gene[i][j][k] = new Block(i, j, k, getRandomBlock(blocksAndValuesForSearch));
                 }
             }
         }
@@ -70,6 +84,7 @@ public class Individual
         this.fitness = 0;
         this.numberOfVertices = 0;
         this.r = new Random();
+        this.blocksAndValuesForSearch = null;
         
         for (int i = 0; i < xLength; i++)
         {
@@ -93,24 +108,35 @@ public class Individual
     public Individual() // test
     {
         this.index = -1;
-        this.xLength = 1;
+        this.xLength = 3;
         this.yLength = 1;
         this.zLength = BlockType.values().length;
         this.gene = new Block[xLength][yLength][zLength];
         this.fitness = 0;
         
         this.r = new Random();
-        for (int i = 0; i < xLength; i++)
+        for (int x = 0; x < xLength; x++)
         {
-            for (int j = 0; j < yLength ; j++)
+            for (int y = 0; y < yLength; y++)
             {
-                for (int k = 0; k < zLength ; k++)
+                for (int z = 0; z < zLength ; z++)
                 {
-                    this.gene[i][j][k] = new Block(i, j, k, BlockType.values()[k]);
+                    if(x == 0 || z == 4)
+                    {
+                        this.gene[x][y][z] = new Block(x, y, z, BlockType.ROAD);
+                    }
+                    else
+                    {
+                        this.gene[x][y][z] = new Block(x, y, z, BlockType.LIGHTRESIDENTIAL);
+                    }
                 }
             }
         }
         this.numberOfVertices = 0;
+        ArrayList<Tuple> test = new ArrayList<>(); 
+        test.add(new Tuple(0,BlockType.ROAD));
+        test.add(new Tuple(0,BlockType.LIGHTRESIDENTIAL));
+        this.blocksAndValuesForSearch = test;
     }
 
     public Individual(Individual in) // copy
@@ -123,6 +149,8 @@ public class Individual
         this.zLength = in.getZLength();  
         
         this.r = new Random();
+        this.blocksAndValuesForSearch = (ArrayList<Tuple>) in.getBlocksForSearch().clone();
+        this.connected = in.connected;
     }
 
     Individual(Individual individual1, Individual individual2, int xCross, int yCross, int zCross, int index) //crossover
@@ -154,6 +182,7 @@ public class Individual
         
         this.fitness = 0;
         this.r = new Random();
+        this.blocksAndValuesForSearch = (ArrayList<Tuple>) individual1.getBlocksForSearch().clone();
     }
 
     public int getIndex()
@@ -169,55 +198,140 @@ public class Individual
     public synchronized void calcFitness()
     {
         this.fitness = 0;
-        int numberOfRoadBlocks = 0;
         
-        this.gene = HardConstraintEnforcement.applyConstraints(xLength, yLength, zLength, this.gene);
-        for (int i = 0; i < xLength; i++)
+        this.gene = HardConstraintEnforcement.getInstance().applyConstraints(xLength, yLength, zLength, this.gene);
+        int roadFitness = 0;
+        int airfitness = 0;
+        int grassfitness = 0;
+        int lResidentialFitness = 0;
+        int dResidentialFitness = 0;
+        int lCommercialFitness = 0;
+        int dCommercialFitness = 0;
+        int farmlandFitness = 0;
+        int industryFitness = 0;
+        int hospitalFitness = 0;
+        int policeFitness = 0;
+        int fireFitness = 0;
+        int educationFitness = 0;
+        
+        int numberOfRoads = 0;
+        int numberOfAir = 0;
+        int numberOfGrass = 0;
+        int numberOfLResidential = 0;
+        int numberOfDResidential = 0;
+        int numberOfLCommercial = 0;
+        int numberOfDCommercial = 0;
+        int numberOfFarmland = 0;
+        int numberOfIndustry = 0;
+        int numberOfHospital = 0;
+        int numberOfPolice = 0;
+        int numberOfFire = 0;
+        int numberOfEducation = 0;
+        for (int y = 0; y < yLength ; y++)
         {
-            for (int j = 0; j < yLength ; j++)
+            for (int x = 0; x < xLength; x++)
             {
-                for (int k = 0; k < zLength ; k++)
+                for (int z = 0; z < zLength ; z++)
                 {
-                    if(this.gene[i][j][k].isRoad())
+                    if(HardConstraintEnforcement.getInstance().isLowestLevel(x,y,z))
                     {
-                        if(i + 1 < xLength)
+                        if(this.gene[x][y][z].isRoad())
                         {
-                            if(this.gene[i + 1][j][k].isRoad())
-                            {
-                                numberOfRoadBlocks++;
-                            }
+                            ++numberOfRoads;
+                            roadFitness += HardConstraintEnforcement.getInstance().roadFitness(x, y, z);
                         }
-                        if(k + 1 < zLength)
+                        else if(this.gene[x][y][z].isAir())
                         {
-                            if(this.gene[i][j][k + 1].isRoad())
-                            {
-                                numberOfRoadBlocks++;
-                            }
+                            ++numberOfAir;
                         }
-                        else if(i != 0)
+                        else if(this.gene[x][y][z].isRoad())
                         {
-                            if(this.gene[i - 1][j][k].isRoad())
-                            {
-                            numberOfRoadBlocks++;
-                            }
+                            //roads are flat and create air space
+                            ++numberOfAir;
                         }
-                        else if(k != 0)
-                        {                        
-                            if(this.gene[i][j][k - 1].isRoad())
-                            {
-                                numberOfRoadBlocks++;
-                            }
+                        else if(this.gene[x][y][z].isWater())
+                        {
+                            //water is flat and create air space
+                            ++numberOfAir;
                         }
+                        else if(this.gene[x][y][z].isGrass())
+                        {
+                            //grass are flat and create air space
+                            ++numberOfAir;
+                            ++numberOfGrass;
+                        }
+                        else if(this.gene[x][y][z].isLResidential())
+                        {
+                            ++numberOfLResidential;
+                            lResidentialFitness += HardConstraintEnforcement.getInstance().lightResidentialFitness(x, y, z);
+                        }
+                        else if(this.gene[x][y][z].isDResidential())
+                        {
+                            dResidentialFitness += HardConstraintEnforcement.getInstance().denseResidentialFitness(x, y, z);
+                            ++numberOfDResidential;
+                        }
+                        else if(this.gene[x][y][z].isLCommercial())
+                        {
+                            lCommercialFitness += HardConstraintEnforcement.getInstance().lightCommercialFitness(x, y, z);
+                            ++numberOfLCommercial;
+                        }
+                        else if(this.gene[x][y][z].isDCommercial())
+                        {
+                            dCommercialFitness += HardConstraintEnforcement.getInstance().denseCommercialFitness(x, y, z);
+                            ++numberOfDCommercial;
+                        }
+                        else if(this.gene[x][y][z].isFarmland())
+                        {
+                            farmlandFitness += HardConstraintEnforcement.getInstance().farmlandFitness(x, y, z);
+                            ++numberOfLCommercial;
+                        }
+                        else if(this.gene[x][y][z].isIndustry())
+                        {
+                            industryFitness += HardConstraintEnforcement.getInstance().industryFitness(x, y, z);
+                            ++numberOfDCommercial;
+                        }
+                        else if(this.gene[x][y][z].isHospital())
+                        {
+                            hospitalFitness += HardConstraintEnforcement.getInstance().hospitalFitness(x, y, z);
+                            ++numberOfHospital;
+                        }
+                        else if(this.gene[x][y][z].isPolice())
+                        {
+                            hospitalFitness += HardConstraintEnforcement.getInstance().policeFitness(x, y, z);
+                            ++numberOfPolice;
+                        }
+                        else if(this.gene[x][y][z].isFire())
+                        {
+                            hospitalFitness += HardConstraintEnforcement.getInstance().fireFitness(x, y, z);
+                            ++numberOfFire;
+                        }
+                        else if(this.gene[x][y][z].isEducation())
+                        {
+                            hospitalFitness += HardConstraintEnforcement.getInstance().educationFitness(x, y, z);
+                            ++numberOfEducation;
+                        }
+                        
+                        
                     }
                 }
             }
         }
-        int numberOfBlocks = xLength * yLength * zLength;
-        if((numberOfBlocks / 2) > numberOfRoadBlocks)
+        float numberOfLowestLevelBlocks = xLength * zLength;
+        float numberOfAllBlocks = xLength * yLength * zLength;
+        float roadWeight = ((float)GeneticAlgorithm.getInstance().getRoadsValue() / 100f);
+        int idealRoadBlocks = Utils.roundFloat(numberOfLowestLevelBlocks * roadWeight);
+        float idealAirBlocks = numberOfLowestLevelBlocks * ((float)GeneticAlgorithm.getInstance().getRoadsValue() / 100f);
+        // if close to the precent of road blocks required
+        if(((float)idealRoadBlocks * 0.9) < numberOfRoads && (numberOfRoads < ((float)idealRoadBlocks * 1.1) )) // if 
         {
-            numberOfRoadBlocks = numberOfRoadBlocks * 2;
+            roadFitness *= roadWeight * 1.2;
         }
-        this.fitness = numberOfRoadBlocks;
+        //if all roads are connected, bonus fitness
+        if(HardConstraintEnforcement.getInstance().isAllRoadsConnected())
+        {
+            roadFitness *= 1.5;
+        }
+        this.fitness = roadFitness;
     }
 
     public Block[][][] getGene()
@@ -247,15 +361,22 @@ public class Individual
     
     public void mutation(double mutationVal)
     {
-        for (int i = 0; i < xLength; i++)
+        for (int x = 0; x < xLength; x++)
         {
-            for (int j = 0; j < yLength ; j++)
+            for (int y = 0; y < yLength ; y++)
             {
-                for (int k = 0; k < zLength ; k++)
+                for (int z = 0; z < zLength ; z++)
                 {
                     if(mutationVal > r.nextDouble())
                     {
-                        this.gene[i][j][k] = new Block(i, j, k, getRandomBlock());
+                        if(HardConstraintEnforcement.getInstance().isLowestLevel(x, y, z))
+                        {
+                            this.gene[x][y][z] = new Block(x, y, z, getRandomBlock(blocksAndValuesForSearch, BlockType.ROAD));
+                        }
+                        else
+                        {
+                            this.gene[x][y][z] = new Block(x, y, z, getRandomBlock(blocksAndValuesForSearch));
+                        }
                     }
                 }
             }
@@ -265,6 +386,11 @@ public class Individual
     public String getName()
     {
         return "Soloution Map " + Integer.toString(this.index) + " Fitness: " + this.getFitness();
+    }
+
+    public ArrayList<Tuple> getBlocksForSearch()
+    {
+        return blocksAndValuesForSearch;
     }
 
     public void print()
@@ -391,9 +517,4 @@ public class Individual
         glDeleteBuffers(VBOColourHandle);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
-    
-    
-    
-    
-    
 }

@@ -36,6 +36,22 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     boolean viewMapButtonPressed = false;
     Population generatedPopulation = null;
     Individual viewingIndividual = null;
+    
+    private int airPercent;
+    private int roadPercent;
+    private int grassParksPercent;
+    private int lightResidentialPercent;
+    private int denseResidentialPercent;
+    private int lightCommercialPercent;
+    private int denseCommercialPercent;
+    private int farmlandPercent;
+    private int industryPercent;
+    private int hospitalPercent;
+    private int policePercent;
+    private int firePercent;
+    private int educationPercent;
+    
+    
     /**
      * Creates new form NewJFrame
      */
@@ -63,6 +79,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         populationValueLabel.setText(Integer.toString(populationGetRealValue()));
         mutationValueLabel.setText(Float.toString(mutationGetRealValue()));
         generationsValueLabel.setText(Integer.toString(generationsGetRealValue()));
+        setSliderLabels();
     }
 
     /**
@@ -79,7 +96,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         topSeperator = new javax.swing.JSeparator();
         sideTabbedPane = new javax.swing.JTabbedPane();
         fitnessFunctionPanel = new javax.swing.JPanel();
-        roadsSlider = new javax.swing.JSlider();
+        roadSlider = new javax.swing.JSlider();
         roadsLabel = new javax.swing.JLabel();
         grassParksSlider = new javax.swing.JSlider();
         grassParksLabel = new javax.swing.JLabel();
@@ -91,7 +108,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         farmlandLabel = new javax.swing.JLabel();
         denseResidentialSlider = new javax.swing.JSlider();
         denseResidentialLabel = new javax.swing.JLabel();
-        lightCommercialSider = new javax.swing.JSlider();
+        lightCommercialSlider = new javax.swing.JSlider();
         lightCommercialLabel = new javax.swing.JLabel();
         industrySlider = new javax.swing.JSlider();
         industryLabel = new javax.swing.JLabel();
@@ -104,6 +121,9 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         fireLabel = new javax.swing.JLabel();
         educationLabel = new javax.swing.JLabel();
         resetFitnessFunctionButton = new javax.swing.JButton();
+        airSlider = new javax.swing.JSlider();
+        airLabel = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
         statsPanel = new javax.swing.JPanel();
         roadsCostLabel = new javax.swing.JLabel();
         costLabel = new javax.swing.JLabel();
@@ -226,21 +246,129 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
         sideTabbedPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
+        roadSlider.setValue(0);
+        roadSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                roadSliderStateChanged(evt);
+            }
+        });
+
         roadsLabel.setText("Roads: 50");
+
+        grassParksSlider.setValue(0);
+        grassParksSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                grassParksSliderStateChanged(evt);
+            }
+        });
 
         grassParksLabel.setText("Grass/Parks: 50");
 
+        lightResidentialSlider.setValue(0);
+        lightResidentialSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                lightResidentialSliderStateChanged(evt);
+            }
+        });
+
         lightResidentialLabel.setText("LightResidential: 50");
+
+        denseCommercialSlider.setValue(0);
+        denseCommercialSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                denseCommercialSliderStateChanged(evt);
+            }
+        });
 
         denseCommercialLabel.setText("DenseCommercial: 50");
 
+        farmlandSlider.setValue(0);
+        farmlandSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                farmlandSliderStateChanged(evt);
+            }
+        });
+
         farmlandLabel.setText("Farmland: 50");
+
+        denseResidentialSlider.setValue(0);
+        denseResidentialSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                denseResidentialSliderStateChanged(evt);
+            }
+        });
 
         denseResidentialLabel.setText("DenseResidential: 50");
 
+        lightCommercialSlider.setValue(0);
+        lightCommercialSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                lightCommercialSliderStateChanged(evt);
+            }
+        });
+
         lightCommercialLabel.setText("LightCommercial: 50");
 
+        industrySlider.setValue(0);
+        industrySlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                industrySliderStateChanged(evt);
+            }
+        });
+
         industryLabel.setText("Industry: 50");
+
+        hospitalSlider.setValue(0);
+        hospitalSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                hospitalSliderStateChanged(evt);
+            }
+        });
+
+        policeSlider.setValue(0);
+        policeSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                policeSliderStateChanged(evt);
+            }
+        });
+
+        fireSlider.setValue(0);
+        fireSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                fireSliderStateChanged(evt);
+            }
+        });
+
+        educationSlider.setValue(0);
+        educationSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                educationSliderStateChanged(evt);
+            }
+        });
 
         hospitalLabel.setText("Hospital: 50");
 
@@ -259,6 +387,27 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             }
         });
 
+        airSlider.setValue(0);
+        airSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                airSliderStateChanged(evt);
+            }
+        });
+        airSlider.addInputMethodListener(new java.awt.event.InputMethodListener()
+        {
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt)
+            {
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt)
+            {
+                airSliderCaretPositionChanged(evt);
+            }
+        });
+
+        airLabel.setText("Air: 50");
+
         javax.swing.GroupLayout fitnessFunctionPanelLayout = new javax.swing.GroupLayout(fitnessFunctionPanel);
         fitnessFunctionPanel.setLayout(fitnessFunctionPanelLayout);
         fitnessFunctionPanelLayout.setHorizontalGroup(
@@ -266,58 +415,72 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
                     .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
-                        .addComponent(industrySlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(industryLabel))
-                    .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
-                        .addGroup(fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(denseResidentialSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                            .addComponent(farmlandSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(denseCommercialSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(lightResidentialSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(grassParksSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(roadsSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(denseResidentialLabel)
-                            .addComponent(grassParksLabel)
-                            .addComponent(roadsLabel)
-                            .addComponent(lightResidentialLabel)
-                            .addComponent(denseCommercialLabel)
-                            .addComponent(farmlandLabel)))
-                    .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
-                        .addComponent(lightCommercialSider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lightCommercialLabel))
-                    .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
-                        .addComponent(hospitalSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(hospitalLabel))
-                    .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
-                        .addComponent(policeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(policeLabel))
-                    .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
-                        .addComponent(fireSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fireLabel))
-                    .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
-                        .addComponent(educationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(educationLabel)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
-                .addComponent(resetFitnessFunctionButton)
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
+                                .addComponent(roadSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(roadsLabel))
+                            .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
+                                .addComponent(airSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(airLabel))
+                            .addComponent(resetFitnessFunctionButton)
+                            .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
+                                .addComponent(industrySlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(industryLabel))
+                            .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
+                                .addComponent(lightCommercialSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lightCommercialLabel))
+                            .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
+                                .addComponent(hospitalSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(hospitalLabel))
+                            .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
+                                .addComponent(policeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(policeLabel))
+                            .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
+                                .addComponent(fireSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fireLabel))
+                            .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
+                                .addComponent(educationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(educationLabel))
+                            .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
+                                .addGroup(fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(grassParksSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(lightResidentialSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(denseResidentialSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(denseCommercialSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(farmlandSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(denseResidentialLabel)
+                                    .addComponent(lightResidentialLabel)
+                                    .addComponent(denseCommercialLabel)
+                                    .addComponent(farmlandLabel)
+                                    .addComponent(grassParksLabel))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         fitnessFunctionPanelLayout.setVerticalGroup(
             fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(fitnessFunctionPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(roadsSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(airSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(airLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(roadSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(roadsLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(grassParksSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -328,14 +491,14 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                     .addComponent(lightResidentialLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(denseResidentialSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(denseResidentialLabel))
+                    .addComponent(denseResidentialLabel)
+                    .addComponent(denseResidentialSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lightCommercialSider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lightCommercialSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lightCommercialLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(fitnessFunctionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(denseCommercialSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(denseCommercialLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -364,7 +527,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                     .addComponent(educationLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(resetFitnessFunctionButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         sideTabbedPane.addTab("Fitness Function", fitnessFunctionPanel);
@@ -595,7 +758,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        lightResidentialKeyPanel.setBackground(new java.awt.Color(0, 255, 200));
+        lightResidentialKeyPanel.setBackground(new java.awt.Color(138, 255, 200));
 
         javax.swing.GroupLayout lightResidentialKeyPanelLayout = new javax.swing.GroupLayout(lightResidentialKeyPanel);
         lightResidentialKeyPanel.setLayout(lightResidentialKeyPanelLayout);
@@ -1353,7 +1516,6 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             GeneticAlgorithm.getInstance().setRunning(false);
             this.gaRestart = true;
         }
-        
     }//GEN-LAST:event_stopGaButtonActionPerformed
 
     private void resetGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_resetGaButtonActionPerformed
@@ -1365,18 +1527,19 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
     private void resetFitnessFunctionButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_resetFitnessFunctionButtonActionPerformed
     {//GEN-HEADEREND:event_resetFitnessFunctionButtonActionPerformed
-        roadsSlider.setValue(50);
-        grassParksSlider.setValue(50);
-        lightResidentialSlider.setValue(50);
-        denseResidentialSlider.setValue(50);
-        lightCommercialSider.setValue(50);
-        denseCommercialSlider.setValue(50);
-        farmlandSlider.setValue(50);
-        industrySlider.setValue(50);
-        hospitalSlider.setValue(50);
-        policeSlider.setValue(50);
-        fireSlider.setValue(50);
-        educationSlider.setValue(50);
+        airSlider.setValue(25);
+        roadSlider.setValue(25);
+        grassParksSlider.setValue(25);
+        lightResidentialSlider.setValue(25);
+        denseResidentialSlider.setValue(25);
+        lightCommercialSlider.setValue(25);
+        denseCommercialSlider.setValue(25);
+        farmlandSlider.setValue(25);
+        industrySlider.setValue(25);
+        hospitalSlider.setValue(25);
+        policeSlider.setValue(25);
+        fireSlider.setValue(25);
+        educationSlider.setValue(25);
     }//GEN-LAST:event_resetFitnessFunctionButtonActionPerformed
 
     private void loadSavedMapButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_loadSavedMapButtonActionPerformed
@@ -1490,7 +1653,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         loadInputFileButton.setEnabled(false);
         
     }//GEN-LAST:event_loadInputFileButtonActionPerformed
-
+   
     public synchronized void log(String text, boolean error)
     {
         String output = "";
@@ -1610,11 +1773,11 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             GeneticAlgorithm.getInstance().setGenerations(generationsGetRealValue());
             GeneticAlgorithm.getInstance().setMutation(mutationGetRealValue());
             
-            GeneticAlgorithm.getInstance().setRoadValue(roadsSlider.getValue());
+            GeneticAlgorithm.getInstance().setRoadValue(roadSlider.getValue());
             GeneticAlgorithm.getInstance().setGrassValue(grassParksSlider.getValue());
             GeneticAlgorithm.getInstance().setLightResidentialValue(lightResidentialSlider.getValue());
             GeneticAlgorithm.getInstance().setDenseResidentialValue(denseResidentialSlider.getValue());
-            GeneticAlgorithm.getInstance().setLightCommercialValue(lightCommercialSider.getValue());
+            GeneticAlgorithm.getInstance().setLightCommercialValue(lightCommercialSlider.getValue());
             GeneticAlgorithm.getInstance().setDenseCommercialValue(denseCommercialSlider.getValue());
             GeneticAlgorithm.getInstance().setFarmlandValue(farmlandSlider.getValue());
             GeneticAlgorithm.getInstance().setIndustryValue(industrySlider.getValue());
@@ -1743,6 +1906,107 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             }
         }
     }//GEN-LAST:event_savePopulationMapButtonActionPerformed
+
+    private void airSliderCaretPositionChanged(java.awt.event.InputMethodEvent evt)//GEN-FIRST:event_airSliderCaretPositionChanged
+    {//GEN-HEADEREND:event_airSliderCaretPositionChanged
+        
+    }//GEN-LAST:event_airSliderCaretPositionChanged
+
+    private void airSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_airSliderStateChanged
+    {//GEN-HEADEREND:event_airSliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_airSliderStateChanged
+
+    private void roadSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_roadSliderStateChanged
+    {//GEN-HEADEREND:event_roadSliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_roadSliderStateChanged
+
+    private void grassParksSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_grassParksSliderStateChanged
+    {//GEN-HEADEREND:event_grassParksSliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_grassParksSliderStateChanged
+
+    private void lightResidentialSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_lightResidentialSliderStateChanged
+    {//GEN-HEADEREND:event_lightResidentialSliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_lightResidentialSliderStateChanged
+
+    private void denseResidentialSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_denseResidentialSliderStateChanged
+    {//GEN-HEADEREND:event_denseResidentialSliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_denseResidentialSliderStateChanged
+
+    private void lightCommercialSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_lightCommercialSliderStateChanged
+    {//GEN-HEADEREND:event_lightCommercialSliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_lightCommercialSliderStateChanged
+
+    private void denseCommercialSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_denseCommercialSliderStateChanged
+    {//GEN-HEADEREND:event_denseCommercialSliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_denseCommercialSliderStateChanged
+
+    private void farmlandSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_farmlandSliderStateChanged
+    {//GEN-HEADEREND:event_farmlandSliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_farmlandSliderStateChanged
+
+    private void industrySliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_industrySliderStateChanged
+    {//GEN-HEADEREND:event_industrySliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_industrySliderStateChanged
+
+    private void hospitalSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_hospitalSliderStateChanged
+    {//GEN-HEADEREND:event_hospitalSliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_hospitalSliderStateChanged
+
+    private void policeSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_policeSliderStateChanged
+    {//GEN-HEADEREND:event_policeSliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_policeSliderStateChanged
+
+    private void fireSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_fireSliderStateChanged
+    {//GEN-HEADEREND:event_fireSliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_fireSliderStateChanged
+
+    private void educationSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_educationSliderStateChanged
+    {//GEN-HEADEREND:event_educationSliderStateChanged
+        setSliderLabels();
+    }//GEN-LAST:event_educationSliderStateChanged
+    
+    public void setSliderLabels()
+    {
+        this.airPercent = airSlider.getValue();
+        this.airLabel.setText("Air: " + this.airPercent + "%");
+        this.roadPercent = roadSlider.getValue();
+        this.roadsLabel.setText("Road: " + this.roadPercent + "%");
+        this.grassParksPercent = grassParksSlider.getValue();
+        this.grassParksLabel.setText("Grass: " + this.grassParksPercent + "%");
+        this.lightResidentialPercent = lightResidentialSlider.getValue();
+        this.lightResidentialLabel.setText("LightResidential: " + this.lightResidentialPercent + "%");
+        this.denseResidentialPercent = denseResidentialSlider.getValue();
+        this.denseResidentialLabel.setText("DenseResidential: " + this.denseResidentialPercent + "%");
+        this.lightCommercialPercent = lightCommercialSlider.getValue();
+        this.lightCommercialLabel.setText("LightCommercial: " + this.lightCommercialPercent + "%");
+        this.denseCommercialPercent = denseCommercialSlider.getValue();
+        this.denseCommercialLabel.setText("DenseCommercial: " + this.denseCommercialPercent + "%");
+        this.farmlandPercent = farmlandSlider.getValue();
+        this.farmlandLabel.setText("Farmland: " + this.farmlandPercent + "%");
+        this.industryPercent = industrySlider.getValue();
+        this.industryLabel.setText("Industry: " + this.industryPercent + "%");
+        this.hospitalPercent = hospitalSlider.getValue();
+        this.hospitalLabel.setText("Hosptial: " + this.policePercent + "%");
+        this.policePercent = policeSlider.getValue();
+        this.policeLabel.setText("Police: " + this.policePercent + "%");
+        this.firePercent = fireSlider.getValue();
+        this.fireLabel.setText("Fire: " + this.firePercent + "%");
+        this.educationPercent = educationSlider.getValue();
+        this.educationLabel.setText("Education: " + this.educationPercent + "%");
+    }
+    
     
     public synchronized void setGeneratedPopulationListPopulation(Population popIn)
     {
@@ -1838,6 +2102,8 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DenseResidentialCostLabel;
     private javax.swing.JLabel GrassParksUtilityLabel;
+    private javax.swing.JLabel airLabel;
+    private javax.swing.JSlider airSlider;
     private javax.swing.JPanel blockKeyPanel;
     private javax.swing.ButtonGroup buttonGroup1;
     private java.awt.Canvas canvas1;
@@ -1905,12 +2171,13 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lightCommercialCostLabel;
     private javax.swing.JLabel lightCommercialKeyLabel;
     private javax.swing.JPanel lightCommercialKeyPanel;
     private javax.swing.JLabel lightCommercialLabel;
-    private javax.swing.JSlider lightCommercialSider;
+    private javax.swing.JSlider lightCommercialSlider;
     private javax.swing.JLabel lightCommercialUtilityLabel;
     private javax.swing.JLabel lightResidentialCostLabel;
     private javax.swing.JLabel lightResidentialKeyLabel;
@@ -1945,11 +2212,11 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton resetGaButton;
     private javax.swing.JButton resetInitialMapMenuButton;
     private javax.swing.JButton resetSearchGaButton;
+    private javax.swing.JSlider roadSlider;
     private javax.swing.JLabel roadsCostLabel;
     private javax.swing.JLabel roadsKeyLabel;
     private javax.swing.JPanel roadsKeyPanel;
     private javax.swing.JLabel roadsLabel;
-    private javax.swing.JSlider roadsSlider;
     private javax.swing.JLabel roadsUtilityLabel;
     private javax.swing.JButton saveGaButton;
     private javax.swing.JButton savePopulationMapButton;

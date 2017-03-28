@@ -8,6 +8,9 @@ package algorithm;
 import cityevolver.Block;
 import cityevolver.BlockType;
 import java.util.ArrayList;
+import static cityevolver.Utils.getRandomBlockExcludeImmovable;
+import java.util.Collections;
+import java.util.Random;
 
 /**
  *
@@ -15,36 +18,50 @@ import java.util.ArrayList;
  */
 public class HardConstraintEnforcement
 {
-    private static Block[][][] gene;
-    private static int xLength;
-    private static int yLength;
-    private static int zLength;
+    private Block[][][] gene;
+    private int xLength;
+    private int yLength;
+    private int zLength;
     
-    protected HardConstraintEnforcement() 
+    private static HardConstraintEnforcement instance = null;
+    
+    public static HardConstraintEnforcement getInstance() 
     {
-        gene = null;
+       if(instance == null) 
+       {
+          instance = new HardConstraintEnforcement();
+       }
+       return instance;
     }
     
-    public static Block[][][] applyConstraints(int xLength, int yLength, int zLength, Block[][][] gene)
+    public Block[][][] applyConstraints(int xLength, int yLength, int zLength, Block[][][] geneIn)
     {
-        HardConstraintEnforcement.gene = gene;
-        HardConstraintEnforcement.xLength = xLength;
-        HardConstraintEnforcement.yLength = yLength;
-        HardConstraintEnforcement.zLength = zLength;
-        
-        ArrayList<Block> possibleDeletions = new ArrayList<>();
+        this.gene = geneIn;
+        this.xLength = xLength;
+        this.yLength = yLength;
+        this.zLength = zLength;
         
         //note the constraints are applied to the first 
         //level first, incrementaly up (y is the outer loop)
-        for (int y = 0; y < HardConstraintEnforcement.yLength; y++)
+        for (int y = 0; y < this.yLength; y++)
         {
-            for (int x = 0; x < HardConstraintEnforcement.xLength; x++)
+            for (int x = 0; x < this.xLength; x++)
             {
-                for (int z = 0; z < HardConstraintEnforcement.zLength; z++)
+                for (int z = 0; z < this.zLength; z++)
                 {
                     //if not the lowest level of the map
                     if(!isLowestLevel(x, y, z))
                     {
+                        if(blockIsIllegalAboveLevelZero(x, y, z))
+                        {
+                            //ensure a legal block is placed in the right place.
+                            boolean isLegal = false;
+                            while(!isLegal)
+                            {
+                                this.gene[x][y][z] = new Block(x, y, z, getRandomBlockExcludeImmovable());
+                                isLegal = !blockIsIllegalAboveLevelZero(x, y, z);
+                            }     
+                        }
                         //if it doesn't have a block below
                         if(!hasJoinableBlockBelow(x, y, z))
                         { 
@@ -52,26 +69,161 @@ public class HardConstraintEnforcement
                             //a legal base it becomes air
                             if(!isAdjacentlyConnectedToLegalBlocks(x, y, z))
                             {
-                                gene[x][y][z] = new Block(x, y, z, BlockType.AIR);
+                                this.gene[x][y][z] = new Block(x, y, z, BlockType.AIR);
                             }
+                        }
+                    }
+                    else
+                    {
+                        if(isBlockAir(x, y, z))
+                        {
+                            boolean isLegal = false;
+                            while(!isLegal)
+                            {
+                                this.gene[x][y][z] = new Block(x, y, z, getRandomBlockExcludeImmovable());
+                                isLegal = !isBlockAir(x, y, z);
+                            } 
                         }
                     }
                 }
             }
         }
-        return gene;
+        return this.gene;
     }
     
-    private static boolean isLowestLevel(int x, int y, int z)
+    public boolean isLowestLevel(int x, int y, int z)
     {
         return y == 0;
     }
     
-    private static boolean hasJoinableBlockBelow(int x, int y, int z)
+    public ArrayList<Block> getRoads()
+    {
+        ArrayList<Block> roads = new ArrayList<>();
+        for (int x = 0; x < this.xLength; x++)
+        {
+            for (int z = 0; z < this.zLength; z++)
+            {
+                if(this.gene[x][0][z].isRoad())
+                {
+                    roads.add(this.gene[x][0][z]);
+                }
+            }
+        }
+        return roads;
+    }
+    
+    public boolean isAllRoadsConnected()
+    {
+        ArrayList<Block> roads = getRoads();
+        ArrayList<Block> queue = new ArrayList<>();
+        ArrayList<Block> visited = new ArrayList<>();
+        
+        if(roads.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            queue.add(roads.get(0));
+        }
+        
+        while(!queue.isEmpty()) {
+                Block node = queue.remove(0);
+                ArrayList<Block> unvisited = getUnvisitedChildrenNode(node, visited);
+                visited.add(node);
+                
+                if(!unvisited.isEmpty())
+                {
+                    queue.addAll(unvisited);
+                }
+        }
+        
+        return roads.size() == visited.size();
+    }
+    
+    private ArrayList<Block> getUnvisitedChildrenNode(Block node, ArrayList<Block> visited)
+    {
+        ArrayList<Block> blocks = getRoadConnections(node);
+        ArrayList<Block> unvisited = new ArrayList<>();
+        for (Block vBlock : visited)
+        {
+            if(isSameBlock(node, vBlock))
+            {
+                //this blocks children are already in the list
+                return unvisited;
+            }
+        }
+        
+        for (Block block : blocks)
+        {
+            boolean visitedBlock = false;
+            for (Block vBlock : visited)
+            {
+                if(isSameBlock(block, vBlock))
+                {
+                    visitedBlock = true;
+                }
+            }
+            if(!visitedBlock)
+            {
+                unvisited.add(block);
+            }
+        }        
+        return unvisited;
+    }
+    
+    private ArrayList<Block> getRoadConnections(Block node)
+    {
+        ArrayList<Block> blocks = new ArrayList<>();
+        
+        if(node.getX() + 1 < xLength)
+        {
+            if(this.gene[node.getX() + 1][node.getY()][node.getZ()].isRoad())
+            {
+                blocks.add(new Block(node.getX() + 1, node.getY(), node.getZ(), node.getType()));
+            }
+        }
+        if(node.getZ() + 1 < zLength)
+        {
+            if(this.gene[node.getX()][node.getY()][node.getZ() + 1].isRoad())
+            {
+                blocks.add(new Block(node.getX(), node.getY(), node.getZ() + 1, node.getType()));
+            }
+        }
+        if(node.getX() != 0)
+        {
+            if(this.gene[node.getX() - 1][node.getY()][node.getZ()].isRoad())
+            {
+                blocks.add(new Block(node.getX() - 1, node.getY(), node.getZ(), node.getType()));
+            }
+        }
+        if(node.getZ() != 0)
+        {                        
+            if(this.gene[node.getX()][node.getY()][node.getZ() - 1].isRoad())
+            {
+                blocks.add(new Block(node.getX(), node.getY(), node.getZ() - 1, node.getType()));
+            }
+        }
+        return blocks;
+    }
+    
+    private boolean isSameBlock(Block block1, Block block2)
+    {
+        return block1.getX() == block2.getX() 
+                && block1.getY() == block2.getY()
+                && block1.getZ() == block2.getZ();
+    }
+    
+    private boolean isRoad(int x, int y, int z)
+    {
+        return this.gene[x][y][z].isRoad();
+    }
+    
+    private boolean hasJoinableBlockBelow(int x, int y, int z)
     {
         if(y != 0)
         {
-            if(HardConstraintEnforcement.gene[x][y - 1][z].isJoinableBlock())
+            if(this.gene[x][y - 1][z].isJoinableBlock())
             {
                 return true;
             }
@@ -84,12 +236,23 @@ public class HardConstraintEnforcement
         return false;
     }
     
-    private static boolean isAdjacentlyConnectedToLegalBlocks(int x, int y, int z)
+    private boolean blockIsIllegalAboveLevelZero(int x, int y, int z)
+    {
+        return this.gene[x][y][z].isRoad() 
+                || this.gene[x][y][z].isWater();
+    }
+    
+    private boolean isBlockAir(int x, int y, int z)
+    {
+        return this.gene[x][y][z].isAir();
+    }
+    
+    private boolean isAdjacentlyConnectedToLegalBlocks(int x, int y, int z)
     {
         int numberOfAdjacentLegalBlocks = 0;
-        if(x + 1 < HardConstraintEnforcement.xLength)
+        if(x + 1 < this.xLength)
         {
-            if(HardConstraintEnforcement.gene[x + 1][y][z].isJoinableBlock())
+            if(this.gene[x + 1][y][z].isJoinableBlock())
             {
                 if(hasJoinableBlockBelow(x + 1, y, z))
                 {
@@ -99,7 +262,7 @@ public class HardConstraintEnforcement
         }
         if(z + 1 < zLength)
         {
-            if(HardConstraintEnforcement.gene[x][y][z + 1].isJoinableBlock())
+            if(this.gene[x][y][z + 1].isJoinableBlock())
             {
                 if(hasJoinableBlockBelow(x, y, z + 1))
                 {
@@ -109,7 +272,7 @@ public class HardConstraintEnforcement
         }
         else if(x != 0)
         {
-            if(HardConstraintEnforcement.gene[x - 1][y][z].isJoinableBlock())
+            if(this.gene[x - 1][y][z].isJoinableBlock())
             {
                 if(hasJoinableBlockBelow(x - 1, y, z))
                 {
@@ -119,7 +282,7 @@ public class HardConstraintEnforcement
         }
         else if(z != 0)
         {                        
-            if(HardConstraintEnforcement.gene[x][y][z - 1].isJoinableBlock())
+            if(this.gene[x][y][z - 1].isJoinableBlock())
             {
                 if(hasJoinableBlockBelow(x, y, z - 1))
                 {
@@ -130,46 +293,447 @@ public class HardConstraintEnforcement
         
         return numberOfAdjacentLegalBlocks >= 2;
     }
-//    public boolean adjacentBlockAreRoadBlocks(int x, int y, int z, Block[][][] gene)
-//    {
-//        if(x + 1 < CityEvolver)
-//        {
-//            if(gene[i + 1][j][k].isRoad())
-//            {
-//                numberOfRoadBlocks++;
-//            }
-//        }
-//        if(k + 1 < zLength)
-//        {
-//            if(this.gene[i][j][k + 1].isRoad())
-//            {
-//                numberOfRoadBlocks++;
-//            }
-//        }
-//        else if(i != 0)
-//        {
-//            if(this.gene[i - 1][j][k].isRoad())
-//            {
-//            numberOfRoadBlocks++;
-//            }
-//        }
-//        else if(k != 0)
-//        {                        
-//            if(this.gene[i][j][k - 1].isRoad())
-//            {
-//                numberOfRoadBlocks++;
-//            }
-//        }
-//    }
     
     public static boolean groupingRoadBlocksOnThisBlock(int x, int y, int z)
     {
         return false; 
     }
     
-    public static boolean isAllRoadBlocksConnected()
+    private boolean withinTwoBlocksOfRoad(int x, int y, int z)
     {
+        //one block away
+        if((x + 1 < xLength) && (this.gene[x + 1][y][z].isRoad()))
+        {
+            return true;
+        }
+        if((z + 1 < zLength) && (this.gene[x][y][z + 1].isRoad()))
+        {
+            return true;
+        }
+        if((x != 0) && (this.gene[x - 1][y][z].isRoad()))
+        {
+            return true;
+        }
+        if((z != 0) && this.gene[x][y][z - 1].isRoad())
+        {                        
+            return true;
+        }
+        
+        //two blocks aways
+        if((x + 2 < xLength) && (this.gene[x + 2][y][z].isRoad()))
+        {
+            return true;
+        }
+        if((z + 2 < zLength) && (this.gene[x][y][z + 2].isRoad()))
+        {
+            return true;
+        }
+        if((x > 1) && (this.gene[x - 2][y][z].isRoad()))
+        {
+            return true;
+        }
+        if((z > 1) && this.gene[x][y][z - 2].isRoad())
+        {                        
+            return true;
+        }
+        
+        //diagonal
+        if((x + 1 < xLength) && (z + 1 < zLength) && (this.gene[x + 1][y][z + 1].isRoad()))
+        {
+            return true;
+        }
+        if((z + 1 < zLength) && (x != 0) && (this.gene[x - 1][y][z + 1].isRoad()))
+        {
+            return true;
+        }
+        if((z != 0) && (x + 1 < xLength) && this.gene[x + 1][y][z - 1].isRoad())
+        {
+            return true;
+        }
+        if((z != 0) && (x != 0) && (this.gene[x - 1][y][z - 1].isRoad()))
+        {
+            return true;
+        }
+        
         return false;
+    }
+    
+    public int adjacentToBlockOfType(int x, int y, int z, BlockType type)
+    {
+        int numberOfBlocks = 0;
+        //if adjacent to any residential
+        if(x + 1 < xLength)
+        {
+            if(this.gene[x + 1][y][z].isType(type))
+            {
+                ++numberOfBlocks;
+            }
+        }
+        if(z + 1 < zLength)
+        {
+            if(this.gene[x][y][z + 1].isType(type))
+            {
+                ++numberOfBlocks;
+            }
+        }
+        if(x != 0)
+        {
+            if(this.gene[x - 1][y][z].isType(type))
+            {
+                ++numberOfBlocks;
+            }
+        }
+        if(z != 0)
+        {                        
+            if(this.gene[x][y][z - 1].isType(type))
+            {
+                ++numberOfBlocks;
+            }
+        }
+        if(y + 1 < yLength)
+        {
+            if(this.gene[x][y + 1][z].isType(type))
+            {
+                ++numberOfBlocks;
+            }
+        }
+        if(y != 0)
+        {
+            if(this.gene[x][y - 1][z].isType(type))
+            {
+                ++numberOfBlocks;
+            }
+        }
+        return numberOfBlocks;
+    }
+    
+    public int nextToBlockOfType(int x, int y, int z, BlockType type)
+    {
+        int numberOfBlocks = adjacentToBlockOfType(x, y, z, type);
+        //if adjacent to any residential
+        
+        if((x + 1 < xLength) && (z + 1 < zLength) && (this.gene[x + 1][y][z + 1].isType(type)))
+        {
+            ++numberOfBlocks;
+        }
+        if((z + 1 < zLength) && (x != 0) && (this.gene[x - 1][y][z + 1].isType(type)))
+        {
+            ++numberOfBlocks;
+        }
+        if((z != 0) && (x + 1 < xLength) && this.gene[x + 1][y][z - 1].isType(type))
+        {
+            ++numberOfBlocks;
+        }
+        if((z != 0) && (x != 0) && (this.gene[x - 1][y][z - 1].isType(type)))
+        {
+            ++numberOfBlocks;
+        }
+        return numberOfBlocks;
+    }
+    
+    public int lightResidentialFitness(int x, int y, int z)
+    {
+        int lightResidentialFitness = 1; // one for being a road block
+        if(this.gene[x][y][z].isLResidential())
+        {
+            if(this.gene[x][y][z].isLowestLevel())
+            {
+                if(withinTwoBlocksOfRoad(x,y,z))
+                {
+                    ++lightResidentialFitness;
+                }
+            }
+            lightResidentialFitness += adjacentToBlockOfType(x, y, z, BlockType.LIGHTRESIDENTIAL) * 2;
+            lightResidentialFitness += adjacentToBlockOfType(x, y, z, BlockType.DENSERESIDENTIAL);              
+        }
+        return lightResidentialFitness;
+    }
+    
+    public int denseResidentialFitness(int x, int y, int z)
+    {
+        int denseResidentialFitness = 1; // one for being a road block
+        if(this.gene[x][y][z].isLResidential())
+        {
+            if(this.gene[x][y][z].isLowestLevel())
+            {
+                if(withinTwoBlocksOfRoad(x,y,z))
+                {
+                    ++denseResidentialFitness;
+                }
+            }
+            denseResidentialFitness += adjacentToBlockOfType(x, y, z, BlockType.DENSERESIDENTIAL) * 2;
+            denseResidentialFitness += adjacentToBlockOfType(x, y, z, BlockType.LIGHTRESIDENTIAL);   
+            
+        }
+        return denseResidentialFitness;
+    }
+    
+    public int lightCommercialFitness(int x, int y, int z)
+    {
+        int lightCommercialFitness = 1; // one for being a road block
+        if(this.gene[x][y][z].isLCommercial())
+        {
+            if(this.gene[x][y][z].isLowestLevel())
+            {
+                if(withinTwoBlocksOfRoad(x,y,z))
+                {
+                    ++lightCommercialFitness;
+                }
+            }
+            lightCommercialFitness += adjacentToBlockOfType(x, y, z, BlockType.LIGHTCOMMERCIAL);
+            
+            //deductions
+            lightCommercialFitness -= nextToBlockOfType(x, y, z, BlockType.INDUSTRY);
+            lightCommercialFitness -= nextToBlockOfType(x, y, z, BlockType.FARMLAND);
+            
+        }
+        return lightCommercialFitness;
+    }
+    
+    public int denseCommercialFitness(int x, int y, int z)
+    {
+        int denseCommercialFitness = 1; // one for being a road block
+        if(this.gene[x][y][z].isLCommercial())
+        {
+            if(this.gene[x][y][z].isLowestLevel())
+            {
+                if(withinTwoBlocksOfRoad(x,y,z))
+                {
+                    ++denseCommercialFitness;
+                }
+            }
+            denseCommercialFitness += adjacentToBlockOfType(x, y, z, BlockType.DENSECOMMERCIAL);
+            
+            //deductions
+            denseCommercialFitness -= nextToBlockOfType(x, y, z, BlockType.INDUSTRY);
+            denseCommercialFitness -= nextToBlockOfType(x, y, z, BlockType.FARMLAND);
+            
+        }
+        return denseCommercialFitness;
+    }
+    
+    public int farmlandFitness(int x, int y, int z)
+    {
+        int farmlandFitness = 1; // one for being a road block
+        if(this.gene[x][y][z].isLCommercial())
+        {
+            if(this.gene[x][y][z].isLowestLevel())
+            {
+                if(withinTwoBlocksOfRoad(x,y,z))
+                {
+                    ++farmlandFitness;
+                }
+            }
+            
+            farmlandFitness += adjacentToBlockOfType(x, y, z, BlockType.FARMLAND);
+            
+        }
+        return farmlandFitness;
+    }
+    
+    public int industryFitness(int x, int y, int z)
+    {
+        int industryFitness = 1; // one for being a road block
+        if(this.gene[x][y][z].isLCommercial())
+        {
+            if(this.gene[x][y][z].isLowestLevel())
+            {
+                if(withinTwoBlocksOfRoad(x,y,z))
+                {
+                    ++industryFitness;
+                }
+            }
+            industryFitness += adjacentToBlockOfType(x, y, z, BlockType.INDUSTRY);
+        }
+        return industryFitness;
+    }
+    
+    public int hospitalFitness(int x, int y, int z)
+    {
+        int hospitalFitness = 1; // one for being a road block
+        if(this.gene[x][y][z].isLCommercial())
+        {
+            if(this.gene[x][y][z].isLowestLevel())
+            {
+                if(withinTwoBlocksOfRoad(x,y,z))
+                {
+                    ++hospitalFitness;
+                }
+            }
+            hospitalFitness += adjacentToBlockOfType(x, y, z, BlockType.HOSPTIAL);
+            
+            //deductions
+            hospitalFitness -= nextToBlockOfType(x, y, z, BlockType.INDUSTRY);
+            hospitalFitness -= nextToBlockOfType(x, y, z, BlockType.FARMLAND);
+            
+        }
+        return hospitalFitness;
+    }
+    
+    public int policeFitness(int x, int y, int z)
+    {
+        int policeFitness = 1; // one for being a road block
+        if(this.gene[x][y][z].isLCommercial())
+        {
+            if(this.gene[x][y][z].isLowestLevel())
+            {
+                if(withinTwoBlocksOfRoad(x,y,z))
+                {
+                    ++policeFitness;
+                }
+            }
+            policeFitness += adjacentToBlockOfType(x, y, z, BlockType.POLICE);            
+        }
+        return policeFitness;
+    }
+    
+    public int fireFitness(int x, int y, int z)
+    {
+        int fireFitness = 1; // one for being a road block
+        if(this.gene[x][y][z].isLCommercial())
+        {
+            if(this.gene[x][y][z].isLowestLevel())
+            {
+                if(withinTwoBlocksOfRoad(x,y,z))
+                {
+                    ++fireFitness;
+                }
+            }
+            fireFitness += adjacentToBlockOfType(x, y, z, BlockType.FIRE);            
+        }
+        return fireFitness;
+    }
+    
+    public int educationFitness(int x, int y, int z)
+    {
+        int educationFitness = 1; // one for being a road block
+        if(this.gene[x][y][z].isLCommercial())
+        {
+            if(this.gene[x][y][z].isLowestLevel())
+            {
+                if(withinTwoBlocksOfRoad(x,y,z))
+                {
+                    ++educationFitness;
+                }
+            }
+            educationFitness += adjacentToBlockOfType(x, y, z, BlockType.EDUCATION);
+            
+            //deductions
+            educationFitness -= nextToBlockOfType(x, y, z, BlockType.INDUSTRY);
+            educationFitness -= nextToBlockOfType(x, y, z, BlockType.FARMLAND);
+            
+        }
+        return educationFitness;
+    }
+    
+    public int roadFitness(int x, int y, int z)
+    {
+        int roadFitness = 0; // one for being a road block
+        if(this.gene[x][y][z].isRoad())
+        {
+            roadFitness += adjacentToBlockOfType(x, y, z, BlockType.ROAD);
+            
+            //if road is diagonal and has no connection
+            if((x + 1 < xLength) && (z + 1 < zLength))
+            {
+                if(this.gene[x + 1][y][z + 1].isRoad())
+                {
+                    if(!this.gene[x + 1][y][z].isRoad() || !this.gene[x][y][z + 1].isRoad())
+                    {
+                        roadFitness -= 2;
+                    }
+                }
+            }
+            if((z + 1 < zLength) && (x != 0))
+            {
+                if(this.gene[x - 1][y][z + 1].isRoad())
+                {
+                    if(!this.gene[x - 1][y][z].isRoad() || !this.gene[x][y][z + 1].isRoad())
+                    {
+                        roadFitness -= 2;
+                    }
+                }
+            }
+            if((z != 0) && (x + 1 < xLength))
+            {
+                if(this.gene[x + 1][y][z - 1].isRoad())
+                {
+                    if(!this.gene[x + 1][y][z].isRoad() || !this.gene[x][y][z - 1].isRoad())
+                    {
+                        roadFitness -= 2;
+                    }
+                }
+            }
+            if((z != 0) && (x != 0))
+            {    
+                if(this.gene[x - 1][y][z - 1].isRoad())
+                {
+                    if(!this.gene[x - 1][y][z].isRoad() || !this.gene[x][y][z - 1].isRoad())
+                    {
+                        roadFitness -= 2;
+                    }
+                }
+            }
+            
+            //if road is diagonal and has two connections to that block
+            if((x + 1 < xLength) && (z + 1 < zLength))
+            {
+                if(this.gene[x + 1][y][z + 1].isRoad())
+                {
+                    if(this.gene[x + 1][y][z].isRoad() && this.gene[x][y][z + 1].isRoad())
+                    {
+                        roadFitness -= 2;
+                    }
+                }
+            }
+            if((z + 1 < zLength) && (x != 0))
+            {
+                if(this.gene[x - 1][y][z + 1].isRoad())
+                {
+                    if(this.gene[x - 1][y][z].isRoad() && this.gene[x][y][z + 1].isRoad())
+                    {
+                        roadFitness -= 2;
+                    }
+                }
+            }
+            if((z != 0) && (x + 1 < xLength))
+            {
+                if(this.gene[x + 1][y][z - 1].isRoad())
+                {
+                    if(this.gene[x + 1][y][z].isRoad() && this.gene[x][y][z - 1].isRoad())
+                    {
+                        roadFitness -= 2;
+                    }
+                }
+            }
+            if((z != 0) && (x != 0))
+            {    
+                if(this.gene[x - 1][y][z - 1].isRoad())
+                {
+                    if(this.gene[x - 1][y][z].isRoad() && this.gene[x][y][z - 1].isRoad())
+                    {
+                        roadFitness -= 2;
+                    }
+                }
+            }
+            
+            //surrounded
+            if((z != 0) && (x != 0) && (x + 1 < xLength) && (z + 1 < zLength))
+            {
+                if(this.gene[x + 1][y][z + 1].isRoad() 
+                        && this.gene[x - 1][y][z - 1].isRoad()
+                        && this.gene[x + 1][y][z - 1].isRoad()
+                        && this.gene[x - 1][y][z + 1].isRoad()
+                        && this.gene[x][y][z + 1].isRoad() 
+                        && this.gene[x][y][z - 1].isRoad()
+                        && this.gene[x + 1][y][z].isRoad()
+                        && this.gene[x - 1][y][z].isRoad())
+                {
+                    roadFitness -= 8;
+                }
+            }
+        }
+        return roadFitness;
     }
 }
 
