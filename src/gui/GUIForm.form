@@ -48,7 +48,10 @@
                   <Group type="102" attributes="0">
                       <Component id="fileManagerPane" min="-2" pref="370" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="messagesPane" pref="304" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="messagesPane" pref="296" max="32767" attributes="0"/>
+                          <Component id="generationOutputLabel" max="32767" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jTabbedPane1" min="-2" pref="571" max="-2" attributes="0"/>
                   </Group>
@@ -64,7 +67,11 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jTabbedPane1" min="-2" max="-2" attributes="0"/>
-                  <Component id="messagesPane" alignment="0" min="-2" pref="127" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="messagesPane" min="-2" pref="127" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="generationOutputLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Component id="fileManagerPane" min="-2" pref="185" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -105,7 +112,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jSeparator1" max="32767" attributes="0"/>
@@ -169,6 +176,7 @@
                                           <Component id="grassParksLabel" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <Component id="jLabel2" alignment="0" min="-2" pref="253" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -249,7 +257,9 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="resetFitnessFunctionButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="75" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="53" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -434,6 +444,11 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator1">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Each block is 5m x 5m x 5m"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -1899,6 +1914,8 @@
       </SubComponents>
     </Container>
     <Component class="java.awt.Canvas" name="canvas1">
+    </Component>
+    <Component class="java.awt.Label" name="generationOutputLabel">
     </Component>
   </SubComponents>
 </Form>

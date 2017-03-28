@@ -124,6 +124,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         airSlider = new javax.swing.JSlider();
         airLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
         statsPanel = new javax.swing.JPanel();
         roadsCostLabel = new javax.swing.JLabel();
         costLabel = new javax.swing.JLabel();
@@ -236,6 +237,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         loadInputFileRadioButton = new javax.swing.JRadioButton();
         useBoundsRadioButton = new javax.swing.JRadioButton();
         canvas1 = new java.awt.Canvas();
+        generationOutputLabel = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("City Evolver");
@@ -408,6 +410,8 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
         airLabel.setText("Air: 50");
 
+        jLabel2.setText("Each block is 5m x 5m x 5m");
+
         javax.swing.GroupLayout fitnessFunctionPanelLayout = new javax.swing.GroupLayout(fitnessFunctionPanel);
         fitnessFunctionPanel.setLayout(fitnessFunctionPanelLayout);
         fitnessFunctionPanelLayout.setHorizontalGroup(
@@ -464,7 +468,8 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                                     .addComponent(lightResidentialLabel)
                                     .addComponent(denseCommercialLabel)
                                     .addComponent(farmlandLabel)
-                                    .addComponent(grassParksLabel))))
+                                    .addComponent(grassParksLabel)))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -527,7 +532,9 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                     .addComponent(educationLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(resetFitnessFunctionButton)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         sideTabbedPane.addTab("Fitness Function", fitnessFunctionPanel);
@@ -1482,7 +1489,9 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(fileManagerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(messagesPane, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(messagesPane, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                            .addComponent(generationOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(topSeperator, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -1494,7 +1503,10 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(messagesPane, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(messagesPane, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(generationOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(fileManagerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(topSeperator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1516,6 +1528,9 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             GeneticAlgorithm.getInstance().setRunning(false);
             this.gaRestart = true;
         }
+        populationSlider.setEnabled(true);
+        generationsSlider.setEnabled(true);
+        mutationSlider.setEnabled(true);
     }//GEN-LAST:event_stopGaButtonActionPerformed
 
     private void resetGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_resetGaButtonActionPerformed
@@ -1769,6 +1784,10 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         //if this is a new search we need to get the values and initialise
         if(!this.gaReset)
         {
+            populationSlider.setEnabled(false);
+            generationsSlider.setEnabled(false);
+            mutationSlider.setEnabled(false);
+            
             GeneticAlgorithm.getInstance().setPopulation(populationGetRealValue());
             GeneticAlgorithm.getInstance().setGenerations(generationsGetRealValue());
             GeneticAlgorithm.getInstance().setMutation(mutationGetRealValue());
@@ -2144,6 +2163,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     private javax.swing.JPanel fitnessFunctionPanel;
     private javax.swing.JPanel gaMenuPanel;
     private javax.swing.JTextField gaNameField;
+    private java.awt.Label generationOutputLabel;
     private javax.swing.JLabel generationsLabel;
     private javax.swing.JSlider generationsSlider;
     private javax.swing.JLabel generationsValueLabel;
@@ -2169,6 +2189,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     private javax.swing.JList<String> inputMapsList;
     private javax.swing.JScrollPane inputMapsPane;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;

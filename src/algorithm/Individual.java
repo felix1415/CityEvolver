@@ -25,6 +25,14 @@ import static cityevolver.Utils.getRandomBlock;
 import static cityevolver.Utils.getRandomBlock;
 import static cityevolver.Utils.getRandomBlock;
 import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
 
 /**
  *
@@ -320,18 +328,15 @@ public class Individual
         float numberOfAllBlocks = xLength * yLength * zLength;
         float roadWeight = ((float)GeneticAlgorithm.getInstance().getRoadsValue() / 100f);
         int idealRoadBlocks = Utils.roundFloat(numberOfLowestLevelBlocks * roadWeight);
-        float idealAirBlocks = numberOfLowestLevelBlocks * ((float)GeneticAlgorithm.getInstance().getRoadsValue() / 100f);
+        float idealAirBlocks = numberOfAllBlocks * ((float)GeneticAlgorithm.getInstance().getAirValue()/ 100f);
         // if close to the precent of road blocks required
         if(((float)idealRoadBlocks * 0.9) < numberOfRoads && (numberOfRoads < ((float)idealRoadBlocks * 1.1) )) // if 
         {
-            roadFitness *= roadWeight * 1.2;
+            roadFitness *= roadWeight * 4;
         }
         //if all roads are connected, bonus fitness
-        if(HardConstraintEnforcement.getInstance().isAllRoadsConnected())
-        {
-            roadFitness *= 1.5;
-        }
-        this.fitness = roadFitness;
+        roadFitness += HardConstraintEnforcement.getInstance().isAllRoadsConnectedFitness();
+        this.fitness += roadFitness;
     }
 
     public Block[][][] getGene()

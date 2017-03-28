@@ -7,8 +7,10 @@ package algorithm;
 
 import cityevolver.Block;
 import cityevolver.BlockType;
+import cityevolver.Utils;
 import java.util.ArrayList;
 import static cityevolver.Utils.getRandomBlockExcludeImmovable;
+import com.cityevolver.util.Util;
 import java.util.Collections;
 import java.util.Random;
 
@@ -112,7 +114,7 @@ public class HardConstraintEnforcement
         return roads;
     }
     
-    public boolean isAllRoadsConnected()
+    public int isAllRoadsConnectedFitness()
     {
         ArrayList<Block> roads = getRoads();
         ArrayList<Block> queue = new ArrayList<>();
@@ -120,25 +122,31 @@ public class HardConstraintEnforcement
         
         if(roads.isEmpty())
         {
-            return false;
+            return 0;
         }
-        else
+        
+        int connectionFitness = 0;
+        for (Block block : roads)
         {
-            queue.add(roads.get(0));
+            queue.add(block);
+            while(!queue.isEmpty()) {
+                    Block node = queue.remove(0);
+                    ArrayList<Block> unvisited = getUnvisitedChildrenNode(node, visited);
+                    visited.add(node);
+
+                    if(!unvisited.isEmpty())
+                    {
+                        queue.addAll(unvisited);
+                    }
+            }
+            connectionFitness += visited.size();
+            if(roads.size() == visited.size())
+            {
+                return roads.size() * 2;
+            }
         }
         
-        while(!queue.isEmpty()) {
-                Block node = queue.remove(0);
-                ArrayList<Block> unvisited = getUnvisitedChildrenNode(node, visited);
-                visited.add(node);
-                
-                if(!unvisited.isEmpty())
-                {
-                    queue.addAll(unvisited);
-                }
-        }
-        
-        return roads.size() == visited.size();
+        return Utils.roundFloat((float)connectionFitness / (float)roads.size());
     }
     
     private ArrayList<Block> getUnvisitedChildrenNode(Block node, ArrayList<Block> visited)
