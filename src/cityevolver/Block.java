@@ -130,14 +130,53 @@ public class Block
             this.getType() == BlockType.GRASS) 
         {
             vertexData = new float[]
-            {   
+            {      
                 //bottom face
                 x, y, z,
                 x, y, 1 + z,
                 1 + x, y, z,
                 1 + x, y, z,
                 1 + x, y, 1 + z,
-                x, y, z + 1
+                x, y, z + 1,
+                //top face
+                x, 0.05f + y, z,
+                x, 0.05f + y, 1 + z,
+                1 + x, 0.05f + y, z,
+                1 + x, 0.05f + y, z,
+                1 + x, 0.05f + y, 1 + z,
+                x, 0.05f + y, z + 1,
+                
+                //left side
+                x, y, z,
+                x, y, 1 + z,
+                x, 0.05f + y, z,
+                x, 0.05f + y, z,
+                x, 0.05f + y, z +1,
+                x, y, z + 1,
+                
+                //right face
+                1 + x, y, z,
+                1 + x, y, 1 + z,
+                1 + x, 0.05f + y, z,
+                1 + x, 0.05f + y, z,
+                1 + x, 0.05f + y, z +1,
+                1 + x, y, z + 1,
+                
+                //front face
+                x, y, z,
+                1 + x, y, z,
+                x, 0.05f + y, z,
+                x, 0.05f + y, z,
+                1 + x, 0.05f + y, z,
+                1 + x, y, z,
+                
+                //back face
+                x, y, 1 + z,
+                1 + x, y, 1 + z,
+                x, 0.05f + y, 1 + z,
+                x, 0.05f + y, 1 + z,
+                1 + x, 0.05f + y, 1 + z,
+                1 + x, y, 1 + z
             };
         }
         else
@@ -209,21 +248,21 @@ public class Block
                 break;
                 
             case WATER:
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 36; i++)
                 {
                     colour = concatenateFloatArrays(colour, new float [] {0f, 0.756f, 0.933f} );
                 }
                 break;
                 
             case ROAD:
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 36; i++)
                 {
                     colour = concatenateFloatArrays(colour, new float [] {0.5f, 0.5f, 0.5f} );
                 }
                 break;
                 
             case GRASS:
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 36; i++)
                 {
                     colour = concatenateFloatArrays(colour, new float [] {0.063f, 0.82f, 0f} );
                 }

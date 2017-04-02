@@ -5,6 +5,7 @@
  */
 package algorithm;
 
+import cityevolver.Block;
 import cityevolver.BlockType;
 import gui.GUIForm;
 import java.util.AbstractMap.SimpleEntry;
@@ -106,14 +107,6 @@ public class GeneticAlgorithm implements Runnable
     {
         try
         {
-            System.out.println(xBound);
-            System.out.println(yBound);
-            System.out.println(zBound);
-            System.out.println(populationNumber);
-            System.out.println(generations);
-            System.out.println(mutation);
-            
-            
             this.population = new Population(xBound, yBound, zBound, populationNumber, generations, mutation);
         }
         catch(Exception e)
@@ -272,7 +265,7 @@ public class GeneticAlgorithm implements Runnable
         return educationValue;
     }
     
-    public synchronized ArrayList<Tuple> getBlocksForSearch()
+    public synchronized ArrayList<BlockType> getBlocksForSearch()
     {
         ArrayList<Tuple> allBlockValues = new ArrayList<>();
         allBlockValues.add(new Tuple(airValue, BlockType.AIR));
@@ -289,10 +282,10 @@ public class GeneticAlgorithm implements Runnable
         allBlockValues.add(new Tuple(fireValue, BlockType.FIRE));
         allBlockValues.add(new Tuple(educationValue, BlockType.EDUCATION));
         
-        ArrayList<Tuple> blocksForSearch = new ArrayList<>();
+        ArrayList<BlockType> blocksForSearch = new ArrayList<>();
         allBlockValues.stream().filter((tuple) -> ((int)tuple.x > 0)).forEach((tuple) ->
         {
-            blocksForSearch.add(tuple);
+            blocksForSearch.add((BlockType)tuple.y);
         });
         
         return blocksForSearch;

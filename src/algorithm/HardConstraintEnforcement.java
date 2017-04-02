@@ -8,11 +8,8 @@ package algorithm;
 import cityevolver.Block;
 import cityevolver.BlockType;
 import cityevolver.Utils;
+import static cityevolver.Utils.getRandomBlock;
 import java.util.ArrayList;
-import static cityevolver.Utils.getRandomBlockExcludeImmovable;
-import com.cityevolver.util.Util;
-import java.util.Collections;
-import java.util.Random;
 
 /**
  *
@@ -36,7 +33,18 @@ public class HardConstraintEnforcement
        return instance;
     }
     
-    public Block[][][] applyConstraints(int xLength, int yLength, int zLength, Block[][][] geneIn)
+    public Block[][][] setValue(int xLength, int yLength, int zLength, 
+            Block[][][] geneIn, ArrayList<BlockType> blocksForSearch)
+    {
+        this.gene = geneIn;
+        this.xLength = xLength;
+        this.yLength = yLength;
+        this.zLength = zLength;
+        return this.gene;
+    }
+    
+    public Block[][][] applyConstraints(int xLength, int yLength, int zLength, 
+            Block[][][] geneIn, ArrayList<BlockType> blocksForSearch)
     {
         this.gene = geneIn;
         this.xLength = xLength;
@@ -60,7 +68,7 @@ public class HardConstraintEnforcement
                             boolean isLegal = false;
                             while(!isLegal)
                             {
-                                this.gene[x][y][z] = new Block(x, y, z, getRandomBlockExcludeImmovable());
+                                this.gene[x][y][z] = new Block(x, y, z, getRandomBlock(blocksForSearch));
                                 isLegal = !blockIsIllegalAboveLevelZero(x, y, z);
                             }     
                         }
@@ -82,7 +90,7 @@ public class HardConstraintEnforcement
                             boolean isLegal = false;
                             while(!isLegal)
                             {
-                                this.gene[x][y][z] = new Block(x, y, z, getRandomBlockExcludeImmovable());
+                                this.gene[x][y][z] = new Block(x, y, z, getRandomBlock(blocksForSearch));
                                 isLegal = !isBlockAir(x, y, z);
                             } 
                         }
@@ -112,6 +120,11 @@ public class HardConstraintEnforcement
             }
         }
         return roads;
+    }
+    
+    public boolean isNextToType(int x, int y, int z, BlockType type)
+    {
+        return adjacentToBlockOfType(x, y, z, type) > 0;
     }
     
     public int isAllRoadsConnectedFitness()
@@ -451,8 +464,8 @@ public class HardConstraintEnforcement
                     ++lightResidentialFitness;
                 }
             }
-            lightResidentialFitness += adjacentToBlockOfType(x, y, z, BlockType.LIGHTRESIDENTIAL) * 2;
-            lightResidentialFitness += adjacentToBlockOfType(x, y, z, BlockType.DENSERESIDENTIAL);              
+            lightResidentialFitness += adjacentToBlockOfType(x, y, z, BlockType.LIGHTRESIDENTIAL);
+//            lightResidentialFitness += adjacentToBlockOfType(x, y, z, BlockType.DENSERESIDENTIAL);              
         }
         return lightResidentialFitness;
     }
@@ -460,7 +473,7 @@ public class HardConstraintEnforcement
     public int denseResidentialFitness(int x, int y, int z)
     {
         int denseResidentialFitness = 1; // one for being a road block
-        if(this.gene[x][y][z].isLResidential())
+        if(this.gene[x][y][z].isDResidential())
         {
             if(this.gene[x][y][z].isLowestLevel())
             {
@@ -469,8 +482,8 @@ public class HardConstraintEnforcement
                     ++denseResidentialFitness;
                 }
             }
-            denseResidentialFitness += adjacentToBlockOfType(x, y, z, BlockType.DENSERESIDENTIAL) * 2;
-            denseResidentialFitness += adjacentToBlockOfType(x, y, z, BlockType.LIGHTRESIDENTIAL);   
+            denseResidentialFitness += adjacentToBlockOfType(x, y, z, BlockType.DENSERESIDENTIAL);
+//            denseResidentialFitness += adjacentToBlockOfType(x, y, z, BlockType.LIGHTRESIDENTIAL);   
             
         }
         return denseResidentialFitness;
@@ -488,12 +501,7 @@ public class HardConstraintEnforcement
                     ++lightCommercialFitness;
                 }
             }
-            lightCommercialFitness += adjacentToBlockOfType(x, y, z, BlockType.LIGHTCOMMERCIAL);
-            
-            //deductions
-            lightCommercialFitness -= nextToBlockOfType(x, y, z, BlockType.INDUSTRY);
-            lightCommercialFitness -= nextToBlockOfType(x, y, z, BlockType.FARMLAND);
-            
+            lightCommercialFitness += adjacentToBlockOfType(x, y, z, BlockType.LIGHTCOMMERCIAL);            
         }
         return lightCommercialFitness;
     }
@@ -501,7 +509,7 @@ public class HardConstraintEnforcement
     public int denseCommercialFitness(int x, int y, int z)
     {
         int denseCommercialFitness = 1; // one for being a road block
-        if(this.gene[x][y][z].isLCommercial())
+        if(this.gene[x][y][z].isDCommercial())
         {
             if(this.gene[x][y][z].isLowestLevel())
             {
@@ -512,10 +520,6 @@ public class HardConstraintEnforcement
             }
             denseCommercialFitness += adjacentToBlockOfType(x, y, z, BlockType.DENSECOMMERCIAL);
             
-            //deductions
-            denseCommercialFitness -= nextToBlockOfType(x, y, z, BlockType.INDUSTRY);
-            denseCommercialFitness -= nextToBlockOfType(x, y, z, BlockType.FARMLAND);
-            
         }
         return denseCommercialFitness;
     }
@@ -523,7 +527,7 @@ public class HardConstraintEnforcement
     public int farmlandFitness(int x, int y, int z)
     {
         int farmlandFitness = 1; // one for being a road block
-        if(this.gene[x][y][z].isLCommercial())
+        if(this.gene[x][y][z].isFarmland())
         {
             if(this.gene[x][y][z].isLowestLevel())
             {
@@ -542,7 +546,7 @@ public class HardConstraintEnforcement
     public int industryFitness(int x, int y, int z)
     {
         int industryFitness = 1; // one for being a road block
-        if(this.gene[x][y][z].isLCommercial())
+        if(this.gene[x][y][z].isIndustry())
         {
             if(this.gene[x][y][z].isLowestLevel())
             {
@@ -559,7 +563,7 @@ public class HardConstraintEnforcement
     public int hospitalFitness(int x, int y, int z)
     {
         int hospitalFitness = 1; // one for being a road block
-        if(this.gene[x][y][z].isLCommercial())
+        if(this.gene[x][y][z].isHospital())
         {
             if(this.gene[x][y][z].isLowestLevel())
             {
@@ -568,7 +572,15 @@ public class HardConstraintEnforcement
                     ++hospitalFitness;
                 }
             }
-            hospitalFitness += adjacentToBlockOfType(x, y, z, BlockType.HOSPTIAL);
+            int value;
+            if((value = adjacentToBlockOfType(x, y, z, BlockType.HOSPTIAL)) == 0)
+            {
+                hospitalFitness -= 2;
+            }
+            else
+            {
+                hospitalFitness += value;
+            } 
             
             //deductions
             hospitalFitness -= nextToBlockOfType(x, y, z, BlockType.INDUSTRY);
@@ -581,7 +593,7 @@ public class HardConstraintEnforcement
     public int policeFitness(int x, int y, int z)
     {
         int policeFitness = 1; // one for being a road block
-        if(this.gene[x][y][z].isLCommercial())
+        if(this.gene[x][y][z].isPolice())
         {
             if(this.gene[x][y][z].isLowestLevel())
             {
@@ -590,7 +602,15 @@ public class HardConstraintEnforcement
                     ++policeFitness;
                 }
             }
-            policeFitness += adjacentToBlockOfType(x, y, z, BlockType.POLICE);            
+            int value;
+            if((value = adjacentToBlockOfType(x, y, z, BlockType.POLICE)) == 0)
+            {
+                policeFitness -= 2;
+            }
+            else
+            {
+                policeFitness += value;
+            }              
         }
         return policeFitness;
     }
@@ -598,7 +618,7 @@ public class HardConstraintEnforcement
     public int fireFitness(int x, int y, int z)
     {
         int fireFitness = 1; // one for being a road block
-        if(this.gene[x][y][z].isLCommercial())
+        if(this.gene[x][y][z].isFire())
         {
             if(this.gene[x][y][z].isLowestLevel())
             {
@@ -607,7 +627,15 @@ public class HardConstraintEnforcement
                     ++fireFitness;
                 }
             }
-            fireFitness += adjacentToBlockOfType(x, y, z, BlockType.FIRE);            
+            int value = 0;
+            if((value = adjacentToBlockOfType(x, y, z, BlockType.FIRE)) == 0)
+            {
+                fireFitness -= 2;
+            }
+            else
+            {
+                fireFitness += value;
+            }          
         }
         return fireFitness;
     }
@@ -615,7 +643,7 @@ public class HardConstraintEnforcement
     public int educationFitness(int x, int y, int z)
     {
         int educationFitness = 1; // one for being a road block
-        if(this.gene[x][y][z].isLCommercial())
+        if(this.gene[x][y][z].isEducation())
         {
             if(this.gene[x][y][z].isLowestLevel())
             {
@@ -624,7 +652,15 @@ public class HardConstraintEnforcement
                     ++educationFitness;
                 }
             }
-            educationFitness += adjacentToBlockOfType(x, y, z, BlockType.EDUCATION);
+            int value = 0;
+            if((value = adjacentToBlockOfType(x, y, z, BlockType.EDUCATION)) == 0)
+            {
+                educationFitness -= 2;
+            }
+            else
+            {
+                educationFitness += value;
+            }
             
             //deductions
             educationFitness -= nextToBlockOfType(x, y, z, BlockType.INDUSTRY);

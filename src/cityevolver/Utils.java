@@ -5,7 +5,6 @@
  */
 package cityevolver;
 
-import algorithm.Tuple;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -55,17 +54,16 @@ public class Utils
     }
     //a list of blocks can be excluded from the types returned
     //a weighted block has a 50 percent chance of being returned
-    public static BlockType getRandomBlock(ArrayList<Tuple> blocks, BlockType weighted)
+    public static BlockType getRandomBlock(ArrayList<BlockType> blocks, BlockType weighted, float weight)
     {
         if(weighted != null)
         {
-            if(random.nextBoolean())
+            if(random.nextFloat() > weight)
             {
                 return weighted;
             }
         }
-        //skip the air block
-        BlockType type = (BlockType)blocks.get(random.nextInt(blocks.size() - 1)).y;
+        BlockType type = blocks.get(random.nextInt(blocks.size()));
         return BlockType.valueOf(type.name());
     }
     
@@ -74,22 +72,8 @@ public class Utils
         return Math.round(number);
     }
     
-    public static BlockType getRandomBlock(ArrayList<Tuple> blocksForSearch)
+    public static BlockType getRandomBlock(ArrayList<BlockType> blocksForSearch)
     {
-        return getRandomBlock(blocksForSearch, null);
-    }
-    
-    public static BlockType getRandomBlockHalfChanceOfRoadBlock()
-    {
-        BlockType type = null;
-        while(true)
-        {
-            type = BlockType.values()[random.nextInt(BlockType.values().length)];
-            
-            if(type != BlockType.IMMOVABLE)
-            {
-                return type;
-            }
-        }
+        return getRandomBlock(blocksForSearch, null, 0);
     }
 }

@@ -8,6 +8,7 @@ package gui;
 import algorithm.Individual;
 import cityevolver.CityEvolver;
 import java.awt.Canvas;
+import java.awt.Window;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.LWJGLException;
@@ -133,9 +134,7 @@ public class Renderer implements Runnable
         catch(Exception ex)
         {
             //sometimes we call this when cleanup has already been performed, just in case.
-            //th
         }
-        System.out.println("gui.Renderer.cleanUp()");
     }
     
     public synchronized void viewMap(Individual individual)
@@ -167,7 +166,13 @@ public class Renderer implements Runnable
         glLoadIdentity();
         camera.cameraView();
         
-        individual.render();        
+        individual.render();
+        
+//        glEnable(GL_POLYGON_OFFSET_FILL);
+//        glColor3f(0, 0, 0); // Color for shape outline
+//        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//        individual.render();
+//        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
         Display.update();
         
@@ -176,7 +181,7 @@ public class Renderer implements Runnable
         frames++;
         if(frameTime > 1000.0)
         {
-            System.out.println("FPS:" + frames);
+            Display.setTitle("City Evolver Viewer" + " - FPS:" + frames);
             frames = 0;
             frameTime = 0.0;
         }
@@ -188,11 +193,6 @@ public class Renderer implements Runnable
         {
             return;
         }
-        glEnable(GL_POLYGON_OFFSET_FILL);
-        glColor3f(0, 0, 0); // Color for shape outline
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // enable wireframe for front and back
-        glCallList(handle); // Call the same rendering routine for the previous polygon.
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //fill shape again
     }
 
     @Override

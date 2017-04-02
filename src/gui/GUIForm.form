@@ -41,16 +41,19 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="sideTabbedPane" min="-2" pref="301" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                      <Component id="canvas1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="fileManagerPane" min="-2" pref="370" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="messagesPane" pref="296" max="32767" attributes="0"/>
+                          <Component id="messagesPane" pref="307" max="32767" attributes="0"/>
                           <Component id="generationOutputLabel" max="32767" attributes="0"/>
+                          <Component id="gaStatusLabel" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jTabbedPane1" min="-2" pref="571" max="-2" attributes="0"/>
@@ -68,20 +71,30 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jTabbedPane1" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="messagesPane" min="-2" pref="127" max="-2" attributes="0"/>
+                      <Component id="messagesPane" min="-2" pref="116" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="generationOutputLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="gaStatusLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="fileManagerPane" min="-2" pref="185" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="topSeperator" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="sideTabbedPane" min="-2" pref="512" max="-2" attributes="0"/>
-                  <Component id="canvas1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideTabbedPane" min="-2" pref="512" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -135,11 +148,6 @@
                                       <Component id="industryLabel" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lightCommercialSlider" min="-2" pref="124" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lightCommercialLabel" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="hospitalSlider" min="-2" pref="124" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="hospitalLabel" min="-2" max="-2" attributes="0"/>
@@ -159,16 +167,19 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="educationLabel" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="jLabel2" alignment="0" min="-2" pref="253" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="lightCommercialSlider" pref="0" max="32767" attributes="0"/>
                                           <Component id="grassParksSlider" alignment="0" pref="0" max="32767" attributes="0"/>
                                           <Component id="lightResidentialSlider" alignment="0" pref="0" max="32767" attributes="0"/>
                                           <Component id="denseResidentialSlider" alignment="0" pref="0" max="32767" attributes="0"/>
                                           <Component id="denseCommercialSlider" alignment="0" pref="0" max="32767" attributes="0"/>
-                                          <Component id="farmlandSlider" min="-2" pref="124" max="-2" attributes="0"/>
+                                          <Component id="farmlandSlider" alignment="1" pref="124" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lightCommercialLabel" min="-2" max="-2" attributes="0"/>
                                           <Component id="denseResidentialLabel" min="-2" max="-2" attributes="0"/>
                                           <Component id="lightResidentialLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="denseCommercialLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -176,7 +187,6 @@
                                           <Component id="grassParksLabel" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Component id="jLabel2" alignment="0" min="-2" pref="253" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -211,17 +221,17 @@
                           <Component id="lightResidentialLabel" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="denseResidentialLabel" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="denseResidentialSlider" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="denseResidentialLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lightCommercialSlider" min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="lightCommercialLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="denseCommercialSlider" min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="denseCommercialLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -345,6 +355,12 @@
             </Component>
             <Component class="javax.swing.JSlider" name="lightCommercialSlider">
               <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="cc" red="33" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="33" green="0" red="ff" type="rgb"/>
+                </Property>
                 <Property name="value" type="int" value="0"/>
               </Properties>
               <Events>
@@ -596,153 +612,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="totalCostLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Total: 2000"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="jPanel1">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Utility">
-                <Property name="tabTitle" type="java.lang.String" value="Utility"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="roadsUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="industryUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="denseResidentialUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="GrassParksUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lightResidentialUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="denseCommericalUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="farmlandUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lightCommercialUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="hospitalUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="policeUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="fireUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="educationUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="totalUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="utilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="46" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="utilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="roadsUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="GrassParksUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lightResidentialUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="denseResidentialUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lightCommercialUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="denseCommericalUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="farmlandUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="industryUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="hospitalUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="policeUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="fireUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="educationUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="totalUtilityLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="utilityLabel">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Lucida Grande" size="13" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Utility"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="roadsUtilityLabel">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="Roads: 50 meters of road"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="GrassParksUtilityLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Grass/Parks: 50 m^3 of green space"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="lightResidentialUtilityLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="LightResidential: 50 population"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="denseResidentialUtilityLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="DenseResidential: 50 population"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="lightCommercialUtilityLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="LightCommercial: 50 jobs"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="denseCommericalUtilityLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="DenseCommercial: 50 jobs"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="farmlandUtilityLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Farmland: 50 servings"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="industryUtilityLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Industry: 50 jobs"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="hospitalUtilityLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Hospital: 50 servings"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="policeUtilityLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Police: 50 servings"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="fireUtilityLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Fire: 50 servings"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="educationUtilityLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Education: 50 servings"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="totalUtilityLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Total: 2000"/>
               </Properties>
@@ -1913,9 +1782,166 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="java.awt.Canvas" name="canvas1">
-    </Component>
     <Component class="java.awt.Label" name="generationOutputLabel">
     </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Test"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="java.awt.Label" name="gaStatusLabel">
+    </Component>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="roadsUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="industryUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="denseResidentialUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="GrassParksUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lightResidentialUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="denseCommericalUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="farmlandUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lightCommercialUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="hospitalUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="policeUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="fireUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="educationUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="totalUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="utilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="airUtilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="241" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="utilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="roadsUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="airUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="GrassParksUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lightResidentialUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="denseResidentialUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lightCommercialUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="denseCommericalUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="farmlandUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="industryUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="hospitalUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="policeUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="fireUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="educationUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="totalUtilityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="29" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="utilityLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Lucida Grande" size="13" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Utility"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="roadsUtilityLabel">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="text" type="java.lang.String" value="Roads: 50 meters of road"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="GrassParksUtilityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Grass/Parks: 50 m^3 of green space"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lightResidentialUtilityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="LightResidential: 50 population"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="denseResidentialUtilityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="DenseResidential: 50 population"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lightCommercialUtilityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="LightCommercial: 50 jobs"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="denseCommericalUtilityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="DenseCommercial: 50 jobs"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="farmlandUtilityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Farmland: 50 servings"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="industryUtilityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Industry: 50 jobs"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="hospitalUtilityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Hospital: 50 servings"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="policeUtilityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Police: 50 servings"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="fireUtilityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Fire: 50 servings"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="educationUtilityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Education: 50 servings"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="totalUtilityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Total: 2000"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="airUtilityLabel">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="text" type="java.lang.String" value="Air:"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

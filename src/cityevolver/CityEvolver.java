@@ -1,10 +1,7 @@
 package cityevolver;
 
 import algorithm.GeneticAlgorithm;
-import algorithm.Individual;
-import files.FileManager;
 import gui.GUIForm;
-import gui.Renderer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

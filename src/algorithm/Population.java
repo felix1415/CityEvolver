@@ -53,7 +53,6 @@ public class Population
         this.population = new Individual[this.populationNumber];
         this.random = new Random();
         currentGeneration = 0;
-        System.out.println("algorithm.Population.<init>()");
         for (int i = 0; i < this.populationNumber; i++)
         {
             this.population[i] = new Individual(X_LENGTH, Y_LENGTH, Z_LENGTH, i + 1);
@@ -85,7 +84,7 @@ public class Population
         
         currentGeneration++;
         
-        GUIForm.getInstance().log("Completed " + currentGeneration + " generation");
+        GUIForm.getInstance().setCurrentGenerationLabel(currentGeneration);
     }
 
     public void run()
