@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,6 +51,29 @@ public class FileManager
     public void test()
     {
         System.out.println("files.FileManager.test() " + System.getProperty("user.dir"));
+    }
+    
+    public String[] getMapsFromDisk()
+    {
+        File folder = new File(resourceLocation);
+        File[] rawListOfFiles = folder.listFiles();
+        ArrayList<String> listOfFiles = new ArrayList<>();
+        
+        for (File rawFile : rawListOfFiles)
+        {
+            String extension = "";
+            int i = rawFile.getName().lastIndexOf('.');
+            if (i > 0) {
+                extension = rawFile.getName().substring(i+1);
+            }
+            
+            if(extension.equals("ceo"))
+            {
+                listOfFiles.add(rawFile.getName());
+            }
+        }
+        
+        return listOfFiles.toArray(new String[0]);
     }
     
     public Population loadCES(String location)

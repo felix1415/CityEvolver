@@ -81,6 +81,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         mutationValueLabel.setText(Float.toString(mutationGetRealValue()));
         generationsValueLabel.setText(Integer.toString(generationsGetRealValue()));
         setSliderLabels();
+        refreshSavedMapList();
     }
 
     /**
@@ -177,6 +178,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         savedMapsList = new javax.swing.JList<>();
         loadSavedMapButton = new javax.swing.JButton();
         deleteSavedMapButton = new javax.swing.JButton();
+        refreshSavedMapListButton = new javax.swing.JButton();
         searchSessionsPanel = new javax.swing.JPanel();
         searchSessionsPane = new javax.swing.JScrollPane();
         searchSessionsList = new javax.swing.JList<>();
@@ -957,12 +959,6 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
         fileManagerPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        savedMapsList.setModel(new javax.swing.AbstractListModel<String>()
-        {
-            String[] strings = { "World 1", "World 2", "Test" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         savedMapsPane.setViewportView(savedMapsList);
 
         loadSavedMapButton.setText("Load");
@@ -975,6 +971,22 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         });
 
         deleteSavedMapButton.setText("Delete");
+        deleteSavedMapButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                deleteSavedMapButtonActionPerformed(evt);
+            }
+        });
+
+        refreshSavedMapListButton.setText("Refresh");
+        refreshSavedMapListButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                refreshSavedMapListButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout savedMapsPanelLayout = new javax.swing.GroupLayout(savedMapsPanel);
         savedMapsPanel.setLayout(savedMapsPanelLayout);
@@ -987,7 +999,8 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                         .addComponent(loadSavedMapButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(deleteSavedMapButton)
-                        .addGap(0, 170, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                        .addComponent(refreshSavedMapListButton))
                     .addComponent(savedMapsPane))
                 .addContainerGap())
         );
@@ -998,7 +1011,8 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(savedMapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteSavedMapButton)
-                    .addComponent(loadSavedMapButton))
+                    .addComponent(loadSavedMapButton)
+                    .addComponent(refreshSavedMapListButton))
                 .addContainerGap())
         );
 
@@ -1013,8 +1027,22 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         searchSessionsPane.setViewportView(searchSessionsList);
 
         loadSearchSessionsButton.setText("Load");
+        loadSearchSessionsButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                loadSearchSessionsButtonActionPerformed(evt);
+            }
+        });
 
         deleteSearchSessionsButton.setText("Delete");
+        deleteSearchSessionsButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                deleteSearchSessionsButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout searchSessionsPanelLayout = new javax.swing.GroupLayout(searchSessionsPanel);
         searchSessionsPanel.setLayout(searchSessionsPanelLayout);
@@ -1586,23 +1614,9 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
     private void loadSavedMapButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_loadSavedMapButtonActionPerformed
     {//GEN-HEADEREND:event_loadSavedMapButtonActionPerformed
-        if(openGLInstance != null && openGLInstance.isAlive())
-        {
-            Renderer.getInstance().setRunning(false);
-            try
-            {
-                openGLInstance.join();
-            } catch (InterruptedException ex)
-            {
-                Logger.getLogger(GUIForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-
-        Renderer.getInstance().setRunning(true);
-//        Renderer.getInstance().viewMap(individual);
-        openGLInstance = new Thread(Renderer.getInstance());
-        openGLInstance.start();
+        mapToViewString = savedMapsList.getSelectedValue();
+        Individual loaded = FileManager.getInstance().loadCEO(mapToViewString);
+        this.viewMap(loaded);
     }//GEN-LAST:event_loadSavedMapButtonActionPerformed
 
     private void generationsSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_generationsSliderStateChanged
@@ -2032,6 +2046,31 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         in.calcFitness();
         this.viewMap(in);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void refreshSavedMapListButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_refreshSavedMapListButtonActionPerformed
+    {//GEN-HEADEREND:event_refreshSavedMapListButtonActionPerformed
+        refreshSavedMapList();
+    }//GEN-LAST:event_refreshSavedMapListButtonActionPerformed
+
+    private void deleteSavedMapButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_deleteSavedMapButtonActionPerformed
+    {//GEN-HEADEREND:event_deleteSavedMapButtonActionPerformed
+        this.log("Map deletion not implemented");
+    }//GEN-LAST:event_deleteSavedMapButtonActionPerformed
+
+    private void loadSearchSessionsButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_loadSearchSessionsButtonActionPerformed
+    {//GEN-HEADEREND:event_loadSearchSessionsButtonActionPerformed
+        this.log("Search session loading deletion not implemented");
+    }//GEN-LAST:event_loadSearchSessionsButtonActionPerformed
+
+    private void deleteSearchSessionsButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_deleteSearchSessionsButtonActionPerformed
+    {//GEN-HEADEREND:event_deleteSearchSessionsButtonActionPerformed
+        this.log("Search session deletion not implemented");
+    }//GEN-LAST:event_deleteSearchSessionsButtonActionPerformed
+    
+    public void refreshSavedMapList()
+    {
+        savedMapsList.setListData(FileManager.getInstance().getMapsFromDisk());        
+    }
     
     public void setSliderLabels()
     {
@@ -2340,6 +2379,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     private javax.swing.JSlider populationSlider;
     private javax.swing.JLabel populationValueLabel;
     private javax.swing.JButton refreshPopulationMapListButton;
+    private javax.swing.JButton refreshSavedMapListButton;
     private javax.swing.JButton resetFitnessFunctionButton;
     private javax.swing.JButton resetGaButton;
     private javax.swing.JButton resetInitialMapMenuButton;

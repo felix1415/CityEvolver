@@ -190,7 +190,7 @@ public class Individual
         this.blocksForSearch = test;
     }
 
-    public Individual(Individual in) // copy
+    public Individual(Individual in) // copy for view
     {
         this.index = in.getIndex() + 100;
         this.gene = in.getGene().clone();
@@ -200,7 +200,7 @@ public class Individual
         this.zLength = in.getZLength();  
         
         this.r = new Random();
-        this.blocksForSearch = (ArrayList<BlockType>) in.getBlocksForSearch().clone();
+        this.blocksForSearch = null; // loaded maps don't have this 
         this.connected = in.connected;
         this.roadFitness = in.roadFitness;
         this.airFitness = in.airFitness;
