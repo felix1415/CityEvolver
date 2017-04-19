@@ -53,11 +53,11 @@ public class HardConstraintEnforcement
         
         //note the constraints are applied to the first 
         //level first, incrementaly up (y is the outer loop)
-        for (int y = 0; y < this.yLength; y++)
+        for (int y = 0; y < this.yLength; ++y)
         {
-            for (int x = 0; x < this.xLength; x++)
+            for (int x = 0; x < this.xLength; ++x)
             {
-                for (int z = 0; z < this.zLength; z++)
+                for (int z = 0; z < this.zLength; ++z)
                 {
                     //if not the lowest level of the map
                     if(!isLowestLevel(x, y, z))
@@ -85,13 +85,13 @@ public class HardConstraintEnforcement
                     }
                     else
                     {
-                        if(isBlockAir(x, y, z))
+                        if(this.gene[x][y][z].isAir())
                         {
                             boolean isLegal = false;
                             while(!isLegal)
                             {
                                 this.gene[x][y][z] = new Block(x, y, z, getRandomBlock(blocksForSearch));
-                                isLegal = !isBlockAir(x, y, z);
+                                isLegal = !this.gene[x][y][z].isAir();
                             } 
                         }
                     }
@@ -106,20 +106,23 @@ public class HardConstraintEnforcement
         return y == 0;
     }
     
-    public ArrayList<Block> getRoads()
+    public ArrayList<Block> getBlocksOfType(BlockType type)
     {
-        ArrayList<Block> roads = new ArrayList<>();
-        for (int x = 0; x < this.xLength; x++)
+        ArrayList<Block> blocks = new ArrayList<>();
+        for (int y = 0; y < this.yLength; ++y)
         {
-            for (int z = 0; z < this.zLength; z++)
+            for (int x = 0; x < this.xLength; ++x)
             {
-                if(this.gene[x][0][z].isRoad())
+                for (int z = 0; z < this.zLength; ++z)
                 {
-                    roads.add(this.gene[x][0][z]);
+                    if(this.gene[x][y][z].isType(type))
+                    {
+                        blocks.add(this.gene[x][y][z]);
+                    }
                 }
             }
         }
-        return roads;
+        return blocks;
     }
     
     public boolean isNextToType(int x, int y, int z, BlockType type)
@@ -127,19 +130,20 @@ public class HardConstraintEnforcement
         return adjacentToBlockOfType(x, y, z, type) > 0;
     }
     
-    public int isAllRoadsConnectedFitness()
+    public int isAllBlockTypeConnectedFitness(BlockType type)
     {
-        ArrayList<Block> roads = getRoads();
+        ArrayList<Block> blocks = getBlocksOfType(type);
         ArrayList<Block> queue = new ArrayList<>();
         ArrayList<Block> visited = new ArrayList<>();
         
-        if(roads.isEmpty())
+        if(blocks.isEmpty())
         {
             return 0;
         }
         
         int connectionFitness = 0;
-        for (Block block : roads)
+        //breadth first search
+        for (Block block : blocks)
         {
             queue.add(block);
             while(!queue.isEmpty()) {
@@ -153,18 +157,18 @@ public class HardConstraintEnforcement
                     }
             }
             connectionFitness += visited.size();
-            if(roads.size() == visited.size())
+            if(blocks.size() == visited.size())
             {
-                return roads.size() * 2;
+                return (blocks.size() * blocks.size()) + blocks.size();
             }
         }
         
-        return Utils.roundFloat((float)connectionFitness / (float)roads.size());
+        return Utils.roundFloat((float)connectionFitness / (float)blocks.size());
     }
     
     private ArrayList<Block> getUnvisitedChildrenNode(Block node, ArrayList<Block> visited)
     {
-        ArrayList<Block> blocks = getRoadConnections(node);
+        ArrayList<Block> blocks = getSameBlockConnections(node);
         ArrayList<Block> unvisited = new ArrayList<>();
         for (Block vBlock : visited)
         {
@@ -193,36 +197,50 @@ public class HardConstraintEnforcement
         return unvisited;
     }
     
-    private ArrayList<Block> getRoadConnections(Block node)
+    private ArrayList<Block> getSameBlockConnections(Block node)
     {
         ArrayList<Block> blocks = new ArrayList<>();
         
         if(node.getX() + 1 < xLength)
         {
-            if(this.gene[node.getX() + 1][node.getY()][node.getZ()].isRoad())
+            if(this.gene[node.getX() + 1][node.getY()][node.getZ()].isType(node.getType()))
             {
                 blocks.add(new Block(node.getX() + 1, node.getY(), node.getZ(), node.getType()));
             }
         }
         if(node.getZ() + 1 < zLength)
         {
-            if(this.gene[node.getX()][node.getY()][node.getZ() + 1].isRoad())
+            if(this.gene[node.getX()][node.getY()][node.getZ() + 1].isType(node.getType()))
             {
                 blocks.add(new Block(node.getX(), node.getY(), node.getZ() + 1, node.getType()));
             }
         }
         if(node.getX() != 0)
         {
-            if(this.gene[node.getX() - 1][node.getY()][node.getZ()].isRoad())
+            if(this.gene[node.getX() - 1][node.getY()][node.getZ()].isType(node.getType()))
             {
                 blocks.add(new Block(node.getX() - 1, node.getY(), node.getZ(), node.getType()));
             }
         }
         if(node.getZ() != 0)
         {                        
-            if(this.gene[node.getX()][node.getY()][node.getZ() - 1].isRoad())
+            if(this.gene[node.getX()][node.getY()][node.getZ() - 1].isType(node.getType()))
             {
                 blocks.add(new Block(node.getX(), node.getY(), node.getZ() - 1, node.getType()));
+            }
+        }
+        if(node.getY() + 1 < yLength)
+        {
+            if(this.gene[node.getX()][node.getY() + 1][node.getZ()].isType(node.getType()))
+            {
+                blocks.add(new Block(node.getX(), node.getY() + 1, node.getZ(), node.getType()));
+            }
+        }
+        if(node.getY() != 0)
+        {
+            if(this.gene[node.getX()][node.getY() - 1][node.getZ()].isType(node.getType()))
+            {
+                blocks.add(new Block(node.getX(), node.getY() - 1, node.getZ(), node.getType()));
             }
         }
         return blocks;
@@ -233,11 +251,6 @@ public class HardConstraintEnforcement
         return block1.getX() == block2.getX() 
                 && block1.getY() == block2.getY()
                 && block1.getZ() == block2.getZ();
-    }
-    
-    private boolean isRoad(int x, int y, int z)
-    {
-        return this.gene[x][y][z].isRoad();
     }
     
     private boolean hasJoinableBlockBelow(int x, int y, int z)
@@ -262,12 +275,7 @@ public class HardConstraintEnforcement
         return this.gene[x][y][z].isRoad() 
                 || this.gene[x][y][z].isWater();
     }
-    
-    private boolean isBlockAir(int x, int y, int z)
-    {
-        return this.gene[x][y][z].isAir();
-    }
-    
+
     private boolean isAdjacentlyConnectedToLegalBlocks(int x, int y, int z)
     {
         int numberOfAdjacentLegalBlocks = 0;
@@ -277,7 +285,7 @@ public class HardConstraintEnforcement
             {
                 if(hasJoinableBlockBelow(x + 1, y, z))
                 {
-                    numberOfAdjacentLegalBlocks++;
+                    ++numberOfAdjacentLegalBlocks;
                 }
             }
         }
@@ -287,7 +295,7 @@ public class HardConstraintEnforcement
             {
                 if(hasJoinableBlockBelow(x, y, z + 1))
                 {
-                    numberOfAdjacentLegalBlocks++;
+                    ++numberOfAdjacentLegalBlocks;
                 }
             }
         }
@@ -297,7 +305,7 @@ public class HardConstraintEnforcement
             {
                 if(hasJoinableBlockBelow(x - 1, y, z))
                 {
-                    numberOfAdjacentLegalBlocks++;
+                    ++numberOfAdjacentLegalBlocks;
                 }
             }
         }
@@ -307,17 +315,12 @@ public class HardConstraintEnforcement
             {
                 if(hasJoinableBlockBelow(x, y, z - 1))
                 {
-                    numberOfAdjacentLegalBlocks++;
+                    ++numberOfAdjacentLegalBlocks;
                 }
             }
         }
         
         return numberOfAdjacentLegalBlocks >= 2;
-    }
-    
-    public static boolean groupingRoadBlocksOnThisBlock(int x, int y, int z)
-    {
-        return false; 
     }
     
     private boolean withinTwoBlocksOfRoad(int x, int y, int z)

@@ -97,11 +97,11 @@ public class Individual
         this.yLength = yLength;
         this.zLength = zLength;
         this.r = new Random();
-        for (int i = 0; i < xLength; i++)
+        for (int i = 0; i < xLength; ++i)
         {
-            for (int j = 0; j < yLength ; j++)
+            for (int j = 0; j < yLength ; ++j)
             {
-                for (int k = 0; k < zLength ; k++)
+                for (int k = 0; k < zLength ; ++k)
                 {
                     this.gene[i][j][k] = new Block(i, j, k, getRandomBlock(blocksForSearch));
                 }
@@ -122,11 +122,11 @@ public class Individual
         this.r = new Random();
         this.blocksForSearch = null;
         
-        for (int i = 0; i < xLength; i++)
+        for (int i = 0; i < xLength; ++i)
         {
-            for (int j = 0; j < yLength ; j++)
+            for (int j = 0; j < yLength ; ++j)
             {
-                for (int k = 0; k < zLength ; k++)
+                for (int k = 0; k < zLength ; ++k)
                 {
                     if(blocks[i][j][k] != null)
                     {
@@ -151,11 +151,11 @@ public class Individual
         this.fitness = 0;
         
         this.r = new Random();
-        for (int x = 0; x < xLength; x++)
+        for (int x = 0; x < xLength; ++x)
         {
-            for (int y = 0; y < yLength; y++)
+            for (int y = 0; y < yLength; ++y)
             {
-                for (int z = 0; z < zLength ; z++)
+                for (int z = 0; z < zLength ; ++z)
                 {
                     if(x == 0 || z == 4)
                     {
@@ -253,11 +253,11 @@ public class Individual
         this.zLength = individual1.getZLength();  
         this.index = index;
         
-        for (int i = 0; i < xLength; i++)
+        for (int i = 0; i < xLength; ++i)
         {
-            for (int j = 0; j < yLength ; j++)
+            for (int j = 0; j < yLength ; ++j)
             {
-                for (int k = 0; k < zLength ; k++)
+                for (int k = 0; k < zLength ; ++k)
                 {
                     if (i < xCross && j < yCross && k < zCross)
                     {
@@ -290,57 +290,17 @@ public class Individual
     public synchronized void calcFitness()
     {
         this.fitness = 0;
+        initialiseFitnessVariables();
         
-        roadFitness = 0;
-        airFitness = 0;
-        grassFitness = 0;
-        lResidentialFitness = 0;
-        dResidentialFitness = 0;
-        lCommercialFitness = 0;
-        dCommercialFitness = 0;
-        farmlandFitness = 0;
-        industryFitness = 0;
-        hospitalFitness = 0;
-        policeFitness = 0;
-        fireFitness = 0;
-        educationFitness = 0;
-
-        numberOfRoads = 0;
-        numberOfAir = 0;
-        numberOfGrass = 0;
-        numberOfLResidential = 0;
-        numberOfDResidential = 0;
-        numberOfLCommercial = 0;
-        numberOfDCommercial = 0;
-        numberOfFarmland = 0;
-        numberOfIndustry = 0;
-        numberOfHospital = 0;
-        numberOfPolice = 0;
-        numberOfFire = 0;
-        numberOfEducation = 0;
-
-        idealRoadBlocks = 0;
-        idealAirBlocks = 0;
-        idealGrassBlocks = 0;
-        idealLightResidential = 0;
-        idealDenseResidential = 0;
-        idealLightCommercial = 0;
-        idealDenseCommercial = 0;
-        idealFarmland = 0;
-        idealIndustry = 0;
-        idealHospital = 0;
-        idealPolice = 0;
-        idealFire = 0;
-        idealEducation = 0;
         //needs to be changed back to applyConstraints
         this.gene = HardConstraintEnforcement.getInstance().applyConstraints
         (xLength, yLength, zLength, this.gene, blocksForSearch);
         
-        for (int y = 0; y < yLength; y++)
+        for (int y = 0; y < yLength; ++y)
         {
-            for (int x = 0; x < xLength; x++)
+            for (int x = 0; x < xLength; ++x)
             {
-                for (int z = 0; z < zLength ; z++)
+                for (int z = 0; z < zLength ; ++z)
                 {
                     if(HardConstraintEnforcement.getInstance().isLowestLevel(x,y,z))
                     {
@@ -429,6 +389,10 @@ public class Individual
                 }
             }
         }
+        
+        //double fitness of grass, ensure fair representation
+        grassFitness *= 2;
+        
         float numberOfLowestLevelBlocks = xLength * zLength;
         float numberOfAllBlocks = xLength * yLength * zLength;
         float buildingSpace = GeneticAlgorithm.getInstance().getLightResidentialValue() +
@@ -475,7 +439,7 @@ public class Individual
         idealEducation = Utils.roundFloat(numberOfAllBlocks * educationWeight);
 
         //if all roads are connected, bonus fitness
-        roadFitness += HardConstraintEnforcement.getInstance().isAllRoadsConnectedFitness() * 2;
+        roadFitness += HardConstraintEnforcement.getInstance().isAllBlockTypeConnectedFitness(BlockType.ROAD) * 2;
         // if close to the precent of road blocks required
         roadFitness += fitnessMultiplier(idealRoadBlocks, numberOfRoads, roadFitness, 1.5f);
         
@@ -487,10 +451,12 @@ public class Individual
         dCommercialFitness = fitnessMultiplier(idealDenseCommercial, numberOfDCommercial, dCommercialFitness, 2);
         farmlandFitness = fitnessMultiplier(idealFarmland, numberOfFarmland, farmlandFitness, 2);
         industryFitness = fitnessMultiplier(idealIndustry, numberOfIndustry, industryFitness, 2);
-        hospitalFitness = fitnessMultiplier(idealHospital, numberOfHospital, hospitalFitness, 2);
-        policeFitness = fitnessMultiplier(idealPolice, numberOfPolice, policeFitness, 2);
-        fireFitness = fitnessMultiplier(idealFire, numberOfFire, fireFitness, 2);
-        educationFitness = fitnessMultiplier(idealEducation, numberOfEducation, educationFitness, 2);       
+        
+        hospitalFitness += HardConstraintEnforcement.getInstance().isAllBlockTypeConnectedFitness(BlockType.HOSPTIAL);
+        hospitalFitness = fitnessMultiplier(idealHospital, numberOfHospital, hospitalFitness, 3);
+        policeFitness = fitnessMultiplier(idealPolice, numberOfPolice, policeFitness, 3);
+        fireFitness = fitnessMultiplier(idealFire, numberOfFire, fireFitness, 3);
+        educationFitness = fitnessMultiplier(idealEducation, numberOfEducation, educationFitness, 3);       
         
         this.fitness += roadFitness;
         this.fitness += airFitness;
@@ -631,11 +597,11 @@ public class Individual
     
     public void mutation(double mutationVal)
     {
-        for (int x = 0; x < xLength; x++)
+        for (int x = 0; x < xLength; ++x)
         {
-            for (int y = 0; y < yLength ; y++)
+            for (int y = 0; y < yLength ; ++y)
             {
-                for (int z = 0; z < zLength ; z++)
+                for (int z = 0; z < zLength ; ++z)
                 {
                     if(mutationVal > r.nextDouble())
                     {
@@ -693,16 +659,61 @@ public class Individual
         System.out.println("-" + this.fitness);
     }
     
+    private void initialiseFitnessVariables()
+    {
+        roadFitness = 0;
+        airFitness = 0;
+        grassFitness = 0;
+        lResidentialFitness = 0;
+        dResidentialFitness = 0;
+        lCommercialFitness = 0;
+        dCommercialFitness = 0;
+        farmlandFitness = 0;
+        industryFitness = 0;
+        hospitalFitness = 0;
+        policeFitness = 0;
+        fireFitness = 0;
+        educationFitness = 0;
+
+        numberOfRoads = 0;
+        numberOfAir = 0;
+        numberOfGrass = 0;
+        numberOfLResidential = 0;
+        numberOfDResidential = 0;
+        numberOfLCommercial = 0;
+        numberOfDCommercial = 0;
+        numberOfFarmland = 0;
+        numberOfIndustry = 0;
+        numberOfHospital = 0;
+        numberOfPolice = 0;
+        numberOfFire = 0;
+        numberOfEducation = 0;
+
+        idealRoadBlocks = 0;
+        idealAirBlocks = 0;
+        idealGrassBlocks = 0;
+        idealLightResidential = 0;
+        idealDenseResidential = 0;
+        idealLightCommercial = 0;
+        idealDenseCommercial = 0;
+        idealFarmland = 0;
+        idealIndustry = 0;
+        idealHospital = 0;
+        idealPolice = 0;
+        idealFire = 0;
+        idealEducation = 0;
+    }
+    
     private int calcNumberOfVertices()
     {
         numberOfVertices = 0;
         if(individualChanged)
         {
-            for (int i = 0; i < xLength; i++)
+            for (int i = 0; i < xLength; ++i)
             {
-                for (int j = 0; j < yLength ; j++)
+                for (int j = 0; j < yLength ; ++j)
                 {
-                    for (int k = 0; k < zLength ; k++)
+                    for (int k = 0; k < zLength ; ++k)
                     {
                         numberOfVertices += this.gene[i][j][k].getNumberOfVertices();
                     }
@@ -715,11 +726,11 @@ public class Individual
     public float [] getVertexBuffer()
     {
         float [] vertices = new float[0];
-        for (int i = 0; i < xLength; i++)
+        for (int i = 0; i < xLength; ++i)
         {
-            for (int j = 0; j < yLength ; j++)
+            for (int j = 0; j < yLength ; ++j)
             {
-                for (int k = 0; k < zLength ; k++)
+                for (int k = 0; k < zLength ; ++k)
                 {
                     vertices = concatenateFloatArrays(vertices, this.gene[i][j][k].getVertexData());
                 }
@@ -731,11 +742,11 @@ public class Individual
     public float [] getColourBuffer()
     {
         float [] colour = null;
-        for (int i = 0; i < xLength; i++)
+        for (int i = 0; i < xLength; ++i)
         {
-            for (int j = 0; j < yLength ; j++)
+            for (int j = 0; j < yLength ; ++j)
             {
-                for (int k = 0; k < zLength ; k++)
+                for (int k = 0; k < zLength ; ++k)
                 {
                     colour = concatenateFloatArrays(colour, this.gene[i][j][k].getColourData());
                 }
@@ -746,11 +757,11 @@ public class Individual
     
     public void calculateBuffers()
     {
-        for (int i = 0; i < xLength; i++)
+        for (int i = 0; i < xLength; ++i)
         {
-            for (int j = 0; j < yLength ; j++)
+            for (int j = 0; j < yLength ; ++j)
             {
-                for (int k = 0; k < zLength ; k++)
+                for (int k = 0; k < zLength ; ++k)
                 {
                     this.gene[i][j][k].calculateBuffers();
                 }
