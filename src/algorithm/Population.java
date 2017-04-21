@@ -6,6 +6,7 @@
 package algorithm;
 
 
+import cityevolver.Block;
 import gui.GUIForm;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,11 +53,35 @@ public class Population
         
         this.population = new Individual[this.populationNumber];
         this.random = new Random();
-        currentGeneration = 0;
+        this.currentGeneration = 0;
+        
         for (int i = 0; i < this.populationNumber; i++)
         {
             this.population[i] = new Individual(X_LENGTH, Y_LENGTH, Z_LENGTH, i + 1);
         }
+    }
+
+    public Population(int x, int y, int z, 
+            int generations, int currentGeneration, int populationNumber, 
+            float mutationRate, ArrayList<Individual> individuals)
+    {
+        this.X_LENGTH = x;
+        this.Y_LENGTH = y;
+        this.Z_LENGTH = z;
+        
+        this.populationNumber = populationNumber;
+        this.totalGenerations = generations;
+        this.currentGeneration = currentGeneration;
+        this.mutationRate = mutationRate;
+        
+        this.population = new Individual[this.populationNumber];
+        
+        for (int i = 0; i < this.populationNumber; i++)
+        {
+            this.population[i] = individuals.get(i);
+        }
+        this.random = new Random();
+        
     }
     
     public void populationStep()
@@ -204,5 +229,44 @@ public class Population
     {
         return this.population[index];
     }
-    
+
+    public int getPopulationNumber()
+    {
+        return populationNumber;
+    }
+
+    public int getX()
+    {
+        return X_LENGTH;
+    }
+
+    public int getY()
+    {
+        return Y_LENGTH;
+    }
+
+    public int getZ()
+    {
+        return Z_LENGTH;
+    }
+
+    public int getTotalGenerations()
+    {
+        return totalGenerations;
+    }
+
+    public double getMutationRate()
+    {
+        return mutationRate;
+    }
+
+    public int getCurrentGeneration()
+    {
+        return currentGeneration;
+    }
+
+    public Individual[] getPopulation()
+    {
+        return population;
+    }    
 }

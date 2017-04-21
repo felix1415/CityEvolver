@@ -6,6 +6,7 @@ import algorithm.Population;
 import files.FileManager;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -82,6 +83,8 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         generationsValueLabel.setText(Integer.toString(generationsGetRealValue()));
         setSliderLabels();
         refreshSavedMapList();
+        refreshSavedSearchSessionList();
+        refreshPopulationMapList();
     }
 
     /**
@@ -184,6 +187,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         searchSessionsList = new javax.swing.JList<>();
         loadSearchSessionsButton = new javax.swing.JButton();
         deleteSearchSessionsButton = new javax.swing.JButton();
+        refreshSearchSessionListButton = new javax.swing.JButton();
         populationMapsPanel = new javax.swing.JPanel();
         viewMapButton = new javax.swing.JButton();
         populationMapsPane = new javax.swing.JScrollPane();
@@ -1018,12 +1022,6 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
         fileManagerPane.addTab("Saved Maps", savedMapsPanel);
 
-        searchSessionsList.setModel(new javax.swing.AbstractListModel<String>()
-        {
-            String[] strings = { "World 1", "World 2", "Test" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         searchSessionsPane.setViewportView(searchSessionsList);
 
         loadSearchSessionsButton.setText("Load");
@@ -1044,6 +1042,15 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             }
         });
 
+        refreshSearchSessionListButton.setText("Refresh");
+        refreshSearchSessionListButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                refreshSearchSessionListButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout searchSessionsPanelLayout = new javax.swing.GroupLayout(searchSessionsPanel);
         searchSessionsPanel.setLayout(searchSessionsPanelLayout);
         searchSessionsPanelLayout.setHorizontalGroup(
@@ -1055,7 +1062,8 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                         .addComponent(loadSearchSessionsButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(deleteSearchSessionsButton)
-                        .addGap(0, 170, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                        .addComponent(refreshSearchSessionListButton))
                     .addComponent(searchSessionsPane))
                 .addContainerGap())
         );
@@ -1066,7 +1074,8 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(searchSessionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteSearchSessionsButton)
-                    .addComponent(loadSearchSessionsButton))
+                    .addComponent(loadSearchSessionsButton)
+                    .addComponent(refreshSearchSessionListButton))
                 .addContainerGap())
         );
 
@@ -1081,12 +1090,6 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             }
         });
 
-        populationMapsList.setModel(new javax.swing.AbstractListModel<String>()
-        {
-            String[] strings = { "World 1", "World 2", "Test" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         populationMapsPane.setViewportView(populationMapsList);
 
         savePopulationMapButton.setText("Save");
@@ -1214,6 +1217,13 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         mutationValueLabel.setText("150");
 
         saveGaButton.setText("Save");
+        saveGaButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                saveGaButtonActionPerformed(evt);
+            }
+        });
 
         resetSearchGaButton.setText("Reset Search");
         resetSearchGaButton.addActionListener(new java.awt.event.ActionListener()
@@ -1831,7 +1841,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         generationsSlider.setEnabled(false);
         mutationSlider.setEnabled(false);
 
-        GeneticAlgorithm.getInstance().setPopulation(populationGetRealValue());
+        GeneticAlgorithm.getInstance().setPopulationNumber(populationGetRealValue());
         GeneticAlgorithm.getInstance().setGenerations(generationsGetRealValue());
         GeneticAlgorithm.getInstance().setMutation(mutationGetRealValue());
         
@@ -1913,7 +1923,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
     private void refreshPopulationMapListButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_refreshPopulationMapListButtonActionPerformed
     {//GEN-HEADEREND:event_refreshPopulationMapListButtonActionPerformed
-        GeneticAlgorithm.getInstance().updateGeneratedPopulationList();
+        refreshPopulationMapList();
     }//GEN-LAST:event_refreshPopulationMapListButtonActionPerformed
 
     private void resetSearchGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_resetSearchGaButtonActionPerformed
@@ -2066,11 +2076,42 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     {//GEN-HEADEREND:event_deleteSearchSessionsButtonActionPerformed
         this.log("Search session deletion not implemented");
     }//GEN-LAST:event_deleteSearchSessionsButtonActionPerformed
+
+    private void refreshSearchSessionListButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_refreshSearchSessionListButtonActionPerformed
+    {//GEN-HEADEREND:event_refreshSearchSessionListButtonActionPerformed
+        refreshSavedSearchSessionList();
+    }//GEN-LAST:event_refreshSearchSessionListButtonActionPerformed
+
+    private void saveGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveGaButtonActionPerformed
+    {//GEN-HEADEREND:event_saveGaButtonActionPerformed
+        String name = gaNameField.getText();
+        FileManager.getInstance().saveCES(generatedPopulation, name);
+    }//GEN-LAST:event_saveGaButtonActionPerformed
     
     public void refreshSavedMapList()
     {
         savedMapsList.setListData(FileManager.getInstance().getMapsFromDisk());        
     }
+    
+    public void refreshSavedSearchSessionList()
+    {
+        searchSessionsList.setListData(FileManager.getInstance().getSearchSessionsFromDisk());        
+    }
+    
+    public void refreshPopulationMapList()
+    {
+        if(GeneticAlgorithm.getInstance().isInitialised())
+        {
+            GeneticAlgorithm.getInstance().updateGeneratedPopulationList();
+        }
+        else
+        {
+            ArrayList<String> dummy = new ArrayList<>();
+            this.populationMapsList.setListData(dummy.toArray(new String[0]));
+        }
+    }
+    
+    
     
     public void setSliderLabels()
     {
@@ -2178,18 +2219,21 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     public synchronized void setGeneratedPopulationListPopulation(Population popIn)
     {
         this.generatedPopulation = popIn;
-        setPopulationMapsList(popIn.getSolutionMapList());
+        if(popIn != null)
+        {
+           setPopulationMapsList(popIn.getSolutionMapList()); 
+        }
     }
     
     private void setPopulationMapsList(ArrayList<String> mapSolutionList)
     {
-        mapSolutionArrayList = mapSolutionList;
-        String[] arr = new String[mapSolutionArrayList.size()];
-        for (int i = 0; i < mapSolutionArrayList.size(); i++)
-        {
-           arr[i] = mapSolutionArrayList.get(i);
-        }
-        this.populationMapsList.setListData(arr);
+//        mapSolutionArrayList = mapSolutionList;
+//        String[] arr = new String[mapSolutionArrayList.size()];
+//        for (int i = 0; i < mapSolutionArrayList.size(); i++)
+//        {
+//           arr[i] = mapSolutionArrayList.get(i);
+//        }
+        this.populationMapsList.setListData(mapSolutionList.toArray(new String[0]));
     }
     
     public void viewMap(Individual individual)
@@ -2380,6 +2424,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     private javax.swing.JLabel populationValueLabel;
     private javax.swing.JButton refreshPopulationMapListButton;
     private javax.swing.JButton refreshSavedMapListButton;
+    private javax.swing.JButton refreshSearchSessionListButton;
     private javax.swing.JButton resetFitnessFunctionButton;
     private javax.swing.JButton resetGaButton;
     private javax.swing.JButton resetInitialMapMenuButton;

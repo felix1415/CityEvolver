@@ -19,6 +19,13 @@ import static org.lwjgl.opengl.GL15.*;
 import java.util.ArrayList;
 import static cityevolver.Utils.getRandomBlock;
 import gui.GUIForm;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
+import static cityevolver.Utils.getRandomBlock;
 
 /**
  *
@@ -32,7 +39,7 @@ public class Individual
     private final int yLength;
     private final int zLength;
     private int fitness;
-    private final Random r;
+    private final Random random;
     private final int index;
     public Tuple connected = null;
     
@@ -89,14 +96,14 @@ public class Individual
 
     public Individual(int xLength, int yLength, int zLength, int index) // intial
     {
-        this.blocksForSearch = GeneticAlgorithm.getInstance().getBlocksForSearch();
+        this.blocksForSearch = GeneticAlgorithm.getInstance().updateBlocksForSearch();
         this.index = index;
         this.gene = new Block[xLength][yLength][zLength];
         this.fitness = 0;
         this.xLength = xLength;
         this.yLength = yLength;
         this.zLength = zLength;
-        this.r = new Random();
+        this.random = new Random();
         for (int i = 0; i < xLength; ++i)
         {
             for (int j = 0; j < yLength ; ++j)
@@ -119,7 +126,7 @@ public class Individual
         this.index = -1;
         this.fitness = 0;
         this.numberOfVertices = 0;
-        this.r = new Random();
+        this.random = new Random();
         this.blocksForSearch = null;
         
         for (int i = 0; i < xLength; ++i)
@@ -150,7 +157,7 @@ public class Individual
         this.gene = new Block[xLength][yLength][zLength];
         this.fitness = 0;
         
-        this.r = new Random();
+        this.random = new Random();
         for (int x = 0; x < xLength; ++x)
         {
             for (int y = 0; y < yLength; ++y)
@@ -199,7 +206,7 @@ public class Individual
         this.yLength = in.getYLength();
         this.zLength = in.getZLength();  
         
-        this.r = new Random();
+        this.random = new Random();
         this.blocksForSearch = null; // loaded maps don't have this 
         this.connected = in.connected;
         this.roadFitness = in.roadFitness;
@@ -273,8 +280,20 @@ public class Individual
         }
         
         this.fitness = 0;
-        this.r = new Random();
+        this.random = new Random();
         this.blocksForSearch = (ArrayList<BlockType>) individual1.getBlocksForSearch().clone();
+    }
+
+    public Individual(int x, int y, int z, int indexNumber, int fitness, Block[][][] blocks, ArrayList<BlockType> blocksForSearch)
+    {
+        this.xLength = x;
+        this.yLength = y;
+        this.zLength = z;
+        this.index = indexNumber;
+        this.fitness = fitness;
+        this.gene = blocks;
+        this.blocksForSearch = blocksForSearch;
+        this.random = new Random();
     }
 
     public int getIndex()
@@ -603,7 +622,7 @@ public class Individual
             {
                 for (int z = 0; z < zLength ; ++z)
                 {
-                    if(mutationVal > r.nextDouble())
+                    if(mutationVal > random.nextDouble())
                     {
                         if(HardConstraintEnforcement.getInstance().isLowestLevel(x, y, z))
                         {

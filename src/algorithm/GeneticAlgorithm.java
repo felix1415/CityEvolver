@@ -5,13 +5,9 @@
  */
 package algorithm;
 
-import cityevolver.Block;
 import cityevolver.BlockType;
 import gui.GUIForm;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -55,6 +51,8 @@ public class GeneticAlgorithm implements Runnable
     private int educationValue;
     private int airValue;
     
+    private ArrayList<BlockType> blocksForSearch;
+    
     protected GeneticAlgorithm() 
     {
         running = false;
@@ -83,7 +81,7 @@ public class GeneticAlgorithm implements Runnable
         this.generations = generations;
     }
 
-    public synchronized void setPopulation(int populationNum)
+    public synchronized void setPopulationNumber(int populationNum)
     {
         this.populationNumber = populationNum;
     }
@@ -122,7 +120,10 @@ public class GeneticAlgorithm implements Runnable
 
     public synchronized void updateGeneratedPopulationList()
     {
-        this.population.updateGeneratedPopulationList();
+        if(this.population != null)
+        {
+            this.population.updateGeneratedPopulationList();
+        }
     }
 
     public synchronized boolean getRunning()
@@ -265,7 +266,7 @@ public class GeneticAlgorithm implements Runnable
         return educationValue;
     }
     
-    public synchronized ArrayList<BlockType> getBlocksForSearch()
+    public synchronized ArrayList<BlockType> updateBlocksForSearch()
     {
         ArrayList<Tuple> allBlockValues = new ArrayList<>();
         allBlockValues.add(new Tuple(airValue, BlockType.AIR));
@@ -288,6 +289,19 @@ public class GeneticAlgorithm implements Runnable
             blocksForSearch.add((BlockType)tuple.y);
         });
         
-        return blocksForSearch;
+        this.blocksForSearch = blocksForSearch;
+        
+        return this.blocksForSearch;
     }
+    
+    public synchronized ArrayList<BlockType> getBlocksForSearch()
+    {
+        return this.blocksForSearch;
+    }
+    
+    public synchronized void setBlocksForSearch(ArrayList<BlockType> blocksForSearch)
+    {
+        this.blocksForSearch = blocksForSearch;
+    }
+    
 }

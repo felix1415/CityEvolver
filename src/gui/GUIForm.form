@@ -1236,7 +1236,8 @@
                               <Component id="loadSearchSessionsButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="deleteSearchSessionsButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="170" max="32767" attributes="0"/>
+                              <EmptySpace pref="79" max="32767" attributes="0"/>
+                              <Component id="refreshSearchSessionListButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="searchSessionsPane" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -1252,6 +1253,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="deleteSearchSessionsButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="loadSearchSessionsButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="refreshSearchSessionListButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -1269,11 +1271,7 @@
                 <Component class="javax.swing.JList" name="searchSessionsList">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                      <StringArray count="3">
-                        <StringItem index="0" value="World 1"/>
-                        <StringItem index="1" value="World 2"/>
-                        <StringItem index="2" value="Test"/>
-                      </StringArray>
+                      <StringArray count="0"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -1296,6 +1294,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteSearchSessionsButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="refreshSearchSessionListButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Refresh"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refreshSearchSessionListButtonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -1366,11 +1372,7 @@
                 <Component class="javax.swing.JList" name="populationMapsList">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                      <StringArray count="3">
-                        <StringItem index="0" value="World 1"/>
-                        <StringItem index="1" value="World 2"/>
-                        <StringItem index="2" value="Test"/>
-                      </StringArray>
+                      <StringArray count="0"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -1609,6 +1611,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveGaButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="gaNameField">
             </Component>
