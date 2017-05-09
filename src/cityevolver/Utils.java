@@ -5,6 +5,7 @@
  */
 package cityevolver;
 
+import algorithm.Tuple;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -54,7 +55,7 @@ public class Utils
     }
     //a list of blocks can be excluded from the types returned
     //a weighted block has a 50 percent chance of being returned
-    public static BlockType getRandomBlock(ArrayList<BlockType> blocks, BlockType weighted, float weight)
+    public static BlockType getRandomBlock(ArrayList<Tuple> blocks, BlockType weighted, float weight)
     {
         if(weighted != null)
         {
@@ -63,7 +64,7 @@ public class Utils
                 return weighted;
             }
         }
-        BlockType type = blocks.get(random.nextInt(blocks.size()));
+        BlockType type = (BlockType)blocks.get(random.nextInt(blocks.size())).x;
         return BlockType.valueOf(type.name());
     }
     
@@ -72,7 +73,27 @@ public class Utils
         return Math.round(number);
     }
     
-    public static BlockType getRandomBlock(ArrayList<BlockType> blocksForSearch)
+    public static BlockType getRandomWeightedBlock(ArrayList<Tuple> blocksAndWegihtsForSearch)
+    {
+        ArrayList<Tuple> copyOfBlocksAndWegihtsForSearch = (ArrayList<Tuple>)blocksAndWegihtsForSearch.clone();
+        float randomFloat = random.nextFloat();
+        float runningWeight = 0f;
+        
+        while (!copyOfBlocksAndWegihtsForSearch.isEmpty())
+        {
+            int randomInt = random.nextInt(copyOfBlocksAndWegihtsForSearch.size());
+            Tuple blockAndWeight = copyOfBlocksAndWegihtsForSearch.remove(randomInt);
+            runningWeight += (float)blockAndWeight.y;
+            
+            if(runningWeight >= randomFloat)
+            {
+                return (BlockType) blockAndWeight.x;
+            }
+        }
+        return null;
+    }
+    
+    public static BlockType getRandomBlock(ArrayList<Tuple> blocksForSearch)
     {
         return getRandomBlock(blocksForSearch, null, 0);
     }

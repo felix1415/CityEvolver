@@ -55,6 +55,8 @@ public class Population
         this.random = new Random();
         this.currentGeneration = 0;
         
+        GeneticAlgorithm.getInstance().updateBlocksForSearch();
+        
         for (int i = 0; i < this.populationNumber; i++)
         {
             this.population[i] = new Individual(X_LENGTH, Y_LENGTH, Z_LENGTH, i + 1);
@@ -156,25 +158,7 @@ public class Population
         }
         this.meanFitness = this.meanFitness / populationNumber;
     }
-    
-    void print()
-    {
-        System.out.println("Mean Fitness: " + this.meanFitness + " Fittest: " + this.fittest);
-    }
-    
-    public void printPopulation()
-    {
-        for (int i = 0; i < populationNumber; i++)
-        {
-            this.population[i].print();
-        }
-    }
 
-    public Individual getBestIndividual()
-    {
-        return this.population[fittestIndividual];
-    }
-    
     public ArrayList<String> getSolutionMapList()
     {
         String[] mapNamesArray = new String[population.length];

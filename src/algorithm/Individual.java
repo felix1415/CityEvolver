@@ -17,15 +17,7 @@ import org.lwjgl.BufferUtils;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 import java.util.ArrayList;
-import static cityevolver.Utils.getRandomBlock;
 import gui.GUIForm;
-import static cityevolver.Utils.getRandomBlock;
-import static cityevolver.Utils.getRandomBlock;
-import static cityevolver.Utils.getRandomBlock;
-import static cityevolver.Utils.getRandomBlock;
-import static cityevolver.Utils.getRandomBlock;
-import static cityevolver.Utils.getRandomBlock;
-import static cityevolver.Utils.getRandomBlock;
 
 /**
  *
@@ -92,11 +84,11 @@ public class Individual
     private int idealFire = 0;
     private int idealEducation = 0;
     
-    private final ArrayList<BlockType> blocksForSearch;
+    private final ArrayList<Tuple> blocksForSearch;
 
     public Individual(int xLength, int yLength, int zLength, int index) // intial
     {
-        this.blocksForSearch = GeneticAlgorithm.getInstance().updateBlocksForSearch();
+        this.blocksForSearch = GeneticAlgorithm.getInstance().getBlocksForSearch();
         this.index = index;
         this.gene = new Block[xLength][yLength][zLength];
         this.fitness = 0;
@@ -110,7 +102,7 @@ public class Individual
             {
                 for (int k = 0; k < zLength ; ++k)
                 {
-                    this.gene[i][j][k] = new Block(i, j, k, getRandomBlock(blocksForSearch));
+                    this.gene[i][j][k] = new Block(i, j, k, Utils.getRandomWeightedBlock(this.blocksForSearch));
                 }
             }
         }
@@ -190,10 +182,10 @@ public class Individual
             }
         }
         this.numberOfVertices = 0;
-        ArrayList<BlockType> test = new ArrayList<>(); 
-        test.add(BlockType.ROAD);
-        test.add(BlockType.LIGHTCOMMERCIAL);
-        test.add(BlockType.GRASS);
+        ArrayList<Tuple> test = new ArrayList<>(); 
+        test.add(new Tuple(BlockType.ROAD, 0f));
+        test.add(new Tuple(BlockType.LIGHTCOMMERCIAL, 0f));
+        test.add(new Tuple(BlockType.GRASS, 0f));
         this.blocksForSearch = test;
     }
 
@@ -207,7 +199,7 @@ public class Individual
         this.zLength = in.getZLength();  
         
         this.random = new Random();
-        this.blocksForSearch = null; // loaded maps don't have this 
+        this.blocksForSearch = GeneticAlgorithm.getInstance().getBlocksForSearch();
         this.connected = in.connected;
         this.roadFitness = in.roadFitness;
         this.airFitness = in.airFitness;
@@ -281,10 +273,10 @@ public class Individual
         
         this.fitness = 0;
         this.random = new Random();
-        this.blocksForSearch = (ArrayList<BlockType>) individual1.getBlocksForSearch().clone();
+        this.blocksForSearch = GeneticAlgorithm.getInstance().getBlocksForSearch();
     }
 
-    public Individual(int x, int y, int z, int indexNumber, int fitness, Block[][][] blocks, ArrayList<BlockType> blocksForSearch)
+    public Individual(int x, int y, int z, int indexNumber, int fitness, Block[][][] blocks, ArrayList<Tuple> blocksForSearch)
     {
         this.xLength = x;
         this.yLength = y;
@@ -329,81 +321,76 @@ public class Individual
                             roadFitness += HardConstraintEnforcement.getInstance().roadFitness(x, y, z);
                         }
                     }
-                        if(this.gene[x][y][z].isAir())
-                        {
-                            ++numberOfAir;
-                            ++airFitness;
-                        }
-                        else if(this.gene[x][y][z].isRoad())
-                        {
-                            //roads are flat and create air space
-                            ++numberOfAir;
-                            ++airFitness;
-                        }
-                        else if(this.gene[x][y][z].isWater())
-                        {
-                            //water is flat and create air space
-                            ++numberOfAir;
-                            ++airFitness;
-                        }
-                        else if(this.gene[x][y][z].isGrass())
-                        {
-                            //grass are flat and create air space
-                            ++numberOfAir;
-                            ++numberOfGrass;
-                            ++grassFitness;
-                            ++airFitness;
-                        }
-                        else if(this.gene[x][y][z].isLResidential())
-                        {
-                            ++numberOfLResidential;
-                            lResidentialFitness += HardConstraintEnforcement.getInstance().lightResidentialFitness(x, y, z);
-                        }
-                        else if(this.gene[x][y][z].isDResidential())
-                        {
-                            dResidentialFitness += HardConstraintEnforcement.getInstance().denseResidentialFitness(x, y, z);
-                            ++numberOfDResidential;
-                        }
-                        else if(this.gene[x][y][z].isLCommercial())
-                        {
-                            lCommercialFitness += HardConstraintEnforcement.getInstance().lightCommercialFitness(x, y, z);
-                            ++numberOfLCommercial;
-                        }
-                        else if(this.gene[x][y][z].isDCommercial())
-                        {
-                            dCommercialFitness += HardConstraintEnforcement.getInstance().denseCommercialFitness(x, y, z);
-                            ++numberOfDCommercial;
-                        }
-                        else if(this.gene[x][y][z].isFarmland())
-                        {
-                            farmlandFitness += HardConstraintEnforcement.getInstance().farmlandFitness(x, y, z);
-                            ++numberOfFarmland;
-                        }
-                        else if(this.gene[x][y][z].isIndustry())
-                        {
-                            industryFitness += HardConstraintEnforcement.getInstance().industryFitness(x, y, z);
-                            ++numberOfIndustry;
-                        }
-                        else if(this.gene[x][y][z].isHospital())
-                        {
-                            policeFitness += HardConstraintEnforcement.getInstance().hospitalFitness(x, y, z);
-                            ++numberOfHospital;
-                        }
-                        else if(this.gene[x][y][z].isPolice())
-                        {
-                            fireFitness += HardConstraintEnforcement.getInstance().policeFitness(x, y, z);
-                            ++numberOfPolice;
-                        }
-                        else if(this.gene[x][y][z].isFire())
-                        {
-                            fireFitness += HardConstraintEnforcement.getInstance().fireFitness(x, y, z);
-                            ++numberOfFire;
-                        }
-                        else if(this.gene[x][y][z].isEducation())
-                        {
-                            educationFitness += HardConstraintEnforcement.getInstance().educationFitness(x, y, z);
-                            ++numberOfEducation;
-                        }
+                    
+                    if(this.gene[x][y][z].isAir())
+                    {
+                        ++numberOfAir;
+                        ++airFitness;
+                    }
+                    else if(this.gene[x][y][z].isWater())
+                    {
+                        //water is flat and create air space
+                        ++numberOfAir;
+                        ++airFitness;
+                    }
+                    else if(this.gene[x][y][z].isGrass())
+                    {
+                        //grass are flat and create air space
+                        ++numberOfAir;
+                        ++numberOfGrass;
+                        ++grassFitness;
+                        ++airFitness;
+                    }
+                    else if(this.gene[x][y][z].isLResidential())
+                    {
+                        ++numberOfLResidential;
+                        lResidentialFitness += HardConstraintEnforcement.getInstance().lightResidentialFitness(x, y, z);
+                    }
+                    else if(this.gene[x][y][z].isDResidential())
+                    {
+                        dResidentialFitness += HardConstraintEnforcement.getInstance().denseResidentialFitness(x, y, z);
+                        ++numberOfDResidential;
+                    }
+                    else if(this.gene[x][y][z].isLCommercial())
+                    {
+                        lCommercialFitness += HardConstraintEnforcement.getInstance().lightCommercialFitness(x, y, z);
+                        ++numberOfLCommercial;
+                    }
+                    else if(this.gene[x][y][z].isDCommercial())
+                    {
+                        dCommercialFitness += HardConstraintEnforcement.getInstance().denseCommercialFitness(x, y, z);
+                        ++numberOfDCommercial;
+                    }
+                    else if(this.gene[x][y][z].isFarmland())
+                    {
+                        farmlandFitness += HardConstraintEnforcement.getInstance().farmlandFitness(x, y, z);
+                        ++numberOfFarmland;
+                    }
+                    else if(this.gene[x][y][z].isIndustry())
+                    {
+                        industryFitness += HardConstraintEnforcement.getInstance().industryFitness(x, y, z);
+                        ++numberOfIndustry;
+                    }
+                    else if(this.gene[x][y][z].isHospital())
+                    {
+                        policeFitness += HardConstraintEnforcement.getInstance().hospitalFitness(x, y, z);
+                        ++numberOfHospital;
+                    }
+                    else if(this.gene[x][y][z].isPolice())
+                    {
+                        fireFitness += HardConstraintEnforcement.getInstance().policeFitness(x, y, z);
+                        ++numberOfPolice;
+                    }
+                    else if(this.gene[x][y][z].isFire())
+                    {
+                        fireFitness += HardConstraintEnforcement.getInstance().fireFitness(x, y, z);
+                        ++numberOfFire;
+                    }
+                    else if(this.gene[x][y][z].isEducation())
+                    {
+                        educationFitness += HardConstraintEnforcement.getInstance().educationFitness(x, y, z);
+                        ++numberOfEducation;
+                    }
                         
                 }
             }
@@ -412,125 +399,112 @@ public class Individual
         //double fitness of grass, ensure fair representation
         grassFitness *= 2;
         
-        float numberOfLowestLevelBlocks = xLength * zLength;
-        float numberOfAllBlocks = xLength * yLength * zLength;
-        float buildingSpace = GeneticAlgorithm.getInstance().getLightResidentialValue() +
-                GeneticAlgorithm.getInstance().getDenseResidentialValue() + 
-                GeneticAlgorithm.getInstance().getLightCommercialValue() + 
-                GeneticAlgorithm.getInstance().getDenseCommercialValue() +
-                GeneticAlgorithm.getInstance().getFarmlandValue() + 
-                GeneticAlgorithm.getInstance().getIndustryValue() + 
-                GeneticAlgorithm.getInstance().getHospitalValue() + 
-                GeneticAlgorithm.getInstance().getPoliceValue() +
-                GeneticAlgorithm.getInstance().getFireValue() + 
-                GeneticAlgorithm.getInstance().getEducationValue();
-        float lightResidentialWeight = GeneticAlgorithm.getInstance().getLightResidentialValue() / buildingSpace;
-        float denseResidentialWeight = GeneticAlgorithm.getInstance().getDenseResidentialValue() / buildingSpace;
-        float lightCommercialWeight = GeneticAlgorithm.getInstance().getLightCommercialValue() / buildingSpace;
-        float denseCommercialWeight = GeneticAlgorithm.getInstance().getDenseCommercialValue() / buildingSpace;
-        float farmlandWeight = GeneticAlgorithm.getInstance().getFarmlandValue() / buildingSpace;
-        float industryWeight = GeneticAlgorithm.getInstance().getIndustryValue() / buildingSpace;
-        float hospitalWeight = GeneticAlgorithm.getInstance().getHospitalValue() / buildingSpace;
-        float policeWeight = GeneticAlgorithm.getInstance().getPoliceValue() / buildingSpace;
-        float fireWeight = GeneticAlgorithm.getInstance().getFireValue() / buildingSpace;
-        float educationWeight = GeneticAlgorithm.getInstance().getEducationValue() / buildingSpace;
-        
-        float roadWeight = ((float)GeneticAlgorithm.getInstance().getRoadsValue() / 100f);
-        float airWeight = ((float)GeneticAlgorithm.getInstance().getAirValue() / 100f);
-        float grassWeight = ((float)GeneticAlgorithm.getInstance().getGrassValue() / 100f);
-        idealRoadBlocks = Utils.roundFloat(numberOfLowestLevelBlocks * roadWeight);
-        idealAirBlocks = Utils.roundFloat(numberOfAllBlocks * airWeight);
-        idealGrassBlocks = Utils.roundFloat(numberOfAllBlocks * grassWeight);
+        idealRoadBlocks = Utils.roundFloat(GeneticAlgorithm.getInstance().getNumberOfLowestLevelBlocks() *
+                GeneticAlgorithm.getInstance().getRoadWeight());
+        idealAirBlocks = Utils.roundFloat(GeneticAlgorithm.getInstance().getNumberOfAllBlocks() *
+                GeneticAlgorithm.getInstance().getAirWeight());
+        idealGrassBlocks = Utils.roundFloat(GeneticAlgorithm.getInstance().getNumberOfAllBlocks() *
+                GeneticAlgorithm.getInstance().getGrassWeight());
 
+        int numberOfAllRemainingBlocks = GeneticAlgorithm.getInstance().getNumberOfAllBlocks();
+        numberOfAllRemainingBlocks -= idealRoadBlocks;
+        numberOfAllRemainingBlocks -= idealGrassBlocks;
         
-        numberOfAllBlocks -= idealRoadBlocks;
-        numberOfAllBlocks -= idealGrassBlocks;
-        
-        idealLightResidential = Utils.roundFloat(numberOfAllBlocks * lightResidentialWeight);
-        idealDenseResidential = Utils.roundFloat(numberOfAllBlocks * denseResidentialWeight);
-        idealLightCommercial = Utils.roundFloat(numberOfAllBlocks * lightCommercialWeight);
-        idealDenseCommercial = Utils.roundFloat(numberOfAllBlocks * denseCommercialWeight);
-        idealFarmland = Utils.roundFloat(numberOfAllBlocks * farmlandWeight);
-        idealIndustry = Utils.roundFloat(numberOfAllBlocks * industryWeight);
-        idealHospital = Utils.roundFloat(numberOfAllBlocks * hospitalWeight);
-        idealPolice = Utils.roundFloat(numberOfAllBlocks * policeWeight);
-        idealFire = Utils.roundFloat(numberOfAllBlocks * fireWeight);
-        idealEducation = Utils.roundFloat(numberOfAllBlocks * educationWeight);
+        idealLightResidential = Utils.roundFloat(numberOfAllRemainingBlocks *
+                GeneticAlgorithm.getInstance().getLightResidentialWeight());
+        idealDenseResidential = Utils.roundFloat(numberOfAllRemainingBlocks *
+                GeneticAlgorithm.getInstance().getDenseResidentialWeight());
+        idealLightCommercial = Utils.roundFloat(numberOfAllRemainingBlocks *
+                GeneticAlgorithm.getInstance().getLightCommercialWeight());
+        idealDenseCommercial = Utils.roundFloat(numberOfAllRemainingBlocks *
+                GeneticAlgorithm.getInstance().getDenseCommercialWeight());
+        idealFarmland = Utils.roundFloat(numberOfAllRemainingBlocks *
+                GeneticAlgorithm.getInstance().getFarmlandWeight());
+        idealIndustry = Utils.roundFloat(numberOfAllRemainingBlocks *
+                GeneticAlgorithm.getInstance().getIndustryWeight());
+        idealHospital = Utils.roundFloat(numberOfAllRemainingBlocks *
+                GeneticAlgorithm.getInstance().getHospitalWeight());
+        idealPolice = Utils.roundFloat(numberOfAllRemainingBlocks *
+                GeneticAlgorithm.getInstance().getPoliceWeight());
+        idealFire = Utils.roundFloat(numberOfAllRemainingBlocks *
+                GeneticAlgorithm.getInstance().getFireWeight());
+        idealEducation = Utils.roundFloat(numberOfAllRemainingBlocks *
+                GeneticAlgorithm.getInstance().getEducationWeight());
 
         //if all roads are connected, bonus fitness
         roadFitness += HardConstraintEnforcement.getInstance().isAllBlockTypeConnectedFitness(BlockType.ROAD) * 2;
         // if close to the precent of road blocks required
-        roadFitness += fitnessMultiplier(idealRoadBlocks, numberOfRoads, roadFitness, 1.5f);
+        roadFitness += HardConstraintEnforcement.getInstance().fitnessMultiplier(idealRoadBlocks, numberOfRoads, roadFitness, 1.5f);
         
-        airFitness = fitnessMultiplier(idealAirBlocks, numberOfAir, airFitness, 2);
-        grassFitness = fitnessMultiplier(idealGrassBlocks, numberOfGrass, grassFitness, 2);
-        lResidentialFitness = fitnessMultiplier(idealLightResidential, numberOfLResidential, lResidentialFitness, 2);
-        dResidentialFitness = fitnessMultiplier(idealDenseResidential, numberOfDResidential, dResidentialFitness, 2);
-        lCommercialFitness = fitnessMultiplier(idealLightCommercial, numberOfLCommercial, lCommercialFitness, 2);
-        dCommercialFitness = fitnessMultiplier(idealDenseCommercial, numberOfDCommercial, dCommercialFitness, 2);
-        farmlandFitness = fitnessMultiplier(idealFarmland, numberOfFarmland, farmlandFitness, 2);
-        industryFitness = fitnessMultiplier(idealIndustry, numberOfIndustry, industryFitness, 2);
+        airFitness = HardConstraintEnforcement.getInstance().fitnessMultiplier(idealAirBlocks, numberOfAir, airFitness, 2);
+        grassFitness = HardConstraintEnforcement.getInstance().fitnessMultiplier(idealGrassBlocks, numberOfGrass, grassFitness, 2);
+        lResidentialFitness = HardConstraintEnforcement.getInstance().fitnessMultiplier(idealLightResidential, numberOfLResidential, lResidentialFitness, 2);
+        dResidentialFitness = HardConstraintEnforcement.getInstance().fitnessMultiplier(idealDenseResidential, numberOfDResidential, dResidentialFitness, 2);
+        lCommercialFitness = HardConstraintEnforcement.getInstance().fitnessMultiplier(idealLightCommercial, numberOfLCommercial, lCommercialFitness, 2);
+        dCommercialFitness = HardConstraintEnforcement.getInstance().fitnessMultiplier(idealDenseCommercial, numberOfDCommercial, dCommercialFitness, 2);
+        farmlandFitness = HardConstraintEnforcement.getInstance().fitnessMultiplier(idealFarmland, numberOfFarmland, farmlandFitness, 2);
+        industryFitness = HardConstraintEnforcement.getInstance().fitnessMultiplier(idealIndustry, numberOfIndustry, industryFitness, 2);
         
         hospitalFitness += HardConstraintEnforcement.getInstance().isAllBlockTypeConnectedFitness(BlockType.HOSPTIAL);
-        hospitalFitness = fitnessMultiplier(idealHospital, numberOfHospital, hospitalFitness, 3);
-        policeFitness = fitnessMultiplier(idealPolice, numberOfPolice, policeFitness, 3);
-        fireFitness = fitnessMultiplier(idealFire, numberOfFire, fireFitness, 3);
-        educationFitness = fitnessMultiplier(idealEducation, numberOfEducation, educationFitness, 3);       
+        hospitalFitness += HardConstraintEnforcement.getInstance().fitnessMultiplier(idealHospital, numberOfHospital, hospitalFitness, 2);
+        policeFitness += HardConstraintEnforcement.getInstance().isAllBlockTypeConnectedFitness(BlockType.POLICE);
+        policeFitness += HardConstraintEnforcement.getInstance().fitnessMultiplier(idealPolice, numberOfPolice, policeFitness, 2);
+        fireFitness += HardConstraintEnforcement.getInstance().isAllBlockTypeConnectedFitness(BlockType.FIRE);
+        fireFitness += HardConstraintEnforcement.getInstance().fitnessMultiplier(idealFire, numberOfFire, fireFitness, 2);
+        educationFitness += HardConstraintEnforcement.getInstance().isAllBlockTypeConnectedFitness(BlockType.EDUCATION);
+        educationFitness += HardConstraintEnforcement.getInstance().fitnessMultiplier(idealEducation, numberOfEducation, educationFitness, 2);       
         
         this.fitness += roadFitness;
         this.fitness += airFitness;
         this.fitness += grassFitness;
         this.fitness += lResidentialFitness;
-        
-//        System.out.println("grass fitness " + grassFitness);
-//        System.out.println("grass number " + numberOfGrass);
-//        System.out.println("Lcom number " + numberOfLCommercial);
-//        System.out.println("lCommercialFitness " + lCommercialFitness);
         this.fitness += dResidentialFitness;
         this.fitness += lCommercialFitness;
         this.fitness += dCommercialFitness;
         this.fitness += farmlandFitness;
         this.fitness += industryFitness;
-        this.fitness += hospitalFitness;
-        this.fitness += policeFitness;
-        this.fitness += fireFitness;
-        this.fitness += educationFitness;
+        this.fitness += hospitalFitness * 0.1;
+        this.fitness += policeFitness * 0.1;
+        this.fitness += fireFitness * 0.1;
+        this.fitness += educationFitness * 0.1;
         
     }
     
-    public int fitnessMultiplier(int idealNumberOfBlocks, int numberOfBlocks, int fitness, float multiplier)
+    private int getTypeFitness(BlockType type)
     {
-        if(((float)idealNumberOfBlocks * 0.9) < numberOfBlocks 
-                && (numberOfBlocks < ((float)idealNumberOfBlocks * 1.1) )) // if 
+        if(null != type)
+        switch (type)
         {
-            if(fitness > 0)
-            {
-                fitness *= multiplier;
-            }
-            else
-            {
-                fitness += (Math.abs(fitness) / 2) + 1;
-            }
+            case AIR:
+                return airFitness;
+            case ROAD:
+                return roadFitness;
+            case GRASS:
+                return grassFitness;
+            case LIGHTRESIDENTIAL:
+                return lResidentialFitness;
+            case DENSERESIDENTIAL:
+                return dResidentialFitness;
+            case LIGHTCOMMERCIAL:
+                return lCommercialFitness;
+            case DENSECOMMERCIAL:
+                return dCommercialFitness;
+            case FARMLAND:
+                return farmlandFitness;
+            case INDUSTRY:
+                return industryFitness;
+            case HOSPTIAL:
+                return hospitalFitness;
+            case POLICE:
+                return policeFitness;
+            case FIRE:
+                return fireFitness;
+            case EDUCATION:
+                return educationFitness;
+            default:
+                break;
         }
-        else
-        {
-            int over;
-            if(idealNumberOfBlocks > numberOfBlocks)
-            {
-                over = idealNumberOfBlocks - numberOfBlocks;
-            }
-            else
-            {
-                over = numberOfBlocks - idealNumberOfBlocks;
-            }
-            fitness -= over * multiplier;
-            
-            if(numberOfBlocks > (idealNumberOfBlocks * multiplier) && fitness > 0)
-            {
-                fitness = -fitness;
-            }
-        }
-        return fitness;
+        return 0;
     }
     
     public void displayStats()
@@ -626,33 +600,20 @@ public class Individual
                     {
                         if(HardConstraintEnforcement.getInstance().isLowestLevel(x, y, z))
                         {
-                            this.gene[x][y][z] = new Block(x, y, z, getRandomBlock(blocksForSearch, BlockType.ROAD, 0.2f));
+                            this.gene[x][y][z] = new Block(x, y, z, Utils.getRandomBlock(this.blocksForSearch, BlockType.ROAD, 0.2f));
                         }
                         else
                         {
-                            if(HardConstraintEnforcement.getInstance().isNextToType(x, y, z, BlockType.HOSPTIAL) &&
-                                    hospitalFitness > 0)
+                            BlockType type = Utils.getRandomWeightedBlock(this.blocksForSearch);
+                            int fitness = getTypeFitness(type);
+                            if(HardConstraintEnforcement.getInstance().isNextToType(x, y, z, type) &&
+                                    fitness > 0)
                             {
-                                this.gene[x][y][z] = new Block(x, y, z, getRandomBlock(blocksForSearch, BlockType.HOSPTIAL, 0.2f));
-                            }
-                            else if(HardConstraintEnforcement.getInstance().isNextToType(x, y, z, BlockType.POLICE) &&
-                                    policeFitness > 0)
-                            {
-                                this.gene[x][y][z] = new Block(x, y, z, getRandomBlock(blocksForSearch, BlockType.POLICE, 0.2f));
-                            }
-                            else if(HardConstraintEnforcement.getInstance().isNextToType(x, y, z, BlockType.FIRE) &&
-                                    fireFitness > 0)
-                            {
-                                this.gene[x][y][z] = new Block(x, y, z, getRandomBlock(blocksForSearch, BlockType.FIRE, 0.2f));
-                            }
-                            else if(HardConstraintEnforcement.getInstance().isNextToType(x, y, z, BlockType.EDUCATION) &&
-                                    educationFitness > 0)
-                            {
-                                this.gene[x][y][z] = new Block(x, y, z, getRandomBlock(blocksForSearch, BlockType.EDUCATION, 0.2f));
+                                this.gene[x][y][z] = new Block(x, y, z, Utils.getRandomWeightedBlock(this.blocksForSearch));
                             }
                             else
                             {
-                                this.gene[x][y][z] = new Block(x, y, z, getRandomBlock(blocksForSearch));
+                                this.gene[x][y][z] = new Block(x, y, z, Utils.getRandomWeightedBlock(this.blocksForSearch));
                             }
                         }
                     }
@@ -666,7 +627,7 @@ public class Individual
         return "Soloution Map " + Integer.toString(this.index) + " Fitness: " + this.getFitness();
     }
 
-    public ArrayList<BlockType> getBlocksForSearch()
+    public ArrayList<Tuple> getBlocksForSearch()
     {
         return blocksForSearch;
     }

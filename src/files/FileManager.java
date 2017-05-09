@@ -8,6 +8,7 @@ package files;
 import algorithm.GeneticAlgorithm;
 import algorithm.Individual;
 import algorithm.Population;
+import algorithm.Tuple;
 import cityevolver.Block;
 import cityevolver.BlockType;
 import java.io.BufferedWriter;
@@ -108,12 +109,16 @@ public class FileManager
             float mutation = Float.valueOf(headerTwo[2]);
             
             //blocks for search
-            ArrayList<BlockType> blocksForSearch = new ArrayList<>();
+            ArrayList<Tuple> blocksForSearch = new ArrayList<>();
             String line = fileIn.nextLine();
+            String [] lineSplit = line.split(",");
             while(!line.startsWith("M"))
             {
-                blocksForSearch.add(BlockType.valueOf(line));
+                blocksForSearch.add(
+                        new Tuple(BlockType.valueOf(lineSplit[0]), 
+                                  Float.valueOf(lineSplit[1])));
                 line = fileIn.nextLine();
+                lineSplit = line.split(",");
             }
             
             GeneticAlgorithm.getInstance().setBlocksForSearch(blocksForSearch);
@@ -264,12 +269,11 @@ public class FileManager
                     + searchSession.getPopulationNumber() + ","
                     + searchSession.getMutationRate() + "\n");
             
-            ArrayList<BlockType> blocksForSearch = GeneticAlgorithm.getInstance().getBlocksForSearch();
-            for (BlockType blockType : blocksForSearch)
+            ArrayList<Tuple> blocksForSearch = GeneticAlgorithm.getInstance().getBlocksForSearch();
+            for (Tuple tuple : blocksForSearch)
             {
-                writer.write(blockType + "\n");
+                writer.write((String)tuple.x + "," + (String)tuple.y + "\n");
             }
-            
             
             Individual [] individuals = searchSession.getPopulation();
             

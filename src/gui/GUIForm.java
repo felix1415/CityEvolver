@@ -5,6 +5,7 @@ import algorithm.Individual;
 import algorithm.Population;
 import files.FileManager;
 import java.awt.Dimension;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -79,7 +80,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         deleteInputFileButton.setEnabled(false);
         loadInputFileButton.setEnabled(false);
         populationValueLabel.setText(Integer.toString(populationGetRealValue()));
-        mutationValueLabel.setText(Float.toString(mutationGetRealValue()));
+        mutationValueLabel.setText(mutationPercentValueString());
         generationsValueLabel.setText(Integer.toString(generationsGetRealValue()));
         setSliderLabels();
         refreshSavedMapList();
@@ -1595,6 +1596,10 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         populationSlider.setEnabled(true);
         generationsSlider.setEnabled(true);
         mutationSlider.setEnabled(true);
+        saveGaButton.setEnabled(true);
+        gaNameField.setEnabled(true);
+        enableFitnessFunctionSliders(true);
+        
         this.gaStatusLabel.setText("Stopped");
     }//GEN-LAST:event_stopGaButtonActionPerformed
 
@@ -1676,7 +1681,31 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     
     private float mutationGetRealValue()
     {
-        return (float) ((float)mutationSlider.getValue() * 0.01);
+        float percentValue = mutationPercentValue();
+        int x = GeneticAlgorithm.getInstance().getX();
+        int y = GeneticAlgorithm.getInstance().getY();
+        int z = GeneticAlgorithm.getInstance().getZ();
+        
+        int totalNumberOfBlocks = x * y * z;
+        float onePercentOfTotalBlocks = totalNumberOfBlocks / 100f;
+        float idealNumberOfMutatatedBlocksPerMutation = onePercentOfTotalBlocks * percentValue;
+        float mutationValue = idealNumberOfMutatatedBlocksPerMutation / totalNumberOfBlocks;
+        System.out.println("onePercentOfTotalBlocks = " + onePercentOfTotalBlocks);
+        System.out.println("idealNumberOfMutatatedBlocksPerMutation = " + idealNumberOfMutatatedBlocksPerMutation);
+        System.out.println("mutationValue = " + mutationValue);
+        
+        return mutationValue;
+    }
+    
+    private String mutationPercentValueString()
+    {
+        DecimalFormat df = new DecimalFormat("#.####");
+        return df.format(mutationPercentValue()) + "%";
+    }
+    
+    private float mutationPercentValue()
+    {
+        return (float)mutationSlider.getValue() * 0.025f;
     }
     
     private void loadInputFileButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_loadInputFileButtonActionPerformed
@@ -1820,7 +1849,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
     private void mutationSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_mutationSliderStateChanged
     {//GEN-HEADEREND:event_mutationSliderStateChanged
-        mutationValueLabel.setText(Float.toString(mutationGetRealValue()));
+        mutationValueLabel.setText(mutationPercentValueString());
     }//GEN-LAST:event_mutationSliderStateChanged
 
     private void populationSliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_populationSliderStateChanged
@@ -1830,20 +1859,24 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
     private void startGaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_startGaButtonActionPerformed
     {//GEN-HEADEREND:event_startGaButtonActionPerformed
+        populationSlider.setEnabled(false);
+        generationsSlider.setEnabled(false);
+        mutationSlider.setEnabled(false);
+        saveGaButton.setEnabled(false);
+        gaNameField.setEnabled(false);
+        
+        GeneticAlgorithm.getInstance().setPopulationNumber(populationGetRealValue());
+        GeneticAlgorithm.getInstance().setGenerations(generationsGetRealValue());
+        GeneticAlgorithm.getInstance().setMutation(mutationGetRealValue());
+        
+        enableFitnessFunctionSliders(false);
+        
         //if just restarting the GA, set it and end
         if(gaRestart && !this.gaReset)
         {
             this.setRunGeneticAlgorithm(true);
             return;
         }
-
-        populationSlider.setEnabled(false);
-        generationsSlider.setEnabled(false);
-        mutationSlider.setEnabled(false);
-
-        GeneticAlgorithm.getInstance().setPopulationNumber(populationGetRealValue());
-        GeneticAlgorithm.getInstance().setGenerations(generationsGetRealValue());
-        GeneticAlgorithm.getInstance().setMutation(mutationGetRealValue());
         
         GeneticAlgorithm.getInstance().setAirValue(airPercent);
         GeneticAlgorithm.getInstance().setRoadValue(roadPercent);
@@ -1882,6 +1915,23 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         return mapSolutionArrayList;
     }
     
+    public void enableFitnessFunctionSliders(boolean value)
+    {
+        this.airSlider.setEnabled(value);
+        this.roadSlider.setEnabled(value);
+        this.grassParksSlider.setEnabled(value);
+        this.lightResidentialSlider.setEnabled(value);
+        this.denseResidentialSlider.setEnabled(value);
+        this.lightCommercialSlider.setEnabled(value);
+        this.denseCommercialSlider.setEnabled(value);
+        this.farmlandSlider.setEnabled(value);
+        this.industrySlider.setEnabled(value);
+        this.hospitalSlider.setEnabled(value);
+        this.policeSlider.setEnabled(value);
+        this.fireSlider.setEnabled(value);
+        this.educationSlider.setEnabled(value);
+    }
+    
     private int getSelectedIndividualFromPopulationList()
     {
         String map = populationMapsList.getSelectedValue();
@@ -1916,7 +1966,6 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
         else
         {
             this.log("Unknown error while trying to load a generated solution", true);
-            return;
         }
         
     }//GEN-LAST:event_viewMapButtonActionPerformed
@@ -2069,7 +2118,9 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
 
     private void loadSearchSessionsButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_loadSearchSessionsButtonActionPerformed
     {//GEN-HEADEREND:event_loadSearchSessionsButtonActionPerformed
-        this.log("Search session loading deletion not implemented");
+        String sessionName = searchSessionsList.getSelectedValue();
+        Population loaded = FileManager.getInstance().loadCES(sessionName);
+        GeneticAlgorithm.getInstance().setPopulation(loaded);
     }//GEN-LAST:event_loadSearchSessionsButtonActionPerformed
 
     private void deleteSearchSessionsButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_deleteSearchSessionsButtonActionPerformed
@@ -2227,7 +2278,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
     
     private void setPopulationMapsList(ArrayList<String> mapSolutionList)
     {
-//        mapSolutionArrayList = mapSolutionList;
+        this.mapSolutionArrayList = mapSolutionList;
 //        String[] arr = new String[mapSolutionArrayList.size()];
 //        for (int i = 0; i < mapSolutionArrayList.size(); i++)
 //        {
@@ -2248,6 +2299,7 @@ public class GUIForm extends javax.swing.JFrame implements Runnable
             } catch (Exception ex)
             {
                 Logger.getLogger(GUIForm.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("gui.GUIForm.viewMap()");
             }            
         }
         

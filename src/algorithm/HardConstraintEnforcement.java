@@ -34,7 +34,7 @@ public class HardConstraintEnforcement
     }
     
     public Block[][][] setValue(int xLength, int yLength, int zLength, 
-            Block[][][] geneIn, ArrayList<BlockType> blocksForSearch)
+            Block[][][] geneIn, ArrayList<Tuple> blocksForSearch)
     {
         this.gene = geneIn;
         this.xLength = xLength;
@@ -44,7 +44,7 @@ public class HardConstraintEnforcement
     }
     
     public Block[][][] applyConstraints(int xLength, int yLength, int zLength, 
-            Block[][][] geneIn, ArrayList<BlockType> blocksForSearch)
+            Block[][][] geneIn, ArrayList<Tuple> blocksForSearch)
     {
         this.gene = geneIn;
         this.xLength = xLength;
@@ -782,6 +782,42 @@ public class HardConstraintEnforcement
         }
         return roadFitness;
     }
+    
+    public int fitnessMultiplier(int idealNumberOfBlocks, int numberOfBlocks, int fitness, float multiplier)
+    {
+        if(((float)idealNumberOfBlocks * 0.9) < numberOfBlocks 
+                && (numberOfBlocks < ((float)idealNumberOfBlocks * 1.1) )) // if 
+        {
+            if(fitness > 0)
+            {
+                fitness *= multiplier;
+            }
+            else
+            {
+                fitness += (Math.abs(fitness) / 2) + 1;
+            }
+        }
+        else
+        {
+            int over;
+            if(idealNumberOfBlocks > numberOfBlocks)
+            {
+                over = idealNumberOfBlocks - numberOfBlocks;
+            }
+            else
+            {
+                over = numberOfBlocks - idealNumberOfBlocks;
+            }
+            fitness -= over * multiplier;
+            
+            if(numberOfBlocks > (idealNumberOfBlocks * multiplier) && fitness > 0)
+            {
+                fitness = -fitness;
+            }
+        }
+        return fitness;
+    }
 }
+
 
 

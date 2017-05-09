@@ -51,11 +51,29 @@ public class GeneticAlgorithm implements Runnable
     private int educationValue;
     private int airValue;
     
-    private ArrayList<BlockType> blocksForSearch;
+    private int numberOfLowestLevelBlocks = 0;
+    private int numberOfAllBlocks = 0;
+    private int buildingSpace = 0;
+    private float lightResidentialWeight = 0;
+    private float denseResidentialWeight = 0;
+    private float lightCommercialWeight = 0;
+    private float denseCommercialWeight = 0;
+    private float farmlandWeight = 0;
+    private float industryWeight = 0;
+    private float hospitalWeight = 0;
+    private float policeWeight = 0;
+    private float fireWeight = 0;
+    private float educationWeight = 0;
+    private float roadWeight = 0;
+    private float airWeight = 0;
+    private float grassWeight = 0;
+    
+    private ArrayList<Tuple> blocksForSearch;
     
     protected GeneticAlgorithm() 
     {
-        running = false;
+        this.running = false;
+        this.blocksForSearch = new ArrayList<>();
     }
 
     @Override
@@ -67,6 +85,21 @@ public class GeneticAlgorithm implements Runnable
         {
             this.population.populationStep();
         }
+    }
+
+    public int getX()
+    {
+        return xBound;
+    }
+
+    public int getY()
+    {
+        return yBound;
+    }
+
+    public int getZ()
+    {
+        return zBound;
     }
     
     public synchronized void setBounds(int x, int y, int z)
@@ -266,7 +299,7 @@ public class GeneticAlgorithm implements Runnable
         return educationValue;
     }
     
-    public synchronized ArrayList<BlockType> updateBlocksForSearch()
+    public synchronized ArrayList<Tuple> updateBlocksForSearch()
     {
         ArrayList<Tuple> allBlockValues = new ArrayList<>();
         allBlockValues.add(new Tuple(airValue, BlockType.AIR));
@@ -283,25 +316,202 @@ public class GeneticAlgorithm implements Runnable
         allBlockValues.add(new Tuple(fireValue, BlockType.FIRE));
         allBlockValues.add(new Tuple(educationValue, BlockType.EDUCATION));
         
-        ArrayList<BlockType> blocksForSearch = new ArrayList<>();
+        this.calcBlockWeights();
+        
+        this.blocksForSearch.clear();
         allBlockValues.stream().filter((tuple) -> ((int)tuple.x > 0)).forEach((tuple) ->
         {
-            blocksForSearch.add((BlockType)tuple.y);
+            this.blocksForSearch.add(new Tuple((BlockType)tuple.y,
+                                               getBlockWeight((BlockType)tuple.y)));
         });
         
-        this.blocksForSearch = blocksForSearch;
+        return this.blocksForSearch;
+    }
+    
+    private void calcBlockWeights()
+    {
+        numberOfLowestLevelBlocks = xBound * zBound;
+        numberOfAllBlocks = xBound * yBound * zBound;
+        buildingSpace = GeneticAlgorithm.getInstance().getLightResidentialValue() +
+                GeneticAlgorithm.getInstance().getDenseResidentialValue() + 
+                GeneticAlgorithm.getInstance().getLightCommercialValue() + 
+                GeneticAlgorithm.getInstance().getDenseCommercialValue() +
+                GeneticAlgorithm.getInstance().getFarmlandValue() + 
+                GeneticAlgorithm.getInstance().getIndustryValue() + 
+                GeneticAlgorithm.getInstance().getHospitalValue() + 
+                GeneticAlgorithm.getInstance().getPoliceValue() +
+                GeneticAlgorithm.getInstance().getFireValue() + 
+                GeneticAlgorithm.getInstance().getEducationValue();
         
-        return this.blocksForSearch;
+        lightResidentialWeight = (float)GeneticAlgorithm.getInstance().getLightResidentialValue() / buildingSpace;
+        denseResidentialWeight = (float)GeneticAlgorithm.getInstance().getDenseResidentialValue() / buildingSpace;
+        lightCommercialWeight = (float)GeneticAlgorithm.getInstance().getLightCommercialValue() / buildingSpace;
+        denseCommercialWeight = (float)GeneticAlgorithm.getInstance().getDenseCommercialValue() / buildingSpace;
+        farmlandWeight = (float)GeneticAlgorithm.getInstance().getFarmlandValue() / buildingSpace;
+        industryWeight = (float)GeneticAlgorithm.getInstance().getIndustryValue() / buildingSpace;
+        hospitalWeight = (float)GeneticAlgorithm.getInstance().getHospitalValue() / buildingSpace;
+        policeWeight = (float)GeneticAlgorithm.getInstance().getPoliceValue() / buildingSpace;
+        fireWeight = (float)GeneticAlgorithm.getInstance().getFireValue() / buildingSpace;
+        educationWeight = (float)GeneticAlgorithm.getInstance().getEducationValue() / buildingSpace;
+        
+        roadWeight = ((float)GeneticAlgorithm.getInstance().getRoadsValue() / 100f);
+        airWeight = ((float)GeneticAlgorithm.getInstance().getAirValue() / 100f);
+        grassWeight = ((float)GeneticAlgorithm.getInstance().getGrassValue() / 100f);
     }
     
-    public synchronized ArrayList<BlockType> getBlocksForSearch()
+    private float getBlockWeight(BlockType type)
+    {
+        if(null != type)
+        switch (type)
+        {
+            case AIR:
+                
+                return airWeight;
+            case ROAD:
+                return roadWeight;
+            case GRASS:
+                return grassWeight;
+            case LIGHTRESIDENTIAL:
+                return lightResidentialWeight;
+            case DENSERESIDENTIAL:
+                return denseResidentialWeight;
+            case LIGHTCOMMERCIAL:
+                return lightCommercialWeight;
+            case DENSECOMMERCIAL:
+                return denseCommercialWeight;
+            case FARMLAND:
+                return farmlandWeight;
+            case INDUSTRY:
+                return industryWeight;
+            case HOSPTIAL:
+                return hospitalWeight;
+            case POLICE:
+                return policeWeight;
+            case FIRE:
+                return fireWeight;
+            case EDUCATION:
+                return educationWeight;
+            default:
+                break;
+        }
+        return 0f;
+    }
+    
+    public synchronized ArrayList<Tuple> getBlocksForSearch()
     {
         return this.blocksForSearch;
     }
     
-    public synchronized void setBlocksForSearch(ArrayList<BlockType> blocksForSearch)
+    public synchronized ArrayList<BlockType> getBlocksForSearchBlockType()
+    {
+        ArrayList<BlockType> newList = new ArrayList<>();
+        blocksForSearch.stream().forEach((type) ->
+        {
+            newList.add((BlockType)type.x);
+        });
+        return newList;
+    }
+    
+    public synchronized void setBlocksForSearch(ArrayList<Tuple> blocksForSearch)
     {
         this.blocksForSearch = blocksForSearch;
     }
+    
+    public synchronized void setBlocksForSearchBlockType(ArrayList<BlockType> blocksForSearchIn)
+    {
+        ArrayList<Tuple> newList = new ArrayList<>();
+        blocksForSearchIn.stream().forEach((type) ->
+        {
+            newList.add(new Tuple(type, 0f));
+        });
+        this.blocksForSearch = newList;
+    }
+
+    public void setPopulation(Population loaded)
+    {
+        this.population = loaded;
+    }
+
+    public int getNumberOfLowestLevelBlocks()
+    {
+        return numberOfLowestLevelBlocks;
+    }
+
+    public int getNumberOfAllBlocks()
+    {
+        return numberOfAllBlocks;
+    }
+
+    public int getBuildingSpace()
+    {
+        return buildingSpace;
+    }
+
+    public float getLightResidentialWeight()
+    {
+        return lightResidentialWeight;
+    }
+
+    public float getDenseResidentialWeight()
+    {
+        return denseResidentialWeight;
+    }
+
+    public float getLightCommercialWeight()
+    {
+        return lightCommercialWeight;
+    }
+
+    public float getDenseCommercialWeight()
+    {
+        return denseCommercialWeight;
+    }
+
+    public float getFarmlandWeight()
+    {
+        return farmlandWeight;
+    }
+
+    public float getIndustryWeight()
+    {
+        return industryWeight;
+    }
+
+    public float getHospitalWeight()
+    {
+        return hospitalWeight;
+    }
+
+    public float getPoliceWeight()
+    {
+        return policeWeight;
+    }
+
+    public float getFireWeight()
+    {
+        return fireWeight;
+    }
+
+    public float getEducationWeight()
+    {
+        return educationWeight;
+    }
+
+    public float getRoadWeight()
+    {
+        return roadWeight;
+    }
+
+    public float getAirWeight()
+    {
+        return airWeight;
+    }
+
+    public float getGrassWeight()
+    {
+        return grassWeight;
+    }
+    
+    
     
 }
